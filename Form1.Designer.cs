@@ -29,8 +29,8 @@
       private void InitializeComponent()
       {
          this.components = new System.ComponentModel.Container();
-         DevExpress.Utils.Animation.PushTransition pushTransition1 = new DevExpress.Utils.Animation.PushTransition();
-         DevExpress.XtraBars.Docking2010.Views.Tabbed.DockingContainer dockingContainer1 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.DockingContainer();
+         DevExpress.Utils.Animation.PushTransition pushTransition2 = new DevExpress.Utils.Animation.PushTransition();
+         DevExpress.XtraBars.Docking2010.Views.Tabbed.DockingContainer dockingContainer2 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.DockingContainer();
          this.documentGroup1 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.DocumentGroup(this.components);
          this.xtraUserControl1Document = new DevExpress.XtraBars.Docking2010.Views.Tabbed.Document(this.components);
          this.xtraUserControl2Document = new DevExpress.XtraBars.Docking2010.Views.Tabbed.Document(this.components);
@@ -59,10 +59,6 @@
          this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
          this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
          this.dockManager1 = new DevExpress.XtraBars.Docking.DockManager(this.components);
-         this.panelContainer3 = new DevExpress.XtraBars.Docking.DockPanel();
-         this.verticalGridDockPanel = new DevExpress.XtraBars.Docking.DockPanel();
-         this.verticalGridDockPanel_Container = new DevExpress.XtraBars.Docking.ControlContainer();
-         this.verticalGridXtraUserControl = new FrontEnd.Modules.VerticalPropertiesXtraUserControl();
          this.propertiesDockPanel = new DevExpress.XtraBars.Docking.DockPanel();
          this.propertiesDockPanel_Container = new DevExpress.XtraBars.Docking.ControlContainer();
          this.propertiesXtraUserControl1 = new FrontEnd.PropertiesXtraUserControl();
@@ -91,9 +87,6 @@
          ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.barAndDockingController1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.dockManager1)).BeginInit();
-         this.panelContainer3.SuspendLayout();
-         this.verticalGridDockPanel.SuspendLayout();
-         this.verticalGridDockPanel_Container.SuspendLayout();
          this.propertiesDockPanel.SuspendLayout();
          this.propertiesDockPanel_Container.SuspendLayout();
          this.panelContainer1.SuspendLayout();
@@ -253,7 +246,7 @@
          // workspaceManager1
          // 
          this.workspaceManager1.TargetControl = this;
-         this.workspaceManager1.TransitionType = pushTransition1;
+         this.workspaceManager1.TransitionType = pushTransition2;
          // 
          // dockingBarSubItem
          // 
@@ -343,7 +336,7 @@
          this.dockManager1.Form = this;
          this.dockManager1.MenuManager = this.barManager1;
          this.dockManager1.RootPanels.AddRange(new DevExpress.XtraBars.Docking.DockPanel[] {
-            this.panelContainer3,
+            this.propertiesDockPanel,
             this.panelContainer1,
             this.panelContainer2});
          this.dockManager1.TopZIndexControls.AddRange(new string[] {
@@ -358,65 +351,23 @@
             "DevExpress.XtraBars.Navigation.TileNavPane",
             "DevExpress.XtraBars.TabFormControl"});
          // 
-         // panelContainer3
-         // 
-         this.panelContainer3.ActiveChild = this.propertiesDockPanel;
-         this.panelContainer3.Controls.Add(this.verticalGridDockPanel);
-         this.panelContainer3.Controls.Add(this.propertiesDockPanel);
-         this.panelContainer3.Dock = DevExpress.XtraBars.Docking.DockingStyle.Right;
-         this.panelContainer3.ID = new System.Guid("d8588fed-a9e4-498f-9c7e-650ee18fff21");
-         this.panelContainer3.Location = new System.Drawing.Point(843, 51);
-         this.panelContainer3.Name = "panelContainer3";
-         this.panelContainer3.OriginalSize = new System.Drawing.Size(200, 200);
-         this.panelContainer3.Size = new System.Drawing.Size(200, 717);
-         this.panelContainer3.Tabbed = true;
-         this.panelContainer3.Text = "panelContainer3";
-         // 
-         // verticalGridDockPanel
-         // 
-         this.verticalGridDockPanel.Controls.Add(this.verticalGridDockPanel_Container);
-         this.verticalGridDockPanel.Dock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
-         this.verticalGridDockPanel.ID = new System.Guid("f3645387-e41e-4edd-b25b-6e804130f092");
-         this.verticalGridDockPanel.Location = new System.Drawing.Point(5, 23);
-         this.verticalGridDockPanel.Name = "verticalGridDockPanel";
-         this.verticalGridDockPanel.OriginalSize = new System.Drawing.Size(200, 200);
-         this.verticalGridDockPanel.Size = new System.Drawing.Size(191, 663);
-         this.verticalGridDockPanel.Text = "Properties(VG)";
-         this.verticalGridDockPanel.Click += new System.EventHandler(this.dockPanel1_Click);
-         // 
-         // verticalGridDockPanel_Container
-         // 
-         this.verticalGridDockPanel_Container.Controls.Add(this.verticalGridXtraUserControl);
-         this.verticalGridDockPanel_Container.Location = new System.Drawing.Point(0, 0);
-         this.verticalGridDockPanel_Container.Name = "verticalGridDockPanel_Container";
-         this.verticalGridDockPanel_Container.Size = new System.Drawing.Size(191, 663);
-         this.verticalGridDockPanel_Container.TabIndex = 0;
-         // 
-         // verticalGridXtraUserControl
-         // 
-         this.verticalGridXtraUserControl.Dock = System.Windows.Forms.DockStyle.Fill;
-         this.verticalGridXtraUserControl.Location = new System.Drawing.Point(0, 0);
-         this.verticalGridXtraUserControl.Name = "verticalGridXtraUserControl";
-         this.verticalGridXtraUserControl.Size = new System.Drawing.Size(191, 663);
-         this.verticalGridXtraUserControl.TabIndex = 0;
-         // 
          // propertiesDockPanel
          // 
          this.propertiesDockPanel.Controls.Add(this.propertiesDockPanel_Container);
-         this.propertiesDockPanel.Dock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
+         this.propertiesDockPanel.Dock = DevExpress.XtraBars.Docking.DockingStyle.Right;
          this.propertiesDockPanel.ID = new System.Guid("eeb38110-f3f0-48a5-8005-6e4955c9f005");
-         this.propertiesDockPanel.Location = new System.Drawing.Point(5, 23);
+         this.propertiesDockPanel.Location = new System.Drawing.Point(843, 51);
          this.propertiesDockPanel.Name = "propertiesDockPanel";
          this.propertiesDockPanel.OriginalSize = new System.Drawing.Size(200, 200);
-         this.propertiesDockPanel.Size = new System.Drawing.Size(191, 663);
+         this.propertiesDockPanel.Size = new System.Drawing.Size(200, 717);
          this.propertiesDockPanel.Text = "Properties";
          // 
          // propertiesDockPanel_Container
          // 
          this.propertiesDockPanel_Container.Controls.Add(this.propertiesXtraUserControl1);
-         this.propertiesDockPanel_Container.Location = new System.Drawing.Point(0, 0);
+         this.propertiesDockPanel_Container.Location = new System.Drawing.Point(5, 23);
          this.propertiesDockPanel_Container.Name = "propertiesDockPanel_Container";
-         this.propertiesDockPanel_Container.Size = new System.Drawing.Size(191, 663);
+         this.propertiesDockPanel_Container.Size = new System.Drawing.Size(191, 690);
          this.propertiesDockPanel_Container.TabIndex = 0;
          // 
          // propertiesXtraUserControl1
@@ -424,7 +375,7 @@
          this.propertiesXtraUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
          this.propertiesXtraUserControl1.Location = new System.Drawing.Point(0, 0);
          this.propertiesXtraUserControl1.Name = "propertiesXtraUserControl1";
-         this.propertiesXtraUserControl1.Size = new System.Drawing.Size(191, 663);
+         this.propertiesXtraUserControl1.Size = new System.Drawing.Size(191, 690);
          this.propertiesXtraUserControl1.TabIndex = 0;
          // 
          // panelContainer1
@@ -604,9 +555,9 @@
          this.tabbedView1.Documents.AddRange(new DevExpress.XtraBars.Docking2010.Views.BaseDocument[] {
             this.xtraUserControl1Document,
             this.xtraUserControl2Document});
-         dockingContainer1.Element = this.documentGroup1;
+         dockingContainer2.Element = this.documentGroup1;
          this.tabbedView1.RootContainer.Nodes.AddRange(new DevExpress.XtraBars.Docking2010.Views.Tabbed.DockingContainer[] {
-            dockingContainer1});
+            dockingContainer2});
          // 
          // Form1
          // 
@@ -615,7 +566,7 @@
          this.ClientSize = new System.Drawing.Size(1043, 791);
          this.Controls.Add(this.panelContainer2);
          this.Controls.Add(this.panelContainer1);
-         this.Controls.Add(this.panelContainer3);
+         this.Controls.Add(this.propertiesDockPanel);
          this.Controls.Add(this.barDockControlLeft);
          this.Controls.Add(this.barDockControlRight);
          this.Controls.Add(this.barDockControlBottom);
@@ -630,9 +581,6 @@
          ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.barAndDockingController1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.dockManager1)).EndInit();
-         this.panelContainer3.ResumeLayout(false);
-         this.verticalGridDockPanel.ResumeLayout(false);
-         this.verticalGridDockPanel_Container.ResumeLayout(false);
          this.propertiesDockPanel.ResumeLayout(false);
          this.propertiesDockPanel_Container.ResumeLayout(false);
          this.panelContainer1.ResumeLayout(false);
@@ -703,11 +651,7 @@
       private TaskListXtraUserControl taskListXtraUserControl1;
       private Modules.OutputXtraUserControl outputXtraUserControl1;
       private Modules.ErrorListXtraUserControl errorListXtraUserControl1;
-      private DevExpress.XtraBars.Docking.DockPanel panelContainer3;
-      private DevExpress.XtraBars.Docking.DockPanel verticalGridDockPanel;
-      private DevExpress.XtraBars.Docking.ControlContainer verticalGridDockPanel_Container;
       private SolutionExplorerXtraUserControl solutionExplorerXtraUserControl1;
-      private Modules.VerticalPropertiesXtraUserControl verticalGridXtraUserControl;
    }
 }
 

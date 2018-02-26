@@ -21,7 +21,7 @@ namespace FrontEnd
       private void DataStoresXtraUserControl1_OnDataStoresProperties( object myObject, System.Data.DataRow row )
       {
          //         throw new NotImplementedException( );
-         this.verticalGridXtraUserControl.SetXXX( row );
+         //this.verticalGridXtraUserControl.SetXXX( row );
       }
 
       private void DataStoresXtraUserControl1_TreeViewItemClick( object sender, EventArgs e )
