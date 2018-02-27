@@ -26,13 +26,19 @@ namespace FrontEnd
          Bitmap splashScreenImage = new Bitmap( CurrentAssembly.GetManifestResourceStream( "FrontEnd.Resources.splashScreen.png" ) );
          DevExpress.XtraSplashScreen.SplashScreenManager.ShowImage( splashScreenImage, true, false );
          //
+         {
+            System.Configuration.ExeConfigurationFileMap configMap = new System.Configuration.ExeConfigurationFileMap( );
+            configMap.ExeConfigFilename = @"SampleProject.config";
+            System.Configuration.Configuration config = System.Configuration.ConfigurationManager
+               .OpenMappedExeConfiguration( configMap, System.Configuration.ConfigurationUserLevel.None );
+            string x = nameof( ProjectSetting.ProjectSection );
+            ProjectSetting.ProjectSection ps = config.GetSection( nameof( ProjectSetting.ProjectSection ) ) as ProjectSetting.ProjectSection;
+
+            //DataPhilosophiaeSection dps = System.Configuration.ConfigurationManager.
+            //   .GetSection( nameof( DataPhilosophiaeSection ) ) as DataPhilosophiaeSection;
+         }
          Application.EnableVisualStyles( );
          Application.SetCompatibleTextRenderingDefault( false );
-
-         {
-            ConfigurationSetting.Bootstrap.LoadDataStoreConfigurationSetting( );
-         }
-
          Application.Run( new Form1( ) );
       }
 

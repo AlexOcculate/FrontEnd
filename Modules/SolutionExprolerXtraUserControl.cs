@@ -17,7 +17,7 @@ namespace FrontEnd
          this.treeView.CustomDrawNodeCell += this.treeView_CustomDrawNodeCell;
          this.treeView.AfterCollapse += this.treeView_AfterCollapse;
          this.treeView.AfterExpand += this.treeView_AfterExpand;
-         this.AddAllNodes( true );
+         this.LoadNodes( true );
       }
       public static void InitTreeView( DevExpress.XtraTreeList.TreeList treeView )
       {
@@ -29,6 +29,59 @@ namespace FrontEnd
          treeView.OptionsView.ShowHorzLines = false;
          treeView.OptionsBehavior.Editable = false;
          treeView.OptionsSelection.EnableAppearanceFocusedCell = false;
+         //
+         treeView.OptionsFind.AllowIncrementalSearch = true;
+         treeView.OptionsFind.AlwaysVisible = true;
+         treeView.OptionsFind.ExpandNodesOnIncrementalSearch = true;
+         treeView.OptionsMenu.ShowConditionalFormattingItem = true;
+         treeView.OptionsPrint.PrintCheckBoxes = true;
+         treeView.OptionsView.ShowAutoFilterRow = true;
+         treeView.OptionsView.ShowCheckBoxes = true;
+         treeView.OptionsView.ShowFilterPanelMode = DevExpress.XtraTreeList.ShowFilterPanelMode.ShowAlways;
+         {
+            TreeListColumn treeListColumn = treeView.Columns[ string.Empty ]; //[ 0 ];
+            treeListColumn.Caption = nameof( Name );
+            treeListColumn.FieldName = "colName";
+            treeListColumn.Name = "treeListColumn";
+            treeListColumn.UnboundType = DevExpress.XtraTreeList.Data.UnboundColumnType.String;
+            treeListColumn.Visible = true;
+            treeListColumn.VisibleIndex = 0;
+         }
+      }
+      private TreeListColumn createNameColumn()
+      {
+         TreeListColumn o = new TreeListColumn( );
+         {
+            o.FieldName = nameof( Name );
+            o.Name = "col" + o.FieldName;
+            o.Visible = true;
+            o.VisibleIndex = 0;
+            o.Fixed = FixedStyle.None;
+            // o.FieldNameSort = "";
+            // o.SortIndex = 1;
+            o.SortMode = DevExpress.XtraGrid.ColumnSortMode.Default;
+            o.SortOrder = System.Windows.Forms.SortOrder.None;
+            //this.treeList1.OptionsView.ShowSummaryFooter = true;
+            o.SummaryFooter = SummaryItemType.Count;
+            o.AllNodesSummary = true;
+            o.RowFooterSummary = SummaryItemType.Count;
+            //this.treeList1.OptionsView.ShowRowFooterSummary = true;
+            {
+               o.OptionsColumn.AllowEdit = true;
+               o.OptionsColumn.AllowFocus = true;
+               o.OptionsColumn.AllowMove = true;
+               o.OptionsColumn.AllowMoveToCustomizationForm = true;
+               o.OptionsColumn.AllowSize = true;
+               o.OptionsColumn.AllowSort = true;
+               //o.OptionsColumn.FixedWidth = true;
+               o.OptionsColumn.Printable = DevExpress.Utils.DefaultBoolean.True;
+               o.OptionsColumn.ReadOnly = false;
+               o.OptionsColumn.ShowInCustomizationForm = true;
+               o.OptionsColumn.ShowInExpressionEditor = true;
+               //
+            }
+         }
+         return o;
       }
       private void treeView_CustomDrawNodeCell( object sender, CustomDrawNodeCellEventArgs e )
       {
@@ -47,9 +100,50 @@ namespace FrontEnd
          this.SetIndex( e.Node, 7, true );
          this.SetIndex( e.Node, 9, true );
       }
-      private void AddAllNodes( bool showAll )
+      private void LoadNodes( bool showAll = false )
       {
          this.treeView.Nodes.Clear( );
+         this.treeView.ExpandAll( );
+      }
+      private void SetIndex( TreeListNode node, int index, bool expand )
+      {
+         int newIndex = expand ? index - 1 : index + 1;
+         if( node.StateImageIndex == index )
+         {
+            node.StateImageIndex = newIndex;
+         }
+      }
+      //
+      private void iRefresh_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
+      {
+         this.LoadNodes( );
+      }
+      private void iShow_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
+      {
+         this.LoadNodes( ((DevExpress.XtraBars.BarButtonItem) e.Item).Down );
+      }
+      //
+      public event EventHandler PropertiesItemClick;
+      private void iProperties_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
+      {
+         if( this.PropertiesItemClick != null )
+         {
+            this.PropertiesItemClick( sender, EventArgs.Empty );
+         }
+      }
+      //
+      public event EventHandler TreeViewItemClick;
+      private void treeView_MouseDoubleClick( object sender, MouseEventArgs e )
+      {
+         if( this.TreeViewItemClick != null )
+         {
+            this.TreeViewItemClick( sender, EventArgs.Empty );
+         }
+      }
+      #region --- LOAD DATA VALUE REAL OR DUMMY ---
+#if false
+      private void LoadDummyDataValues( bool showAll )
+      {
          this.treeView.AppendNode( new object[ ] { "Solution \'VisualStudioInspiredUIDemo\' (1 project)" }, -1, -1, -1, 3 ); //0
          this.treeView.AppendNode( new object[ ] { "VisualStudioInspiredUIDemo" }, -1, -1, -1, 4 );//1
          this.treeView.AppendNode( new object[ ] { "Properties" }, 1, -1, -1, 2 );//2
@@ -83,38 +177,8 @@ namespace FrontEnd
             this.treeView.AppendNode( new object[ ] { "ucSolutionExplorer.resx" }, 21, -1, -1, 13 );
             this.treeView.AppendNode( new object[ ] { "ucToolbox.resx" }, 22, -1, -1, 13 );
          }
-         this.treeView.ExpandAll( );
       }
-      private void SetIndex( TreeListNode node, int index, bool expand )
-      {
-         int newIndex = expand ? index - 1 : index + 1;
-         if( node.StateImageIndex == index )
-         {
-            node.StateImageIndex = newIndex;
-         }
-      }
-      //
-      private void iShow_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
-      {
-         this.AddAllNodes( ((DevExpress.XtraBars.BarButtonItem) e.Item).Down );
-      }
-      //
-      public event EventHandler PropertiesItemClick;
-      private void iProperties_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
-      {
-         if( this.PropertiesItemClick != null )
-         {
-            this.PropertiesItemClick( sender, EventArgs.Empty );
-         }
-      }
-      //
-      public event EventHandler TreeViewItemClick;
-      private void treeView_MouseDoubleClick( object sender, MouseEventArgs e )
-      {
-         if( this.TreeViewItemClick != null )
-         {
-            this.TreeViewItemClick( sender, EventArgs.Empty );
-         }
-      }
+#endif
+      #endregion
    }
 }

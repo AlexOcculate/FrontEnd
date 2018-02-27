@@ -9,6 +9,8 @@ namespace FrontEnd
 {
    public partial class DataStoresXtraUserControl : DevExpress.XtraEditors.XtraUserControl
    {
+      System.Data.DataTable _dsc;
+
       public DataStoresXtraUserControl()
       {
          this.InitializeComponent( );
@@ -40,7 +42,7 @@ namespace FrontEnd
             TreeListColumn treeListColumn = treeView.Columns[ string.Empty ]; //[ 0 ];
             treeListColumn.Caption = nameof( Name );
             treeListColumn.FieldName = "colName";
-            treeListColumn.Name = "treeListColumn1";
+            treeListColumn.Name = "treeListColumn";
             treeListColumn.UnboundType = DevExpress.XtraTreeList.Data.UnboundColumnType.String;
             treeListColumn.Visible = true;
             treeListColumn.VisibleIndex = 0;
@@ -104,13 +106,49 @@ namespace FrontEnd
          this.treeView.BeginUpdate( );
          try
          {
-            if( ConfigurationSetting.Bootstrap.GetDataStoreConfigurationSetting( ) != null )
+            this._dsc = ConfigurationSetting.DataStore.LoadDataStoreConfigurationSetting( );
+            foreach( System.Data.DataRow row in this._dsc.Rows )
             {
-               this.LoadRealDataValues( showAll );
+               //
+               // Summary:
+               //     Adds a DevExpress.XtraTreeList.Nodes.TreeListNode containing the specified values
+               //     to the XtraTreeList.
+               //
+               // Parameters:
+               //
+               //   nodeData:
+               //     An array of values or a System.Data.DataRow object, used to initialize the created
+               //     node's cells.
+               //
+               //   parentNodeId:
+               //     An integer value specifying the identifier of the parent node.
+               //
+               //   imageIndex:
+               //     A zero-based index of the image displayed within the node.
+               //
+               //   selectImageIndex:
+               //     A zero-based index of the image displayed within the node when it is focused
+               //     or selected.
+               //
+               //   stateImageIndex:
+               //     An integer value that specifies the index of the node's state image.
+               //
+               //   checkState:
+               //     The node's check state.
+               //
+               //   tag:
+               //     An object that contains information associated with the Tree List node. This
+               //     value is assigned to the DevExpress.XtraTreeList.Nodes.TreeListNode.Tag property.
+               //
+               // Returns:
+               //     A DevExpress.XtraTreeList.Nodes.TreeListNode object or descendant representing
+               //     the added node.
+               //
+               object[ ] o = new object[ ] { row[ ConfigurationSetting.DataStore.NAME_COLNAME ].ToString( ) };
+               this.treeView.AppendNode( o, -1, 0, -1, 3, CheckState.Checked, row );
             }
-            else
+            if( showAll )
             {
-               this.LoadDummyDataValues( showAll );
             }
             this.treeView.ExpandAll( );
          }
@@ -153,8 +191,7 @@ namespace FrontEnd
             }
             TreeListNode treeListNode = selection[ 0 ];
             System.Data.DataRow row = treeListNode.Tag as System.Data.DataRow;
-            ConfigurationSetting.DataStoreElement dse = row[ "Tag" ] as ConfigurationSetting.DataStoreElement;
-            ConfigurationSetting.DataStore ds = new ConfigurationSetting.DataStore( dse );
+            ConfigurationSetting.DataStore ds = row[ ConfigurationSetting.DataStore.TAG_COLNAME ] as ConfigurationSetting.DataStore;
             // send a message to all external subscribers...
             this.PropertiesItemClick( ds, EventArgs.Empty );
          }
@@ -171,54 +208,7 @@ namespace FrontEnd
       }
       //
       #region --- LOAD DATA VALUE REAL OR DUMMY ---
-      private void LoadRealDataValues( bool showAll )
-      {
-         //
-         // Summary:
-         //     Adds a DevExpress.XtraTreeList.Nodes.TreeListNode containing the specified values
-         //     to the XtraTreeList.
-         //
-         // Parameters:
-         //
-         //   nodeData:
-         //     An array of values or a System.Data.DataRow object, used to initialize the created
-         //     node's cells.
-         //
-         //   parentNodeId:
-         //     An integer value specifying the identifier of the parent node.
-         //
-         //   imageIndex:
-         //     A zero-based index of the image displayed within the node.
-         //
-         //   selectImageIndex:
-         //     A zero-based index of the image displayed within the node when it is focused
-         //     or selected.
-         //
-         //   stateImageIndex:
-         //     An integer value that specifies the index of the node's state image.
-         //
-         //   checkState:
-         //     The node's check state.
-         //
-         //   tag:
-         //     An object that contains information associated with the Tree List node. This
-         //     value is assigned to the DevExpress.XtraTreeList.Nodes.TreeListNode.Tag property.
-         //
-         // Returns:
-         //     A DevExpress.XtraTreeList.Nodes.TreeListNode object or descendant representing
-         //     the added node.
-         //
-         //         this.treeView.AppendNode( new object[ ] { "Solution \'VisualStudioInspiredUIDemo\' (1 project)" }, -1, -1, -1, 3, CheckState.Unchecked ); //0
-         System.Data.DataTable dt = ConfigurationSetting.Bootstrap.GetDataStoreConfigurationSetting( );
-         foreach( System.Data.DataRow row in dt.Rows )
-         {
-            this.treeView.AppendNode( new object[ ] { row[ nameof( Name ) ].ToString( ) }, -1, 0, -1, 3, CheckState.Checked, row );
-         }
-         if( showAll )
-         {
-         }
-      }
-
+#if false
       private void LoadDummyDataValues( bool showAll )
       {
          this.treeView.AppendNode( new object[ ] { "Solution \'VisualStudioInspiredUIDemo\' (1 project)" }, -1, -1, -1, 3 ); //0
@@ -255,7 +245,7 @@ namespace FrontEnd
             this.treeView.AppendNode( new object[ ] { "ucToolbox.resx" }, 22, -1, -1, 13 );
          }
       }
+#endif
       #endregion
-
    }
 }

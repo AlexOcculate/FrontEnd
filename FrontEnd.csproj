@@ -50,6 +50,7 @@
     <Reference Include="DevExpress.XtraTreeList.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraVerticalGrid.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -64,7 +65,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigurationSetting\Bootstrap.cs" />
+    <Compile Include="ConfigurationSetting\DataPhilosophiaeSection.Config.cs" />
     <Compile Include="ConfigurationSetting\DataPhilosophiaeSection.cs" />
+    <Compile Include="ConfigurationSetting\ProjectSection.cs" />
     <Compile Include="ConfigurationSetting\TunnelSection.cs" />
     <Compile Include="Modules\SolutionExprolerXtraUserControl.cs">
       <SubType>UserControl</SubType>
@@ -173,6 +176,9 @@
     </Compile>
     <None Include="connections.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SampleProject.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
