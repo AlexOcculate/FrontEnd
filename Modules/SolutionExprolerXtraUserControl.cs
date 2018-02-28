@@ -17,7 +17,25 @@ namespace FrontEnd
          this.treeView.CustomDrawNodeCell += this.treeView_CustomDrawNodeCell;
          this.treeView.AfterCollapse += this.treeView_AfterCollapse;
          this.treeView.AfterExpand += this.treeView_AfterExpand;
-         this.LoadNodes( true );
+         if( !IsInDesignMode( ) )
+         {
+            this.LoadNodes( true );
+         }
+      }
+      //
+      private bool IsInDesignMode()
+      {
+         if( base.DesignMode )
+            return true;
+         if( System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime
+            || System.Diagnostics.Debugger.IsAttached )
+         {
+            using( var process = System.Diagnostics.Process.GetCurrentProcess( ) )
+            {
+               return process.ProcessName.ToLowerInvariant( ).Contains( "devenv" );
+            }
+         }
+         return false;
       }
       public static void InitTreeView( DevExpress.XtraTreeList.TreeList treeView )
       {
@@ -36,7 +54,7 @@ namespace FrontEnd
          treeView.OptionsMenu.ShowConditionalFormattingItem = true;
          treeView.OptionsPrint.PrintCheckBoxes = true;
          treeView.OptionsView.ShowAutoFilterRow = true;
-         treeView.OptionsView.ShowCheckBoxes = true;
+         treeView.OptionsView.ShowCheckBoxes = false;
          treeView.OptionsView.ShowFilterPanelMode = DevExpress.XtraTreeList.ShowFilterPanelMode.ShowAlways;
          {
             TreeListColumn treeListColumn = treeView.Columns[ string.Empty ]; //[ 0 ];
@@ -100,10 +118,82 @@ namespace FrontEnd
          this.SetIndex( e.Node, 7, true );
          this.SetIndex( e.Node, 9, true );
       }
-      private void LoadNodes( bool showAll = false )
+      public void LoadNodes( bool showAll = false )
       {
          this.treeView.Nodes.Clear( );
-         this.treeView.ExpandAll( );
+         this.treeView.BeginUpdate( );
+         try
+         {
+            System.Configuration.ExeConfigurationFileMap configMap = new System.Configuration.ExeConfigurationFileMap( );
+            configMap.ExeConfigFilename = @"SampleProject.config";
+            System.Configuration.Configuration config = System.Configuration.ConfigurationManager
+               .OpenMappedExeConfiguration( configMap, System.Configuration.ConfigurationUserLevel.None );
+            ProjectSetting.ProjectSection ps = config.GetSection( nameof( ProjectSetting.ProjectSection ) ) as ProjectSetting.ProjectSection;
+            //
+            this.treeView.AppendNode( new object[ ] { "Solution \'VisualStudioInspiredUIDemo\' (1 project)" }, -1, -1, -1, 3 ); //0
+            object[ ] o = new object[ ] { ps.Name };
+            TreeListNode prjNode = this.treeView.AppendNode( o, -1, -1, -1, 4, ps ); //0
+
+            foreach( ProjectSetting.DataStoreElement dse in ps.DataStores )
+            {
+               #region --- REMARKS ---
+               //
+               // Summary:
+               //     Adds a DevExpress.XtraTreeList.Nodes.TreeListNode containing the specified values
+               //     to the XtraTreeList.
+               //
+               // Parameters:
+               //
+               //   nodeData:
+               //     An array of values or a System.Data.DataRow object, used to initialize the created
+               //     node's cells.
+               //
+               //   parentNodeId:
+               //     An integer value specifying the identifier of the parent node.
+               //
+               //   imageIndex:
+               //     A zero-based index of the image displayed within the node.
+               //
+               //   selectImageIndex:
+               //     A zero-based index of the image displayed within the node when it is focused
+               //     or selected.
+               //
+               //   stateImageIndex:
+               //     An integer value that specifies the index of the node's state image.
+               //
+               //   checkState:
+               //     The node's check state.
+               //
+               //   tag:
+               //     An object that contains information associated with the Tree List node. This
+               //     value is assigned to the DevExpress.XtraTreeList.Nodes.TreeListNode.Tag property.
+               //
+               // Returns:
+               //     A DevExpress.XtraTreeList.Nodes.TreeListNode object or descendant representing
+               //     the added node.
+               //
+               #endregion
+               object[ ] oo = new object[ ] { dse.Name };
+               TreeListNode dsNode = this.treeView.AppendNode( oo, prjNode.Id, 1, -1, 5, dse );
+               if( !string.IsNullOrWhiteSpace( dse.SnapshotFile ) )
+               {
+                  object[ ] ooo = new object[ ] { dse.SnapshotFile };
+                  TreeListNode child = this.treeView.AppendNode( ooo, dsNode.Id, 4, -1, 6, dse );
+               } else
+               {
+                  object[ ] ooo = new object[ ] { "most recent" };
+                  TreeListNode child = this.treeView.AppendNode( ooo, dsNode.Id, 4, -1, 7 );
+               }
+            }
+            if( showAll )
+            {
+            }
+            this.treeView.ExpandAll( );
+         }
+         finally
+         {
+            this.treeView.EndUpdate( );
+         }
       }
       private void SetIndex( TreeListNode node, int index, bool expand )
       {
@@ -126,10 +216,7 @@ namespace FrontEnd
       public event EventHandler PropertiesItemClick;
       private void iProperties_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
-         if( this.PropertiesItemClick != null )
-         {
-            this.PropertiesItemClick( sender, EventArgs.Empty );
-         }
+         ShowDataStoreProperties( );
       }
       //
       public event EventHandler TreeViewItemClick;
@@ -140,6 +227,39 @@ namespace FrontEnd
             this.TreeViewItemClick( sender, EventArgs.Empty );
          }
       }
+
+      private void treeView_FocusedNodeChanged( object sender, FocusedNodeChangedEventArgs e )
+      {
+         ShowDataStoreProperties( );
+      }
+      //
+      private void ShowDataStoreProperties()
+      {
+         if( this.PropertiesItemClick != null )
+         {
+            TreeListMultiSelection selection = this.treeView.Selection;
+            if( selection == null || selection.Count == 0 )
+            {
+               return;
+            }
+            TreeListNode treeListNode = selection[ 0 ];
+            if( treeListNode.Tag == null )
+            {
+               return;
+            }
+            if( treeListNode.Tag is ProjectSetting.ProjectSection )
+            {
+               // send a message to all external subscribers...
+               this.PropertiesItemClick( treeListNode.Tag, EventArgs.Empty );
+            }
+            if( treeListNode.Tag is ProjectSetting.DataStoreElement )
+            {
+               // send a message to all external subscribers...
+               this.PropertiesItemClick( treeListNode.Tag, EventArgs.Empty );
+            }
+         }
+      }
+
       #region --- LOAD DATA VALUE REAL OR DUMMY ---
 #if false
       private void LoadDummyDataValues( bool showAll )

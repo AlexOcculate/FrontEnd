@@ -118,12 +118,75 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <metadata name="barManager.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
+    <value>175, 17</value>
   </metadata>
   <metadata name="barAndDockingController.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>135, 17</value>
+    <value>293, 17</value>
   </metadata>
-  <metadata name="svgImageCollection1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>751, 17</value>
+  <metadata name="svgImageCollection.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
   </metadata>
+  <assembly alias="DevExpress.Data.v17.2" name="DevExpress.Data.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <data name="svgImageCollection.db_yellow" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v17.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjE3LjIsIFZlcnNpb249MTcuMi41
+        LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
+        dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAHUDAAAC77u/
+        PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgdmlld0JveD0iLTYgLTQg
+        MzIgMzIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+DQogIDxnIGlkPSJMYXllcl8x
+        IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtNiwgLTQpIj4NCiAgICA8ZyBpZD0iRGF0YWJhc2UiPg0KICAg
+        ICAgPHBhdGggZD0iTTE2LCAyNEMxMC41LCAyNCA2LCAyMi4yIDYsIDIwTDYsIDI0QzYsIDI2LjIgMTAu
+        NSwgMjggMTYsIDI4QzIxLjUsIDI4IDI2LCAyNi4yIDI2LCAyNEwyNiwgMjBDMjYsIDIyLjIgMjEuNSwg
+        MjQgMTYsIDI0eiIgZmlsbD0iI0ZGQjExNSIgY2xhc3M9IlllbGxvdyIgLz4NCiAgICA8L2c+DQogIDwv
+        Zz4NCiAgPGcgaWQ9IkxheWVyXzEiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC02LCAtNCkiPg0KICAgIDxn
+        IGlkPSJEYXRhYmFzZSI+DQogICAgICA8cGF0aCBkPSJNMTYsIDE4QzEwLjUsIDE4IDYsIDE2LjIgNiwg
+        MTRMNiwgMThDNiwgMjAuMiAxMC41LCAyMiAxNiwgMjJDMjEuNSwgMjIgMjYsIDIwLjIgMjYsIDE4TDI2
+        LCAxNEMyNiwgMTYuMiAyMS41LCAxOCAxNiwgMTh6IiBmaWxsPSIjRkZCMTE1IiBjbGFzcz0iWWVsbG93
+        IiAvPg0KICAgIDwvZz4NCiAgPC9nPg0KICA8ZyBpZD0iTGF5ZXJfMSIgdHJhbnNmb3JtPSJ0cmFuc2xh
+        dGUoLTYsIC00KSI+DQogICAgPGcgaWQ9IkRhdGFiYXNlIj4NCiAgICAgIDxwYXRoIGQ9Ik0xNiwgNEMx
+        MC41LCA0IDYsIDUuOCA2LCA4TDYsIDEyQzYsIDE0LjIgMTAuNSwgMTYgMTYsIDE2QzIxLjUsIDE2IDI2
+        LCAxNC4yIDI2LCAxMkwyNiwgOEMyNiwgNS44IDIxLjUsIDQgMTYsIDR6IiBmaWxsPSIjRkZCMTE1IiBj
+        bGFzcz0iWWVsbG93IiAvPg0KICAgIDwvZz4NCiAgPC9nPg0KPC9zdmc+Cw==
+</value>
+  </data>
+  <data name="svgImageCollection.snapshot_gray" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v17.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjE3LjIsIFZlcnNpb249MTcuMi41
+        LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
+        dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAPQCAAAC77u/
+        PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgdmlld0JveD0iLTIgLTQg
+        MzIgMzIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+DQogIDxnIGlkPSJMYXllcl8x
+        IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMiwgLTQpIj4NCiAgICA8ZyBpZD0iUGhvdG8iPg0KICAgICAg
+        PHBhdGggZD0iTTI5LCA4TDI0LCA4TDIwLCA0TDEyLCA0TDgsIDhMMywgOEMyLjUsIDggMiwgOC41IDIs
+        IDlMMiwgMjdDMiwgMjcuNSAyLjUsIDI4IDMsIDI4TDI5LCAyOEMyOS41LCAyOCAzMCwgMjcuNSAzMCwg
+        MjdMMzAsIDlDMzAsIDguNSAyOS41LCA4IDI5LCA4ek04LCAxNEM2LjksIDE0IDYsIDEzLjEgNiwgMTJD
+        NiwgMTAuOSA2LjksIDEwIDgsIDEwQzkuMSwgMTAgMTAsIDEwLjkgMTAsIDEyQzEwLCAxMy4xIDkuMSwg
+        MTQgOCwgMTR6TTE2LCAyNEMxMi43LCAyNCAxMCwgMjEuMyAxMCwgMThDMTAsIDE0LjcgMTIuNywgMTIg
+        MTYsIDEyQzE5LjMsIDEyIDIyLCAxNC43IDIyLCAxOEMyMiwgMjEuMyAxOS4zLCAyNCAxNiwgMjR6IiBm
+        aWxsPSIjNzI3MjcyIiBjbGFzcz0iQmxhY2siIC8+DQogICAgPC9nPg0KICA8L2c+DQogIDxnIGlkPSJM
+        YXllcl8xIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMiwgLTQpIj4NCiAgICA8ZyBpZD0iUGhvdG8iPg0K
+        ICAgICAgPGNpcmNsZSBjeD0iMTYiIGN5PSIxOCIgcj0iNCIgZmlsbD0iIzcyNzI3MiIgY2xhc3M9IkJs
+        YWNrIiAvPg0KICAgIDwvZz4NCiAgPC9nPg0KPC9zdmc+Cw==
+</value>
+  </data>
+  <data name="svgImageCollection.snapshot_yellow" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v17.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjE3LjIsIFZlcnNpb249MTcuMi41
+        LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
+        dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAPYCAAAC77u/
+        PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgdmlld0JveD0iLTIgLTQg
+        MzIgMzIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+DQogIDxnIGlkPSJMYXllcl8x
+        IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMiwgLTQpIj4NCiAgICA8ZyBpZD0iUGhvdG8iPg0KICAgICAg
+        PHBhdGggZD0iTTI5LCA4TDI0LCA4TDIwLCA0TDEyLCA0TDgsIDhMMywgOEMyLjUsIDggMiwgOC41IDIs
+        IDlMMiwgMjdDMiwgMjcuNSAyLjUsIDI4IDMsIDI4TDI5LCAyOEMyOS41LCAyOCAzMCwgMjcuNSAzMCwg
+        MjdMMzAsIDlDMzAsIDguNSAyOS41LCA4IDI5LCA4ek04LCAxNEM2LjksIDE0IDYsIDEzLjEgNiwgMTJD
+        NiwgMTAuOSA2LjksIDEwIDgsIDEwQzkuMSwgMTAgMTAsIDEwLjkgMTAsIDEyQzEwLCAxMy4xIDkuMSwg
+        MTQgOCwgMTR6TTE2LCAyNEMxMi43LCAyNCAxMCwgMjEuMyAxMCwgMThDMTAsIDE0LjcgMTIuNywgMTIg
+        MTYsIDEyQzE5LjMsIDEyIDIyLCAxNC43IDIyLCAxOEMyMiwgMjEuMyAxOS4zLCAyNCAxNiwgMjR6IiBm
+        aWxsPSIjRkZCMTE1IiBjbGFzcz0iWWVsbG93IiAvPg0KICAgIDwvZz4NCiAgPC9nPg0KICA8ZyBpZD0i
+        TGF5ZXJfMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIsIC00KSI+DQogICAgPGcgaWQ9IlBob3RvIj4N
+        CiAgICAgIDxjaXJjbGUgY3g9IjE2IiBjeT0iMTgiIHI9IjQiIGZpbGw9IiNGRkIxMTUiIGNsYXNzPSJZ
+        ZWxsb3ciIC8+DQogICAgPC9nPg0KICA8L2c+DQo8L3N2Zz4L
+</value>
+  </data>
 </root>

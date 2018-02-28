@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 
-namespace FrontEnd.Modules
+namespace FrontEnd
 {
    public partial class OutputXtraUserControl : DevExpress.XtraEditors.XtraUserControl
    {

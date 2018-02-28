@@ -9,7 +9,7 @@ namespace FrontEnd
 {
    public partial class DataStoresXtraUserControl : DevExpress.XtraEditors.XtraUserControl
    {
-      System.Data.DataTable _dsc;
+      private System.Data.DataTable _dsc;
 
       public DataStoresXtraUserControl()
       {
@@ -18,7 +18,25 @@ namespace FrontEnd
          this.treeView.CustomDrawNodeCell += this.treeView_CustomDrawNodeCell;
          this.treeView.AfterCollapse += this.treeView_AfterCollapse;
          this.treeView.AfterExpand += this.treeView_AfterExpand;
-         this.LoadNodes( );
+         if( !IsInDesignMode( ) )
+         {
+            this.LoadNodes( );
+         }
+      }
+      //
+      private bool IsInDesignMode()
+      {
+         if( base.DesignMode )
+            return true;
+         if( System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime
+            || System.Diagnostics.Debugger.IsAttached )
+         {
+            using( var process = System.Diagnostics.Process.GetCurrentProcess( ) )
+            {
+               return process.ProcessName.ToLowerInvariant( ).Contains( "devenv" );
+            }
+         }
+         return false;
       }
       private static void InitTreeView( DevExpress.XtraTreeList.TreeList treeView )
       {
@@ -157,7 +175,6 @@ namespace FrontEnd
             this.treeView.EndUpdate( );
          }
       }
-
       private void SetIndex( TreeListNode node, int index, bool expand )
       {
          int newIndex = expand ? index - 1 : index + 1;
@@ -182,19 +199,7 @@ namespace FrontEnd
       public event EventHandler PropertiesItemClick;
       private void iProperties_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
-         if( this.PropertiesItemClick != null )
-         {
-            TreeListMultiSelection selection = this.treeView.Selection;
-            if( selection == null )
-            {
-               return;
-            }
-            TreeListNode treeListNode = selection[ 0 ];
-            System.Data.DataRow row = treeListNode.Tag as System.Data.DataRow;
-            ConfigurationSetting.DataStore ds = row[ ConfigurationSetting.DataStore.TAG_COLNAME ] as ConfigurationSetting.DataStore;
-            // send a message to all external subscribers...
-            this.PropertiesItemClick( ds, EventArgs.Empty );
-         }
+         ShowDataStoreProperties( );
       }
       //
       public event EventHandler TreeViewItemClick;
@@ -206,7 +211,29 @@ namespace FrontEnd
             this.TreeViewItemClick( sender, EventArgs.Empty );
          }
       }
+
+      private void treeView_FocusedNodeChanged( object sender, FocusedNodeChangedEventArgs e )
+      {
+         ShowDataStoreProperties( );
+      }
       //
+      private void ShowDataStoreProperties()
+      {
+         if( this.PropertiesItemClick != null )
+         {
+            TreeListMultiSelection selection = this.treeView.Selection;
+            if( selection == null || selection.Count == 0 )
+            {
+               return;
+            }
+            TreeListNode treeListNode = selection[ 0 ];
+            System.Data.DataRow row = treeListNode.Tag as System.Data.DataRow;
+            ConfigurationSetting.DataStore ds = row[ ConfigurationSetting.DataStore.TAG_COLNAME ] as ConfigurationSetting.DataStore;
+            // send a message to all external subscribers...
+            this.PropertiesItemClick( ds, EventArgs.Empty );
+         }
+      }
+
       #region --- LOAD DATA VALUE REAL OR DUMMY ---
 #if false
       private void LoadDummyDataValues( bool showAll )

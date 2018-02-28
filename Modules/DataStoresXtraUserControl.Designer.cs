@@ -183,6 +183,7 @@
          this.treeView.Size = new System.Drawing.Size(362, 437);
          this.treeView.StateImageList = this.svgImageCollection;
          this.treeView.TabIndex = 4;
+         this.treeView.FocusedNodeChanged += new DevExpress.XtraTreeList.FocusedNodeChangedEventHandler(this.treeView_FocusedNodeChanged);
          this.treeView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeView_MouseDoubleClick);
          // 
          // DataStoresXtraUserControl

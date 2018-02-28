@@ -12,10 +12,16 @@ namespace FrontEnd
          this.Icon = DevExpress.Utils.ResourceImageHelper.CreateIconFromResourcesEx( "FrontEnd.Resources.AppIcon.ico", typeof( Form1 ).Assembly );
          // Handling the QueryControl event that will populate all automatically generated Documents
          this.tabbedView1.QueryControl += this.tabbedView1_QueryControl;
+         //
          this.dataStoresXtraUserControl1.LoadNodes( );
          this.dataStoresXtraUserControl1.PropertiesItemClick += this.DataStoresXtraUserControl1_PropertiesItemClick;
-        // this.dataStoresXtraUserControl1.OnDataStoresProperties += this.DataStoresXtraUserControl1_OnDataStoresProperties;
+         // this.dataStoresXtraUserControl1.OnDataStoresProperties += this.DataStoresXtraUserControl1_OnDataStoresProperties;
          this.dataStoresXtraUserControl1.TreeViewItemClick += this.DataStoresXtraUserControl1_TreeViewItemClick;
+         //
+         this.solutionExplorerXtraUserControl1.LoadNodes( );
+         this.solutionExplorerXtraUserControl1.PropertiesItemClick += this.SolutionExplorerXtraUserControl1_PropertiesItemClick;
+         // this.solutionExplorerXtraUserControl1.OnDataStoresProperties += this.SolutionExplorerXtraUserControl1_OnDataStoresProperties;
+         this.solutionExplorerXtraUserControl1.TreeViewItemClick += this.SolutionExplorerXtraUserControl1_TreeViewItemClick;
       }
 
       private void DataStoresXtraUserControl1_OnDataStoresProperties( object myObject, System.Data.DataRow row )
@@ -32,7 +38,18 @@ namespace FrontEnd
       private void DataStoresXtraUserControl1_PropertiesItemClick( object sender, EventArgs e )
       {
          //         throw new NotImplementedException( );
-         this.propertiesXtraUserControl1.SetXXX( sender );
+         this.dataStorePropertiesXtraUserControl.SetXXX( sender );
+      }
+
+      private void SolutionExplorerXtraUserControl1_TreeViewItemClick( object sender, EventArgs e )
+      {
+         //         throw new NotImplementedException( );
+      }
+
+      private void SolutionExplorerXtraUserControl1_PropertiesItemClick( object sender, EventArgs e )
+      {
+         //         throw new NotImplementedException( );
+         this.projectPropertiesXtraUserControl.SetXXX( sender );
       }
 
       private void Form1_Load( object sender, EventArgs e )
@@ -64,6 +81,35 @@ namespace FrontEnd
       }
 
       private void dockPanel1_Click( object sender, EventArgs e )
+      {
+
+      }
+
+      private void dockManager1_Docking( object sender, DevExpress.XtraBars.Docking.DockingEventArgs e )
+      {
+
+      }
+
+      private void dockManager1_ClosedPanel( object sender, DevExpress.XtraBars.Docking.DockPanelEventArgs e )
+      {
+         string name = e.Panel.Name;
+         if( e.Panel == this.solutionExplorerDockPanel )
+         {
+            switch( this.solutionExplorerDockPanel.Visibility )
+            {
+               case DevExpress.XtraBars.Docking.DockVisibility.Visible:
+                  break;
+               case DevExpress.XtraBars.Docking.DockVisibility.Hidden:
+                  break;
+               case DevExpress.XtraBars.Docking.DockVisibility.AutoHide:
+                  break;
+               default:
+                  break;
+            }
+         }
+      }
+
+      private void dockManager1_Collapsed( object sender, DevExpress.XtraBars.Docking.DockPanelEventArgs e )
       {
 
       }

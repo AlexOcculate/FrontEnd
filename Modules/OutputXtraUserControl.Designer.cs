@@ -1,4 +1,4 @@
-﻿namespace FrontEnd.Modules
+﻿namespace FrontEnd
 {
    partial class OutputXtraUserControl
    {
