@@ -113,5 +113,10 @@ namespace FrontEnd
       {
 
       }
+
+      private void openSolutionBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
+      {
+
+      }
    }
 }
