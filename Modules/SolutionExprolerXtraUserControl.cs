@@ -19,7 +19,7 @@ namespace FrontEnd
          this.treeView.AfterExpand += this.treeView_AfterExpand;
          if( !IsInDesignMode( ) )
          {
-            this.LoadNodes( true );
+            //this.LoadNodes( true );
          }
       }
       //
@@ -118,14 +118,18 @@ namespace FrontEnd
          this.SetIndex( e.Node, 7, true );
          this.SetIndex( e.Node, 9, true );
       }
-      public void LoadNodes( bool showAll = false )
+      public void LoadSolution( bool showAll = false, string filename = @"SampleProject.config" )
       {
          this.treeView.Nodes.Clear( );
          this.treeView.BeginUpdate( );
          try
          {
+            if( string.IsNullOrWhiteSpace( filename ) )
+            {
+               return;
+            }
             System.Configuration.ExeConfigurationFileMap configMap = new System.Configuration.ExeConfigurationFileMap( );
-            configMap.ExeConfigFilename = @"SampleProject.config";
+            configMap.ExeConfigFilename = filename;
             System.Configuration.Configuration config = System.Configuration.ConfigurationManager
                .OpenMappedExeConfiguration( configMap, System.Configuration.ConfigurationUserLevel.None );
             ProjectSetting.ProjectSection ps = config.GetSection( nameof( ProjectSetting.ProjectSection ) ) as ProjectSetting.ProjectSection;
@@ -179,22 +183,32 @@ namespace FrontEnd
                {
                   object[ ] ooo = new object[ ] { dse.SnapshotFile };
                   TreeListNode child = this.treeView.AppendNode( ooo, dsNode.Id, 4, -1, 6, dse );
-               } else
+                  dsNode.Expand( );
+               }
+               else
                {
                   object[ ] ooo = new object[ ] { "most recent" };
                   TreeListNode child = this.treeView.AppendNode( ooo, dsNode.Id, 4, -1, 7 );
+                  dsNode.Collapse( );
                }
             }
             if( showAll )
             {
             }
-            this.treeView.ExpandAll( );
+            prjNode.Expand( );
+            // this.treeView.ExpandAll( );
          }
          finally
          {
             this.treeView.EndUpdate( );
          }
       }
+
+      public void CloseSolution()
+      {
+         this.treeView.ClearNodes( );
+      }
+
       private void SetIndex( TreeListNode node, int index, bool expand )
       {
          int newIndex = expand ? index - 1 : index + 1;
@@ -206,11 +220,11 @@ namespace FrontEnd
       //
       private void iRefresh_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
-         this.LoadNodes( );
+         this.LoadSolution( );
       }
       private void iShow_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
-         this.LoadNodes( ((DevExpress.XtraBars.BarButtonItem) e.Item).Down );
+         this.LoadSolution( ((DevExpress.XtraBars.BarButtonItem) e.Item).Down );
       }
       //
       public event EventHandler PropertiesItemClick;

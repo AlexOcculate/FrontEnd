@@ -18,10 +18,13 @@ namespace FrontEnd
          // this.dataStoresXtraUserControl1.OnDataStoresProperties += this.DataStoresXtraUserControl1_OnDataStoresProperties;
          this.dataStoresXtraUserControl1.TreeViewItemClick += this.DataStoresXtraUserControl1_TreeViewItemClick;
          //
-         this.solutionExplorerXtraUserControl1.LoadNodes( );
+         //         this.solutionExplorerXtraUserControl1.LoadNodes( );
          this.solutionExplorerXtraUserControl1.PropertiesItemClick += this.SolutionExplorerXtraUserControl1_PropertiesItemClick;
          // this.solutionExplorerXtraUserControl1.OnDataStoresProperties += this.SolutionExplorerXtraUserControl1_OnDataStoresProperties;
          this.solutionExplorerXtraUserControl1.TreeViewItemClick += this.SolutionExplorerXtraUserControl1_TreeViewItemClick;
+         //
+         this.initialPath = GetDefaultFilePath( );
+         //  this.SetMemoEditText( this.initialPath + "\\" + defaultFileName );
       }
 
       private void DataStoresXtraUserControl1_OnDataStoresProperties( object myObject, System.Data.DataRow row )
@@ -114,7 +117,129 @@ namespace FrontEnd
 
       }
 
+      #region Utils
+      private string initialPath = string.Empty;
+
+      private void SetMemoEditText( string filePath )
+      {
+         if( System.IO.File.Exists( filePath ) )
+         {
+            // this.mainModule.Text = System.IO.File.ReadAllText( filePath );
+         }
+      }
+      private string OpenItemClick( string filter )
+      {
+         using( DevExpress.XtraEditors.XtraOpenFileDialog dialog = new DevExpress.XtraEditors.XtraOpenFileDialog( ) )
+         {
+            dialog.InitialDirectory = this.initialPath;
+            dialog.ShowDragDropConfirmation = true;
+            dialog.AutoUpdateFilterDescription = false;
+            dialog.Filter = filter;
+            DialogResult dialogResult = dialog.ShowDialog( );
+            if( dialogResult == DialogResult.OK )
+            {
+               return dialog.FileName;
+            }
+         }
+         return null;
+      }
+      private void SaveItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
+      {
+         using( DevExpress.XtraEditors.XtraSaveFileDialog dialog = new DevExpress.XtraEditors.XtraSaveFileDialog( ) )
+         {
+            dialog.InitialDirectory = this.initialPath;
+            dialog.ShowDragDropConfirmation = true;
+            dialog.Filter = "Text files|*.txt";
+            dialog.CreatePrompt = true;
+            dialog.OverwritePrompt = true;
+            DialogResult dialogResult = dialog.ShowDialog( );
+            if( dialogResult == DialogResult.OK )
+            {
+               // System.IO.File.WriteAllText( dialog.FileName, this.mainModule.Text );
+            }
+         }
+      }
+      private void SetWorkingFolderItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
+      {
+         using( DevExpress.XtraEditors.XtraFolderBrowserDialog dialog = new DevExpress.XtraEditors.XtraFolderBrowserDialog( ) )
+         {
+            dialog.SelectedPath = this.initialPath;
+            if( dialog.ShowDialog( ) == DialogResult.OK )
+            {
+               this.initialPath = dialog.SelectedPath;
+            }
+         }
+      }
+
+      private static string GetDefaultFilePath()
+      {
+         //return System.IO.Path.GetDirectoryName(
+         //   DevExpress.Utils.FilesHelper.FindingFileName(
+         //      Application.StartupPath, "", true
+         //      ) );
+         return Application.StartupPath;
+      }
+      #endregion
+
+      #region --- DATA STORE ITEM CLICK HANDLERS ---
+      private void refreshDataStoreBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
+      {
+      }
+
+      private void openDataStoreBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
+      {
+      }
+
+      private void closeDataStoreBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
+      {
+      }
+
+      private void importDataStoreBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
+      {
+      }
+
+      private void exportDataStoreBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
+      {
+      }
+
+      private void newDataStoreBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
+      {
+      }
+
+      private void deleteDataStoreBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
+      {
+      }
+      #endregion
+
+      #region --- SOLUTION EXPLORER ITEM CLICK HANDLERS ---
+      private string solutionFileName = @"SampleSolution.dusln";
+
+      private void newSolutionBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
+      {
+      }
       private void openSolutionBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
+      {
+         this.solutionFileName = this.OpenItemClick( "Data Understand Solution (*.dusln)|*.dusln" );
+         this.solutionExplorerXtraUserControl1.LoadSolution( false, this.solutionFileName );
+      }
+      private void saveSolutionBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
+      {
+      }
+      private void saveAsSolutionBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
+      {
+      }
+      private void saveAllSolutionBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
+      {
+      }
+
+      private void closeSolutionBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
+      {
+         this.solutionExplorerXtraUserControl1.CloseSolution( );
+      }
+
+      #endregion
+
+      private void newProjectBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
 
       }

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+   
+   <configSections>
+      <section name="ProjectSection" type="FrontEnd.ProjectSetting.ProjectSection,FrontEnd" />
+   </configSections>
+
+   <ProjectSection Name="projectName">
+      <Stage PathDir="D:\TEMP\SQLite\DSCOLL_PATHDIR\" />
+      <datastore Name="blade01" />
+      <datastore Name="blade02" />
+      <datastore Name="blade03" />
+      <datastore Name="blade04" SnapshotFile="20180201-235950-123456-dsName" />
+      <datastore Name="blade05" SnapshotFile="20180201-235950-123456-dsName" />
+      <datastore Name="blade06" />
+      <datastore Name="blade07" />
+      <datastore Name="blade08" SnapshotFile="20180201-235950-123456-dsName" />
+   </ProjectSection>
+
+</configuration>

@@ -30,7 +30,7 @@
       {
          this.components = new System.ComponentModel.Container();
          DevExpress.Utils.Animation.PushTransition pushTransition1 = new DevExpress.Utils.Animation.PushTransition();
-         DevExpress.XtraBars.Docking2010.Views.Tabbed.DockingContainer dockingContainer5 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.DockingContainer();
+         DevExpress.XtraBars.Docking2010.Views.Tabbed.DockingContainer dockingContainer1 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.DockingContainer();
          this.documentGroup1 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.DocumentGroup(this.components);
          this.xtraUserControl1Document = new DevExpress.XtraBars.Docking2010.Views.Tabbed.Document(this.components);
          this.xtraUserControl2Document = new DevExpress.XtraBars.Docking2010.Views.Tabbed.Document(this.components);
@@ -46,22 +46,39 @@
          this.mainMenuBar = new DevExpress.XtraBars.Bar();
          this.fileBarSubItem = new DevExpress.XtraBars.BarSubItem();
          this.newBarSubItem = new DevExpress.XtraBars.BarSubItem();
-         this.barButtonItem6 = new DevExpress.XtraBars.BarButtonItem();
-         this.barButtonItem5 = new DevExpress.XtraBars.BarButtonItem();
-         this.barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
+         this.newDataStoreBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.newProjectBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.newSolutionBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
          this.openBarSubItem = new DevExpress.XtraBars.BarSubItem();
+         this.openDataStoreBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
          this.openProjectBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
          this.openSolutionBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
          this.startPageBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
          this.addBarSubItem = new DevExpress.XtraBars.BarSubItem();
-         this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
          this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
+         this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
          this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
+         this.refreshDataStoreBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.barButtonItem8 = new DevExpress.XtraBars.BarButtonItem();
+         this.barButtonItem9 = new DevExpress.XtraBars.BarButtonItem();
+         this.barButtonItem11 = new DevExpress.XtraBars.BarButtonItem();
+         this.deleteDataStoreBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.barButtonItem12 = new DevExpress.XtraBars.BarButtonItem();
+         this.barButtonItem13 = new DevExpress.XtraBars.BarButtonItem();
+         this.closeDataStoreBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
          this.closeBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
          this.closeSolutionBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
-         this.saveBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
-         this.saveAsBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
-         this.saveAllBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.saveSolutionBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.saveAsSolutionBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.saveAllSolutionBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.exportDataStoreBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.importDataStoreBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.barButtonItem17 = new DevExpress.XtraBars.BarButtonItem();
+         this.barButtonItem21 = new DevExpress.XtraBars.BarButtonItem();
+         this.barButtonItem18 = new DevExpress.XtraBars.BarButtonItem();
+         this.barButtonItem22 = new DevExpress.XtraBars.BarButtonItem();
+         this.barButtonItem19 = new DevExpress.XtraBars.BarButtonItem();
+         this.barButtonItem23 = new DevExpress.XtraBars.BarButtonItem();
          this.recentFilesBarSubItem = new DevExpress.XtraBars.BarSubItem();
          this.recentSolutionsBarSubItem = new DevExpress.XtraBars.BarSubItem();
          this.exitBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
@@ -109,25 +126,8 @@
          this.dataStoreDockPanel_Container = new DevExpress.XtraBars.Docking.ControlContainer();
          this.dataStoresXtraUserControl1 = new FrontEnd.DataStoresXtraUserControl();
          this.solutionExplorerPopupMenu = new DevExpress.XtraBars.PopupMenu(this.components);
-         this.tabbedView1 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.TabbedView(this.components);
-         this.barButtonItem7 = new DevExpress.XtraBars.BarButtonItem();
-         this.barButtonItem8 = new DevExpress.XtraBars.BarButtonItem();
-         this.barButtonItem9 = new DevExpress.XtraBars.BarButtonItem();
-         this.barButtonItem10 = new DevExpress.XtraBars.BarButtonItem();
-         this.barButtonItem11 = new DevExpress.XtraBars.BarButtonItem();
-         this.barButtonItem12 = new DevExpress.XtraBars.BarButtonItem();
-         this.barButtonItem13 = new DevExpress.XtraBars.BarButtonItem();
          this.dataStorePopupMenu = new DevExpress.XtraBars.PopupMenu(this.components);
-         this.barButtonItem14 = new DevExpress.XtraBars.BarButtonItem();
-         this.barButtonItem15 = new DevExpress.XtraBars.BarButtonItem();
-         this.barButtonItem16 = new DevExpress.XtraBars.BarButtonItem();
-         this.barButtonItem17 = new DevExpress.XtraBars.BarButtonItem();
-         this.barButtonItem18 = new DevExpress.XtraBars.BarButtonItem();
-         this.barButtonItem19 = new DevExpress.XtraBars.BarButtonItem();
-         this.barButtonItem20 = new DevExpress.XtraBars.BarButtonItem();
-         this.barButtonItem21 = new DevExpress.XtraBars.BarButtonItem();
-         this.barButtonItem22 = new DevExpress.XtraBars.BarButtonItem();
-         this.barButtonItem23 = new DevExpress.XtraBars.BarButtonItem();
+         this.tabbedView1 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.TabbedView(this.components);
          ((System.ComponentModel.ISupportInitialize)(this.documentGroup1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.xtraUserControl1Document)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.xtraUserControl2Document)).BeginInit();
@@ -157,8 +157,8 @@
          this.dataStoreDockPanel.SuspendLayout();
          this.dataStoreDockPanel_Container.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.solutionExplorerPopupMenu)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.tabbedView1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.dataStorePopupMenu)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.tabbedView1)).BeginInit();
          this.SuspendLayout();
          // 
          // documentGroup1
@@ -220,9 +220,9 @@
             this.addBarSubItem,
             this.closeBarButtonItem,
             this.closeSolutionBarButtonItem,
-            this.saveBarButtonItem,
-            this.saveAsBarButtonItem,
-            this.saveAllBarButtonItem,
+            this.saveSolutionBarButtonItem,
+            this.saveAsSolutionBarButtonItem,
+            this.saveAllSolutionBarButtonItem,
             this.recentFilesBarSubItem,
             this.recentSolutionsBarSubItem,
             this.exitBarButtonItem,
@@ -231,23 +231,23 @@
             this.barButtonItem1,
             this.barButtonItem2,
             this.barButtonItem3,
-            this.barButtonItem5,
-            this.barButtonItem6,
-            this.barButtonItem4,
-            this.barButtonItem7,
+            this.newProjectBarButtonItem,
+            this.newDataStoreBarButtonItem,
+            this.newSolutionBarButtonItem,
+            this.refreshDataStoreBarButtonItem,
             this.barButtonItem8,
             this.barButtonItem9,
-            this.barButtonItem10,
+            this.deleteDataStoreBarButtonItem,
             this.barButtonItem11,
             this.barButtonItem12,
             this.barButtonItem13,
-            this.barButtonItem14,
-            this.barButtonItem15,
-            this.barButtonItem16,
+            this.openDataStoreBarButtonItem,
+            this.closeDataStoreBarButtonItem,
+            this.exportDataStoreBarButtonItem,
             this.barButtonItem17,
             this.barButtonItem18,
             this.barButtonItem19,
-            this.barButtonItem20,
+            this.importDataStoreBarButtonItem,
             this.barButtonItem21,
             this.barButtonItem22,
             this.barButtonItem23});
@@ -336,14 +336,14 @@
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.openBarSubItem, DevExpress.XtraBars.BarItemPaintStyle.Standard),
             new DevExpress.XtraBars.LinkPersistInfo(this.startPageBarButtonItem, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.addBarSubItem, true),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem15, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.closeDataStoreBarButtonItem, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.closeBarButtonItem),
             new DevExpress.XtraBars.LinkPersistInfo(this.closeSolutionBarButtonItem),
-            new DevExpress.XtraBars.LinkPersistInfo(this.saveBarButtonItem, true),
-            new DevExpress.XtraBars.LinkPersistInfo(this.saveAsBarButtonItem),
-            new DevExpress.XtraBars.LinkPersistInfo(this.saveAllBarButtonItem),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem16, true),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem20),
+            new DevExpress.XtraBars.LinkPersistInfo(this.saveSolutionBarButtonItem, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.saveAsSolutionBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.saveAllSolutionBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.exportDataStoreBarButtonItem, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.importDataStoreBarButtonItem),
             new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem17),
             new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem21),
             new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem18),
@@ -361,28 +361,31 @@
          this.newBarSubItem.Id = 24;
          this.newBarSubItem.ImageOptions.AllowStubGlyph = DevExpress.Utils.DefaultBoolean.True;
          this.newBarSubItem.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem6),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem5),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem4)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.newDataStoreBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.newProjectBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.newSolutionBarButtonItem)});
          this.newBarSubItem.Name = "newBarSubItem";
          // 
-         // barButtonItem6
+         // newDataStoreBarButtonItem
          // 
-         this.barButtonItem6.Caption = "New DataStore";
-         this.barButtonItem6.Id = 44;
-         this.barButtonItem6.Name = "barButtonItem6";
+         this.newDataStoreBarButtonItem.Caption = "New DataStore";
+         this.newDataStoreBarButtonItem.Id = 44;
+         this.newDataStoreBarButtonItem.Name = "newDataStoreBarButtonItem";
+         this.newDataStoreBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.newDataStoreBarButtonItem_ItemClick);
          // 
-         // barButtonItem5
+         // newProjectBarButtonItem
          // 
-         this.barButtonItem5.Caption = "New Project";
-         this.barButtonItem5.Id = 43;
-         this.barButtonItem5.Name = "barButtonItem5";
+         this.newProjectBarButtonItem.Caption = "New Project";
+         this.newProjectBarButtonItem.Id = 43;
+         this.newProjectBarButtonItem.Name = "newProjectBarButtonItem";
+         this.newProjectBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.newProjectBarButtonItem_ItemClick);
          // 
-         // barButtonItem4
+         // newSolutionBarButtonItem
          // 
-         this.barButtonItem4.Caption = "New Solution";
-         this.barButtonItem4.Id = 45;
-         this.barButtonItem4.Name = "barButtonItem4";
+         this.newSolutionBarButtonItem.Caption = "New Solution";
+         this.newSolutionBarButtonItem.Id = 45;
+         this.newSolutionBarButtonItem.Name = "newSolutionBarButtonItem";
+         this.newSolutionBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.newSolutionBarButtonItem_ItemClick);
          // 
          // openBarSubItem
          // 
@@ -390,10 +393,17 @@
          this.openBarSubItem.Id = 25;
          this.openBarSubItem.ImageOptions.AllowStubGlyph = DevExpress.Utils.DefaultBoolean.True;
          this.openBarSubItem.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem14),
+            new DevExpress.XtraBars.LinkPersistInfo(this.openDataStoreBarButtonItem),
             new DevExpress.XtraBars.LinkPersistInfo(this.openProjectBarButtonItem),
             new DevExpress.XtraBars.LinkPersistInfo(this.openSolutionBarButtonItem)});
          this.openBarSubItem.Name = "openBarSubItem";
+         // 
+         // openDataStoreBarButtonItem
+         // 
+         this.openDataStoreBarButtonItem.Caption = "Open DataStore";
+         this.openDataStoreBarButtonItem.Id = 53;
+         this.openDataStoreBarButtonItem.Name = "openDataStoreBarButtonItem";
+         this.openDataStoreBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.openDataStoreBarButtonItem_ItemClick);
          // 
          // openProjectBarButtonItem
          // 
@@ -424,20 +434,14 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem2),
             new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem1),
             new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem3),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem7, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.refreshDataStoreBarButtonItem, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem8),
             new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem9),
             new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem11, true),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem10),
+            new DevExpress.XtraBars.LinkPersistInfo(this.deleteDataStoreBarButtonItem),
             new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem12),
             new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem13)});
          this.addBarSubItem.Name = "addBarSubItem";
-         // 
-         // barButtonItem1
-         // 
-         this.barButtonItem1.Caption = "Add DataStore";
-         this.barButtonItem1.Id = 39;
-         this.barButtonItem1.Name = "barButtonItem1";
          // 
          // barButtonItem2
          // 
@@ -445,11 +449,68 @@
          this.barButtonItem2.Id = 40;
          this.barButtonItem2.Name = "barButtonItem2";
          // 
+         // barButtonItem1
+         // 
+         this.barButtonItem1.Caption = "Add DataStore";
+         this.barButtonItem1.Id = 39;
+         this.barButtonItem1.Name = "barButtonItem1";
+         // 
          // barButtonItem3
          // 
          this.barButtonItem3.Caption = "Add Project";
          this.barButtonItem3.Id = 41;
          this.barButtonItem3.Name = "barButtonItem3";
+         // 
+         // refreshDataStoreBarButtonItem
+         // 
+         this.refreshDataStoreBarButtonItem.Caption = "Refresh DataStore";
+         this.refreshDataStoreBarButtonItem.Id = 46;
+         this.refreshDataStoreBarButtonItem.Name = "refreshDataStoreBarButtonItem";
+         this.refreshDataStoreBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.refreshDataStoreBarButtonItem_ItemClick);
+         // 
+         // barButtonItem8
+         // 
+         this.barButtonItem8.Caption = "Refresh Project";
+         this.barButtonItem8.Id = 47;
+         this.barButtonItem8.Name = "barButtonItem8";
+         // 
+         // barButtonItem9
+         // 
+         this.barButtonItem9.Caption = "Refresh Solution";
+         this.barButtonItem9.Id = 48;
+         this.barButtonItem9.Name = "barButtonItem9";
+         // 
+         // barButtonItem11
+         // 
+         this.barButtonItem11.Caption = "Delete Snapshot";
+         this.barButtonItem11.Id = 50;
+         this.barButtonItem11.Name = "barButtonItem11";
+         // 
+         // deleteDataStoreBarButtonItem
+         // 
+         this.deleteDataStoreBarButtonItem.Caption = "Delete DataStore";
+         this.deleteDataStoreBarButtonItem.Id = 49;
+         this.deleteDataStoreBarButtonItem.Name = "deleteDataStoreBarButtonItem";
+         this.deleteDataStoreBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.deleteDataStoreBarButtonItem_ItemClick);
+         // 
+         // barButtonItem12
+         // 
+         this.barButtonItem12.Caption = "Delete Project";
+         this.barButtonItem12.Id = 51;
+         this.barButtonItem12.Name = "barButtonItem12";
+         // 
+         // barButtonItem13
+         // 
+         this.barButtonItem13.Caption = "Delete Solution";
+         this.barButtonItem13.Id = 52;
+         this.barButtonItem13.Name = "barButtonItem13";
+         // 
+         // closeDataStoreBarButtonItem
+         // 
+         this.closeDataStoreBarButtonItem.Caption = "Close DataStore";
+         this.closeDataStoreBarButtonItem.Id = 54;
+         this.closeDataStoreBarButtonItem.Name = "closeDataStoreBarButtonItem";
+         this.closeDataStoreBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.closeDataStoreBarButtonItem_ItemClick);
          // 
          // closeBarButtonItem
          // 
@@ -464,27 +525,81 @@
          this.closeSolutionBarButtonItem.Id = 29;
          this.closeSolutionBarButtonItem.ImageOptions.AllowStubGlyph = DevExpress.Utils.DefaultBoolean.True;
          this.closeSolutionBarButtonItem.Name = "closeSolutionBarButtonItem";
+         this.closeSolutionBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.closeSolutionBarButtonItem_ItemClick);
          // 
-         // saveBarButtonItem
+         // saveSolutionBarButtonItem
          // 
-         this.saveBarButtonItem.Caption = "Save";
-         this.saveBarButtonItem.Id = 30;
-         this.saveBarButtonItem.ImageOptions.AllowStubGlyph = DevExpress.Utils.DefaultBoolean.True;
-         this.saveBarButtonItem.Name = "saveBarButtonItem";
+         this.saveSolutionBarButtonItem.Caption = "Save";
+         this.saveSolutionBarButtonItem.Id = 30;
+         this.saveSolutionBarButtonItem.ImageOptions.AllowStubGlyph = DevExpress.Utils.DefaultBoolean.True;
+         this.saveSolutionBarButtonItem.Name = "saveSolutionBarButtonItem";
+         this.saveSolutionBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.saveSolutionBarButtonItem_ItemClick);
          // 
-         // saveAsBarButtonItem
+         // saveAsSolutionBarButtonItem
          // 
-         this.saveAsBarButtonItem.Caption = "Save As";
-         this.saveAsBarButtonItem.Id = 31;
-         this.saveAsBarButtonItem.ImageOptions.AllowStubGlyph = DevExpress.Utils.DefaultBoolean.True;
-         this.saveAsBarButtonItem.Name = "saveAsBarButtonItem";
+         this.saveAsSolutionBarButtonItem.Caption = "Save As";
+         this.saveAsSolutionBarButtonItem.Id = 31;
+         this.saveAsSolutionBarButtonItem.ImageOptions.AllowStubGlyph = DevExpress.Utils.DefaultBoolean.True;
+         this.saveAsSolutionBarButtonItem.Name = "saveAsSolutionBarButtonItem";
+         this.saveAsSolutionBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.saveAsSolutionBarButtonItem_ItemClick);
          // 
-         // saveAllBarButtonItem
+         // saveAllSolutionBarButtonItem
          // 
-         this.saveAllBarButtonItem.Caption = "Save All";
-         this.saveAllBarButtonItem.Id = 32;
-         this.saveAllBarButtonItem.ImageOptions.AllowStubGlyph = DevExpress.Utils.DefaultBoolean.True;
-         this.saveAllBarButtonItem.Name = "saveAllBarButtonItem";
+         this.saveAllSolutionBarButtonItem.Caption = "Save All";
+         this.saveAllSolutionBarButtonItem.Id = 32;
+         this.saveAllSolutionBarButtonItem.ImageOptions.AllowStubGlyph = DevExpress.Utils.DefaultBoolean.True;
+         this.saveAllSolutionBarButtonItem.Name = "saveAllSolutionBarButtonItem";
+         this.saveAllSolutionBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.saveAllSolutionBarButtonItem_ItemClick);
+         // 
+         // exportDataStoreBarButtonItem
+         // 
+         this.exportDataStoreBarButtonItem.Caption = "Export DataStore";
+         this.exportDataStoreBarButtonItem.Id = 55;
+         this.exportDataStoreBarButtonItem.Name = "exportDataStoreBarButtonItem";
+         this.exportDataStoreBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.exportDataStoreBarButtonItem_ItemClick);
+         // 
+         // importDataStoreBarButtonItem
+         // 
+         this.importDataStoreBarButtonItem.Caption = "Import DataStore";
+         this.importDataStoreBarButtonItem.Id = 59;
+         this.importDataStoreBarButtonItem.Name = "importDataStoreBarButtonItem";
+         this.importDataStoreBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.importDataStoreBarButtonItem_ItemClick);
+         // 
+         // barButtonItem17
+         // 
+         this.barButtonItem17.Caption = "Export Snapshot";
+         this.barButtonItem17.Id = 56;
+         this.barButtonItem17.Name = "barButtonItem17";
+         // 
+         // barButtonItem21
+         // 
+         this.barButtonItem21.Caption = "Import Snapshot";
+         this.barButtonItem21.Id = 60;
+         this.barButtonItem21.Name = "barButtonItem21";
+         // 
+         // barButtonItem18
+         // 
+         this.barButtonItem18.Caption = "Export Project";
+         this.barButtonItem18.Id = 57;
+         this.barButtonItem18.Name = "barButtonItem18";
+         // 
+         // barButtonItem22
+         // 
+         this.barButtonItem22.Caption = "Import Project";
+         this.barButtonItem22.Id = 61;
+         this.barButtonItem22.Name = "barButtonItem22";
+         // 
+         // barButtonItem19
+         // 
+         this.barButtonItem19.Caption = "Export Solution";
+         this.barButtonItem19.Id = 58;
+         this.barButtonItem19.Name = "barButtonItem19";
+         // 
+         // barButtonItem23
+         // 
+         this.barButtonItem23.Caption = "Import Solution";
+         this.barButtonItem23.Id = 62;
+         this.barButtonItem23.Name = "barButtonItem23";
          // 
          // recentFilesBarSubItem
          // 
@@ -866,7 +981,7 @@
          // 
          // leftPanelContainer
          // 
-         this.leftPanelContainer.ActiveChild = this.dataStoreDockPanel;
+         this.leftPanelContainer.ActiveChild = this.solutionExplorerDockPanel;
          this.leftPanelContainer.Controls.Add(this.dataStoreDockPanel);
          this.leftPanelContainer.Controls.Add(this.solutionExplorerDockPanel);
          this.leftPanelContainer.Dock = DevExpress.XtraBars.Docking.DockingStyle.Left;
@@ -941,17 +1056,30 @@
          // solutionExplorerPopupMenu
          // 
          this.solutionExplorerPopupMenu.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem5),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem4),
+            new DevExpress.XtraBars.LinkPersistInfo(this.newProjectBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.newSolutionBarButtonItem),
             new DevExpress.XtraBars.LinkPersistInfo(this.openSolutionBarButtonItem, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.openProjectBarButtonItem),
             new DevExpress.XtraBars.LinkPersistInfo(this.addBarSubItem, true),
-            new DevExpress.XtraBars.LinkPersistInfo(this.saveBarButtonItem, true),
-            new DevExpress.XtraBars.LinkPersistInfo(this.saveAsBarButtonItem),
-            new DevExpress.XtraBars.LinkPersistInfo(this.saveAllBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.saveSolutionBarButtonItem, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.saveAsSolutionBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.saveAllSolutionBarButtonItem),
             new DevExpress.XtraBars.LinkPersistInfo(this.closeSolutionBarButtonItem, true)});
          this.solutionExplorerPopupMenu.Manager = this.barManager1;
          this.solutionExplorerPopupMenu.Name = "solutionExplorerPopupMenu";
+         // 
+         // dataStorePopupMenu
+         // 
+         this.dataStorePopupMenu.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.refreshDataStoreBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.openDataStoreBarButtonItem, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.closeDataStoreBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.importDataStoreBarButtonItem, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.exportDataStoreBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.newDataStoreBarButtonItem, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.deleteDataStoreBarButtonItem, true)});
+         this.dataStorePopupMenu.Manager = this.barManager1;
+         this.dataStorePopupMenu.Name = "dataStorePopupMenu";
          // 
          // tabbedView1
          // 
@@ -960,124 +1088,9 @@
          this.tabbedView1.Documents.AddRange(new DevExpress.XtraBars.Docking2010.Views.BaseDocument[] {
             this.xtraUserControl1Document,
             this.xtraUserControl2Document});
-         dockingContainer5.Element = this.documentGroup1;
+         dockingContainer1.Element = this.documentGroup1;
          this.tabbedView1.RootContainer.Nodes.AddRange(new DevExpress.XtraBars.Docking2010.Views.Tabbed.DockingContainer[] {
-            dockingContainer5});
-         // 
-         // barButtonItem7
-         // 
-         this.barButtonItem7.Caption = "Refresh DataStore";
-         this.barButtonItem7.Id = 46;
-         this.barButtonItem7.Name = "barButtonItem7";
-         // 
-         // barButtonItem8
-         // 
-         this.barButtonItem8.Caption = "Refresh Project";
-         this.barButtonItem8.Id = 47;
-         this.barButtonItem8.Name = "barButtonItem8";
-         // 
-         // barButtonItem9
-         // 
-         this.barButtonItem9.Caption = "Refresh Solution";
-         this.barButtonItem9.Id = 48;
-         this.barButtonItem9.Name = "barButtonItem9";
-         // 
-         // barButtonItem10
-         // 
-         this.barButtonItem10.Caption = "Delete DataStore";
-         this.barButtonItem10.Id = 49;
-         this.barButtonItem10.Name = "barButtonItem10";
-         // 
-         // barButtonItem11
-         // 
-         this.barButtonItem11.Caption = "Delete Snapshot";
-         this.barButtonItem11.Id = 50;
-         this.barButtonItem11.Name = "barButtonItem11";
-         // 
-         // barButtonItem12
-         // 
-         this.barButtonItem12.Caption = "Delete Project";
-         this.barButtonItem12.Id = 51;
-         this.barButtonItem12.Name = "barButtonItem12";
-         // 
-         // barButtonItem13
-         // 
-         this.barButtonItem13.Caption = "Delete Solution";
-         this.barButtonItem13.Id = 52;
-         this.barButtonItem13.Name = "barButtonItem13";
-         // 
-         // dataStorePopupMenu
-         // 
-         this.dataStorePopupMenu.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem7),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem14, true),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem15),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem20, true),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem16),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem6, true),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem10, true)});
-         this.dataStorePopupMenu.Manager = this.barManager1;
-         this.dataStorePopupMenu.Name = "dataStorePopupMenu";
-         // 
-         // barButtonItem14
-         // 
-         this.barButtonItem14.Caption = "Open DataStore";
-         this.barButtonItem14.Id = 53;
-         this.barButtonItem14.Name = "barButtonItem14";
-         // 
-         // barButtonItem15
-         // 
-         this.barButtonItem15.Caption = "Close DataStore";
-         this.barButtonItem15.Id = 54;
-         this.barButtonItem15.Name = "barButtonItem15";
-         // 
-         // barButtonItem16
-         // 
-         this.barButtonItem16.Caption = "Export DataStore";
-         this.barButtonItem16.Id = 55;
-         this.barButtonItem16.Name = "barButtonItem16";
-         // 
-         // barButtonItem17
-         // 
-         this.barButtonItem17.Caption = "Export Snapshot";
-         this.barButtonItem17.Id = 56;
-         this.barButtonItem17.Name = "barButtonItem17";
-         // 
-         // barButtonItem18
-         // 
-         this.barButtonItem18.Caption = "Export Project";
-         this.barButtonItem18.Id = 57;
-         this.barButtonItem18.Name = "barButtonItem18";
-         // 
-         // barButtonItem19
-         // 
-         this.barButtonItem19.Caption = "Export Solution";
-         this.barButtonItem19.Id = 58;
-         this.barButtonItem19.Name = "barButtonItem19";
-         // 
-         // barButtonItem20
-         // 
-         this.barButtonItem20.Caption = "Import DataStore";
-         this.barButtonItem20.Id = 59;
-         this.barButtonItem20.Name = "barButtonItem20";
-         // 
-         // barButtonItem21
-         // 
-         this.barButtonItem21.Caption = "Import Snapshot";
-         this.barButtonItem21.Id = 60;
-         this.barButtonItem21.Name = "barButtonItem21";
-         // 
-         // barButtonItem22
-         // 
-         this.barButtonItem22.Caption = "Import Project";
-         this.barButtonItem22.Id = 61;
-         this.barButtonItem22.Name = "barButtonItem22";
-         // 
-         // barButtonItem23
-         // 
-         this.barButtonItem23.Caption = "Import Solution";
-         this.barButtonItem23.Id = 62;
-         this.barButtonItem23.Name = "barButtonItem23";
+            dockingContainer1});
          // 
          // Form1
          // 
@@ -1123,8 +1136,8 @@
          this.dataStoreDockPanel.ResumeLayout(false);
          this.dataStoreDockPanel_Container.ResumeLayout(false);
          ((System.ComponentModel.ISupportInitialize)(this.solutionExplorerPopupMenu)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.tabbedView1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.dataStorePopupMenu)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.tabbedView1)).EndInit();
          this.ResumeLayout(false);
          this.PerformLayout();
 
@@ -1194,8 +1207,8 @@
       private DevExpress.XtraBars.BarSubItem addBarSubItem;
       private DevExpress.XtraBars.BarButtonItem closeBarButtonItem;
       private DevExpress.XtraBars.BarButtonItem closeSolutionBarButtonItem;
-      private DevExpress.XtraBars.BarButtonItem saveAsBarButtonItem;
-      private DevExpress.XtraBars.BarButtonItem saveAllBarButtonItem;
+      private DevExpress.XtraBars.BarButtonItem saveAsSolutionBarButtonItem;
+      private DevExpress.XtraBars.BarButtonItem saveAllSolutionBarButtonItem;
       private DevExpress.XtraBars.BarSubItem recentFilesBarSubItem;
       private DevExpress.XtraBars.BarSubItem recentSolutionsBarSubItem;
       private DevExpress.XtraBars.BarButtonItem exitBarButtonItem;
@@ -1204,25 +1217,25 @@
       private DevExpress.XtraBars.BarButtonItem openProjectBarButtonItem;
       private DevExpress.XtraBars.BarButtonItem openSolutionBarButtonItem;
       private DevExpress.XtraBars.PopupMenu solutionExplorerPopupMenu;
-      private DevExpress.XtraBars.BarButtonItem barButtonItem5;
-      private DevExpress.XtraBars.BarButtonItem barButtonItem6;
+      private DevExpress.XtraBars.BarButtonItem newProjectBarButtonItem;
+      private DevExpress.XtraBars.BarButtonItem newDataStoreBarButtonItem;
       private DevExpress.XtraBars.BarButtonItem barButtonItem1;
       private DevExpress.XtraBars.BarButtonItem barButtonItem2;
       private DevExpress.XtraBars.BarButtonItem barButtonItem3;
-      private DevExpress.XtraBars.BarButtonItem barButtonItem4;
-      private DevExpress.XtraBars.BarButtonItem saveBarButtonItem;
-      private DevExpress.XtraBars.BarButtonItem barButtonItem7;
+      private DevExpress.XtraBars.BarButtonItem newSolutionBarButtonItem;
+      private DevExpress.XtraBars.BarButtonItem saveSolutionBarButtonItem;
+      private DevExpress.XtraBars.BarButtonItem refreshDataStoreBarButtonItem;
       private DevExpress.XtraBars.BarButtonItem barButtonItem8;
       private DevExpress.XtraBars.BarButtonItem barButtonItem9;
       private DevExpress.XtraBars.BarButtonItem barButtonItem11;
-      private DevExpress.XtraBars.BarButtonItem barButtonItem10;
+      private DevExpress.XtraBars.BarButtonItem deleteDataStoreBarButtonItem;
       private DevExpress.XtraBars.BarButtonItem barButtonItem12;
       private DevExpress.XtraBars.BarButtonItem barButtonItem13;
-      private DevExpress.XtraBars.BarButtonItem barButtonItem14;
+      private DevExpress.XtraBars.BarButtonItem openDataStoreBarButtonItem;
       private DevExpress.XtraBars.PopupMenu dataStorePopupMenu;
-      private DevExpress.XtraBars.BarButtonItem barButtonItem15;
-      private DevExpress.XtraBars.BarButtonItem barButtonItem16;
-      private DevExpress.XtraBars.BarButtonItem barButtonItem20;
+      private DevExpress.XtraBars.BarButtonItem closeDataStoreBarButtonItem;
+      private DevExpress.XtraBars.BarButtonItem exportDataStoreBarButtonItem;
+      private DevExpress.XtraBars.BarButtonItem importDataStoreBarButtonItem;
       private DevExpress.XtraBars.BarButtonItem barButtonItem17;
       private DevExpress.XtraBars.BarButtonItem barButtonItem21;
       private DevExpress.XtraBars.BarButtonItem barButtonItem18;
