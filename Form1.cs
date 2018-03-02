@@ -72,9 +72,9 @@ namespace FrontEnd
             e.Control = new FrontEnd.XtraUserControl1( );
          }
 
-         if( e.Document == this.xtraUserControl2Document )
+         if( e.Document == this.metadataItemXtraUserControlDocument )
          {
-            e.Control = new FrontEnd.XtraUserControl2( );
+            e.Control = new FrontEnd.MetadataItemXtraUserControl( );
          }
 
          if( e.Control == null )

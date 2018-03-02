@@ -1,20 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <configuration>
-   
+
    <configSections>
       <section name="ProjectSection" type="FrontEnd.ProjectSetting.ProjectSection,FrontEnd" />
    </configSections>
 
    <ProjectSection Name="projectName">
       <Stage PathDir="D:\TEMP\SQLite\DSCOLL_PATHDIR\" />
-      <datastore Name="blade01" />
+      <datastore Name="blade01" SnapshotFile="a.aqb.config" />
       <datastore Name="blade02" />
       <datastore Name="blade03" />
-      <datastore Name="blade04" SnapshotFile="20180201-235950-123456-dsName" />
-      <datastore Name="blade05" SnapshotFile="20180201-235950-123456-dsName" />
+      <datastore Name="blade04" />
+      <datastore Name="blade05" />
+      <datastore Name="blade4444" SnapshotFile="20180125-144413-7068846+1100.ChiNook.DataSet.xml" />
+      <datastore Name="blade5555" SnapshotFile="20180201-235950-123456-dsName" />
       <datastore Name="blade06" />
       <datastore Name="blade07" />
-      <datastore Name="blade08" SnapshotFile="20180201-235950-123456-dsName" />
+      <datastore Name="blade08" SnapshotFile="20180125-144413-7068846+1100.ChiNook.DataSet.xml" />
    </ProjectSection>
 
 </configuration>

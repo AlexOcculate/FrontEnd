@@ -154,8 +154,12 @@
          this.svgImageCollection.Add("showproduct", "image://devav/actions/showproduct.svg");
          this.svgImageCollection.Add("carousel", "image://devav/layout/carousel.svg");
          this.svgImageCollection.Add("db_yellow", ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("svgImageCollection.db_yellow"))));
+         this.svgImageCollection.Add("db_yellow_notFound", ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("svgImageCollection.db_yellow_notFound"))));
+         this.svgImageCollection.Add("db_yellow_warning", ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("svgImageCollection.db_yellow_warning"))));
          this.svgImageCollection.Add("snapshot_gray", ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("svgImageCollection.snapshot_gray"))));
+         this.svgImageCollection.Add("snapshot_gray_notFound", ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("svgImageCollection.snapshot_gray_notFound"))));
          this.svgImageCollection.Add("snapshot_yellow", ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("svgImageCollection.snapshot_yellow"))));
+         this.svgImageCollection.Add("snapshot_yellow_notFound", ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("svgImageCollection.snapshot_yellow_notFound"))));
          this.svgImageCollection.Add("driving", "image://devav/actions/driving.svg");
          this.svgImageCollection.Add("add", "image://devav/actions/add.svg");
          this.svgImageCollection.Add("picture", "image://devav/actions/picture.svg");

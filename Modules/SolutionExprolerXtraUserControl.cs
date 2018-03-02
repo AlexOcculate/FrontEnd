@@ -110,13 +110,13 @@ namespace FrontEnd
       }
       private void treeView_AfterCollapse( object sender, DevExpress.XtraTreeList.NodeEventArgs e )
       {
-         this.SetIndex( e.Node, 6, false );
-         this.SetIndex( e.Node, 8, false );
+         //this.SetIndex( e.Node, 6, false );
+         //this.SetIndex( e.Node, 8, false );
       }
       private void treeView_AfterExpand( object sender, DevExpress.XtraTreeList.NodeEventArgs e )
       {
-         this.SetIndex( e.Node, 7, true );
-         this.SetIndex( e.Node, 9, true );
+         //this.SetIndex( e.Node, 7, true );
+         //this.SetIndex( e.Node, 9, true );
       }
       public void LoadSolution( bool showAll = false, string filename = @"SampleProject.config" )
       {
@@ -124,79 +124,8 @@ namespace FrontEnd
          this.treeView.BeginUpdate( );
          try
          {
-            if( string.IsNullOrWhiteSpace( filename ) )
-            {
-               return;
-            }
-            System.Configuration.ExeConfigurationFileMap configMap = new System.Configuration.ExeConfigurationFileMap( );
-            configMap.ExeConfigFilename = filename;
-            System.Configuration.Configuration config = System.Configuration.ConfigurationManager
-               .OpenMappedExeConfiguration( configMap, System.Configuration.ConfigurationUserLevel.None );
-            ProjectSetting.ProjectSection ps = config.GetSection( nameof( ProjectSetting.ProjectSection ) ) as ProjectSetting.ProjectSection;
-            //
-            this.treeView.AppendNode( new object[ ] { "Solution \'VisualStudioInspiredUIDemo\' (1 project)" }, -1, -1, -1, 3 ); //0
-            object[ ] o = new object[ ] { ps.Name };
-            TreeListNode prjNode = this.treeView.AppendNode( o, -1, -1, -1, 4, ps ); //0
-
-            foreach( ProjectSetting.DataStoreElement dse in ps.DataStores )
-            {
-               #region --- REMARKS ---
-               //
-               // Summary:
-               //     Adds a DevExpress.XtraTreeList.Nodes.TreeListNode containing the specified values
-               //     to the XtraTreeList.
-               //
-               // Parameters:
-               //
-               //   nodeData:
-               //     An array of values or a System.Data.DataRow object, used to initialize the created
-               //     node's cells.
-               //
-               //   parentNodeId:
-               //     An integer value specifying the identifier of the parent node.
-               //
-               //   imageIndex:
-               //     A zero-based index of the image displayed within the node.
-               //
-               //   selectImageIndex:
-               //     A zero-based index of the image displayed within the node when it is focused
-               //     or selected.
-               //
-               //   stateImageIndex:
-               //     An integer value that specifies the index of the node's state image.
-               //
-               //   checkState:
-               //     The node's check state.
-               //
-               //   tag:
-               //     An object that contains information associated with the Tree List node. This
-               //     value is assigned to the DevExpress.XtraTreeList.Nodes.TreeListNode.Tag property.
-               //
-               // Returns:
-               //     A DevExpress.XtraTreeList.Nodes.TreeListNode object or descendant representing
-               //     the added node.
-               //
-               #endregion
-               object[ ] oo = new object[ ] { dse.Name };
-               TreeListNode dsNode = this.treeView.AppendNode( oo, prjNode.Id, 1, -1, 5, dse );
-               if( !string.IsNullOrWhiteSpace( dse.SnapshotFile ) )
-               {
-                  object[ ] ooo = new object[ ] { dse.SnapshotFile };
-                  TreeListNode child = this.treeView.AppendNode( ooo, dsNode.Id, 4, -1, 6, dse );
-                  dsNode.Expand( );
-               }
-               else
-               {
-                  object[ ] ooo = new object[ ] { "most recent" };
-                  TreeListNode child = this.treeView.AppendNode( ooo, dsNode.Id, 4, -1, 7 );
-                  dsNode.Collapse( );
-               }
-            }
-            if( showAll )
-            {
-            }
-            prjNode.Expand( );
-            // this.treeView.ExpandAll( );
+            ProjectSetting.ProjectSection ps = ProjectSetting.ProjectSection.GetSection( filename );
+            ps.GET_TREE( this.treeView );
          }
          finally
          {

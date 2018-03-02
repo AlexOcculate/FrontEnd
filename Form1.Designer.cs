@@ -33,7 +33,7 @@
          DevExpress.XtraBars.Docking2010.Views.Tabbed.DockingContainer dockingContainer1 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.DockingContainer();
          this.documentGroup1 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.DocumentGroup(this.components);
          this.xtraUserControl1Document = new DevExpress.XtraBars.Docking2010.Views.Tabbed.Document(this.components);
-         this.xtraUserControl2Document = new DevExpress.XtraBars.Docking2010.Views.Tabbed.Document(this.components);
+         this.metadataItemXtraUserControlDocument = new DevExpress.XtraBars.Docking2010.Views.Tabbed.Document(this.components);
          this.documentManager1 = new DevExpress.XtraBars.Docking2010.DocumentManager(this.components);
          this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
          this.toolsBar = new DevExpress.XtraBars.Bar();
@@ -130,7 +130,7 @@
          this.tabbedView1 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.TabbedView(this.components);
          ((System.ComponentModel.ISupportInitialize)(this.documentGroup1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.xtraUserControl1Document)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.xtraUserControl2Document)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.metadataItemXtraUserControlDocument)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.documentManager1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.barAndDockingController1)).BeginInit();
@@ -165,19 +165,22 @@
          // 
          this.documentGroup1.Items.AddRange(new DevExpress.XtraBars.Docking2010.Views.Tabbed.Document[] {
             this.xtraUserControl1Document,
-            this.xtraUserControl2Document});
+            this.metadataItemXtraUserControlDocument});
          // 
          // xtraUserControl1Document
          // 
          this.xtraUserControl1Document.Caption = "XtraUserControl1";
          this.xtraUserControl1Document.ControlName = "XtraUserControl1";
          this.xtraUserControl1Document.ControlTypeName = "FrontEnd.XtraUserControl1";
+         this.xtraUserControl1Document.FloatLocation = new System.Drawing.Point(1131, 534);
+         this.xtraUserControl1Document.FloatSize = new System.Drawing.Size(870, 668);
          // 
-         // xtraUserControl2Document
+         // metadataItemXtraUserControlDocument
          // 
-         this.xtraUserControl2Document.Caption = "XtraUserControl2";
-         this.xtraUserControl2Document.ControlName = "XtraUserControl2";
-         this.xtraUserControl2Document.ControlTypeName = "FrontEnd.XtraUserControl2";
+         this.metadataItemXtraUserControlDocument.Caption = "Metadata Item";
+         this.metadataItemXtraUserControlDocument.ControlName = "MetadataItemXtraUserControl";
+         this.metadataItemXtraUserControlDocument.ControlTypeName = "FrontEnd.MetadataItemXtraUserControl";
+         this.metadataItemXtraUserControlDocument.Properties.UseFormIconAsDocumentImage = DevExpress.Utils.DefaultBoolean.True;
          // 
          // documentManager1
          // 
@@ -700,7 +703,7 @@
          this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
          this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
          this.barDockControlTop.Manager = this.barManager1;
-         this.barDockControlTop.Size = new System.Drawing.Size(1243, 53);
+         this.barDockControlTop.Size = new System.Drawing.Size(1293, 53);
          // 
          // barDockControlBottom
          // 
@@ -708,7 +711,7 @@
          this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
          this.barDockControlBottom.Location = new System.Drawing.Point(0, 768);
          this.barDockControlBottom.Manager = this.barManager1;
-         this.barDockControlBottom.Size = new System.Drawing.Size(1243, 23);
+         this.barDockControlBottom.Size = new System.Drawing.Size(1293, 23);
          // 
          // barDockControlLeft
          // 
@@ -722,7 +725,7 @@
          // 
          this.barDockControlRight.CausesValidation = false;
          this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-         this.barDockControlRight.Location = new System.Drawing.Point(1243, 53);
+         this.barDockControlRight.Location = new System.Drawing.Point(1293, 53);
          this.barDockControlRight.Manager = this.barManager1;
          this.barDockControlRight.Size = new System.Drawing.Size(0, 715);
          // 
@@ -757,7 +760,7 @@
          this.hideContainerBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
          this.hideContainerBottom.Location = new System.Drawing.Point(0, 749);
          this.hideContainerBottom.Name = "hideContainerBottom";
-         this.hideContainerBottom.Size = new System.Drawing.Size(1224, 19);
+         this.hideContainerBottom.Size = new System.Drawing.Size(1274, 19);
          // 
          // bottomPanelContainer
          // 
@@ -870,7 +873,7 @@
          this.hideContainerRight.BackColor = System.Drawing.SystemColors.Control;
          this.hideContainerRight.Controls.Add(this.rightPanelContainer);
          this.hideContainerRight.Dock = System.Windows.Forms.DockStyle.Right;
-         this.hideContainerRight.Location = new System.Drawing.Point(1224, 53);
+         this.hideContainerRight.Location = new System.Drawing.Point(1274, 53);
          this.hideContainerRight.Name = "hideContainerRight";
          this.hideContainerRight.Size = new System.Drawing.Size(19, 715);
          // 
@@ -1087,7 +1090,7 @@
             this.documentGroup1});
          this.tabbedView1.Documents.AddRange(new DevExpress.XtraBars.Docking2010.Views.BaseDocument[] {
             this.xtraUserControl1Document,
-            this.xtraUserControl2Document});
+            this.metadataItemXtraUserControlDocument});
          dockingContainer1.Element = this.documentGroup1;
          this.tabbedView1.RootContainer.Nodes.AddRange(new DevExpress.XtraBars.Docking2010.Views.Tabbed.DockingContainer[] {
             dockingContainer1});
@@ -1096,7 +1099,7 @@
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-         this.ClientSize = new System.Drawing.Size(1243, 791);
+         this.ClientSize = new System.Drawing.Size(1293, 791);
          this.Controls.Add(this.leftPanelContainer);
          this.Controls.Add(this.hideContainerBottom);
          this.Controls.Add(this.hideContainerRight);
@@ -1109,7 +1112,7 @@
          this.Load += new System.EventHandler(this.Form1_Load);
          ((System.ComponentModel.ISupportInitialize)(this.documentGroup1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.xtraUserControl1Document)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.xtraUserControl2Document)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.metadataItemXtraUserControlDocument)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.documentManager1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.barAndDockingController1)).EndInit();
@@ -1149,7 +1152,7 @@
       private DevExpress.XtraBars.Docking2010.Views.Tabbed.TabbedView tabbedView1;
       private DevExpress.XtraBars.Docking2010.Views.Tabbed.DocumentGroup documentGroup1;
       private DevExpress.XtraBars.Docking2010.Views.Tabbed.Document xtraUserControl1Document;
-      private DevExpress.XtraBars.Docking2010.Views.Tabbed.Document xtraUserControl2Document;
+      private DevExpress.XtraBars.Docking2010.Views.Tabbed.Document metadataItemXtraUserControlDocument;
       private DevExpress.XtraBars.Docking.DockManager dockManager1;
       private DevExpress.XtraBars.Docking.DockPanel leftPanelContainer;
       private DevExpress.XtraBars.Docking.DockPanel solutionExplorerDockPanel;
@@ -1198,9 +1201,9 @@
       private ErrorListXtraUserControl errorListXtraUserControl1;
       private DataStoresXtraUserControl dataStoresXtraUserControl1;
       private SolutionExplorerXtraUserControl solutionExplorerXtraUserControl1;
+      private PropertiesXtraUserControl propertiesXtraUserControl1;
       private DevExpress.XtraBars.Docking.DockPanel snapshotPropertiesDockPanel;
       private DevExpress.XtraBars.Docking.ControlContainer snapshotPropertiesDockPanel_Container;
-      private PropertiesXtraUserControl propertiesXtraUserControl1;
       private DevExpress.XtraBars.BarSubItem newBarSubItem;
       private DevExpress.XtraBars.BarSubItem openBarSubItem;
       private DevExpress.XtraBars.BarButtonItem startPageBarButtonItem;

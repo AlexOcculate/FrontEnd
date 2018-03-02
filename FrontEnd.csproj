@@ -32,6 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ActiveQueryBuilder.Core, Version=3.4.3.1079, Culture=neutral, PublicKeyToken=3cbcbcc9bf57ecde, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.BonusSkins.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Data.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Dialogs.v17.2.Core, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -71,6 +72,12 @@
     <Compile Include="ConfigurationSetting\DataPhilosophiaeSection.cs" />
     <Compile Include="ConfigurationSetting\ProjectSection.cs" />
     <Compile Include="ConfigurationSetting\TunnelSection.cs" />
+    <Compile Include="Modules\MetadataItemXtraUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\MetadataItemXtraUserControl.Designer.cs">
+      <DependentUpon>MetadataItemXtraUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Modules\SolutionExprolerXtraUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -133,6 +140,9 @@
     <Compile Include="Modules\XtraUserControl2.Designer.cs">
       <DependentUpon>XtraUserControl2.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Modules\MetadataItemXtraUserControl.resx">
+      <DependentUpon>MetadataItemXtraUserControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Modules\SolutionExprolerXtraUserControl.resx">
       <DependentUpon>SolutionExprolerXtraUserControl.cs</DependentUpon>
     </EmbeddedResource>

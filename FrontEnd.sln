@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontEnd", "FrontEnd.csproj", "{BB04EB0B-6B31-4D8D-B175-7032CC19E56A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqXml", "..\LinqXml\LinqXml.csproj", "{8E063C6E-A4C6-4720-AD8A-B7787FDDA6C4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqXml", "LinqXml\LinqXml.csproj", "{8E063C6E-A4C6-4720-AD8A-B7787FDDA6C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
