@@ -17,6 +17,7 @@ namespace FrontEnd
          this.dataStoresXtraUserControl1.PropertiesItemClick += this.DataStoresXtraUserControl1_PropertiesItemClick;
          // this.dataStoresXtraUserControl1.OnDataStoresProperties += this.DataStoresXtraUserControl1_OnDataStoresProperties;
          this.dataStoresXtraUserControl1.TreeViewItemClick += this.DataStoresXtraUserControl1_TreeViewItemClick;
+         this.dataStoresXtraUserControl1.FocusedNodeChanged += this.DataStoresXtraUserControl1_FocusedNodeChanged;
          //
          //         this.solutionExplorerXtraUserControl1.LoadNodes( );
          this.solutionExplorerXtraUserControl1.PropertiesItemClick += this.SolutionExplorerXtraUserControl1_PropertiesItemClick;
@@ -25,6 +26,21 @@ namespace FrontEnd
          //
          this.initialPath = GetDefaultFilePath( );
          //  this.SetMemoEditText( this.initialPath + "\\" + defaultFileName );
+      }
+
+      private System.Data.DataRow _dsRow;
+      private void DataStoresXtraUserControl1_FocusedNodeChanged( object sender, EventArgs e )
+      {
+         // Execute in Background...
+         this._dsRow = sender as System.Data.DataRow;
+         if( this._dsRow == null )
+         {
+            return;
+         }
+         //ConfigurationSetting.DataStore ds = this._dsRow[ ConfigurationSetting.DataStore.TAG_COLNAME ] as ConfigurationSetting.DataStore;
+         //ActiveQueryBuilder.Core.SQLContext sQLContext = Program.CreateAqbSqlContext4SQLiteOnline( ds.ConnectionString );
+         //System.Data.DataTable miTable = Program.CreateMetadataItemTable( );
+         //Program.DrillDownAqbSqlContext( sQLContext, miTable, ds.Name );
       }
 
       private void DataStoresXtraUserControl1_OnDataStoresProperties( object myObject, System.Data.DataRow row )
@@ -55,6 +71,7 @@ namespace FrontEnd
          this.projectPropertiesXtraUserControl.SetXXX( sender );
       }
 
+      #region --- Splash Screen ---
       private void Form1_Load( object sender, EventArgs e )
       {
          BeginInvoke( new MethodInvoker( this.InitDemo ) );
@@ -63,6 +80,7 @@ namespace FrontEnd
       {
          DevExpress.XtraSplashScreen.SplashScreenManager.HideImage( 1000, this );
       }
+      #endregion
 
       // Assigning a required content for each auto generated Document
       private void tabbedView1_QueryControl( object sender, DevExpress.XtraBars.Docking2010.Views.QueryControlEventArgs e )
@@ -188,6 +206,11 @@ namespace FrontEnd
 
       private void openDataStoreBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
+         if( this._dsRow == null )
+         {
+            return;
+         }
+
       }
 
       private void closeDataStoreBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )

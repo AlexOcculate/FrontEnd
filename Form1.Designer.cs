@@ -984,7 +984,7 @@
          // 
          // leftPanelContainer
          // 
-         this.leftPanelContainer.ActiveChild = this.solutionExplorerDockPanel;
+         this.leftPanelContainer.ActiveChild = this.dataStoreDockPanel;
          this.leftPanelContainer.Controls.Add(this.dataStoreDockPanel);
          this.leftPanelContainer.Controls.Add(this.solutionExplorerDockPanel);
          this.leftPanelContainer.Dock = DevExpress.XtraBars.Docking.DockingStyle.Left;

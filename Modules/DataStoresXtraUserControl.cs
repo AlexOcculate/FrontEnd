@@ -199,7 +199,8 @@ namespace FrontEnd
       public event EventHandler PropertiesItemClick;
       private void iProperties_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
-         ShowDataStoreProperties( );
+         System.Data.DataRow row = this.GET_SELECTED_DATASTORE( );
+         ShowDataStoreProperties( row );
       }
       //
       public event EventHandler TreeViewItemClick;
@@ -212,26 +213,38 @@ namespace FrontEnd
          }
       }
 
+      public event EventHandler FocusedNodeChanged;
       private void treeView_FocusedNodeChanged( object sender, FocusedNodeChangedEventArgs e )
       {
-         ShowDataStoreProperties( );
+         System.Data.DataRow row = this.GET_SELECTED_DATASTORE( );
+         if( this.FocusedNodeChanged != null )
+         {
+            // send a message to all external subscribers...
+            this.FocusedNodeChanged( row, EventArgs.Empty );
+         }
+         ShowDataStoreProperties( row );
       }
       //
-      private void ShowDataStoreProperties()
+      private void ShowDataStoreProperties( System.Data.DataRow row )
       {
          if( this.PropertiesItemClick != null )
          {
-            TreeListMultiSelection selection = this.treeView.Selection;
-            if( selection == null || selection.Count == 0 )
-            {
-               return;
-            }
-            TreeListNode treeListNode = selection[ 0 ];
-            System.Data.DataRow row = treeListNode.Tag as System.Data.DataRow;
             ConfigurationSetting.DataStore ds = row[ ConfigurationSetting.DataStore.TAG_COLNAME ] as ConfigurationSetting.DataStore;
             // send a message to all external subscribers...
             this.PropertiesItemClick( ds, EventArgs.Empty );
          }
+      }
+
+      private System.Data.DataRow GET_SELECTED_DATASTORE()
+      {
+         TreeListMultiSelection selection = this.treeView.Selection;
+         if( selection == null || selection.Count == 0 )
+         {
+            return null;
+         }
+         TreeListNode treeListNode = selection[ 0 ];
+         System.Data.DataRow row = treeListNode.Tag as System.Data.DataRow;
+         return row;
       }
 
       #region --- LOAD DATA VALUE REAL OR DUMMY ---

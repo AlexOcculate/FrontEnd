@@ -64,6 +64,25 @@ namespace FrontEnd
          }
          return sc;
       }
+      public static ActiveQueryBuilder.Core.SQLContext CreateAqbSqlContext4SQLiteOnline( string cs )
+      {
+         ActiveQueryBuilder.Core.SQLContext sc = new ActiveQueryBuilder.Core.SQLContext( )
+         {
+            SyntaxProvider = new ActiveQueryBuilder.Core.SQLiteSyntaxProvider( ),
+            MetadataProvider = new ActiveQueryBuilder.Core.SQLiteMetadataProvider( )
+            {
+               Connection = new System.Data.SQLite.SQLiteConnection( )
+               {
+                  ConnectionString = cs
+               }
+            }
+         };
+         //{
+         //   sc.MetadataContainer.LoadingOptions.OfflineMode = true;
+         //   sc.MetadataContainer.ImportFromXML( filepath );
+         //}
+         return sc;
+      }
 
       private class StackItem
       {
