@@ -25,12 +25,31 @@
                System.Configuration.ConnectionStringSettings cs = css[ dse.ConnectionStringName ];
                DataStore ds = new DataStore( dps, dse, cs );
                tbl.Rows.Add( ds.GetAsDataRow( tbl.NewRow( ) ) );
+               f( ds );
             }
          }
          return tbl;
       }
-
-
-
+      private static void f( DataStore ds )
+      {
+         bool isValidProviderName = ds.IsValidProviderName;
+         if( !ds.IsValidStagePathDir )
+         {
+            try
+            {
+               System.IO.DirectoryInfo di = new System.IO.DirectoryInfo( ds.StagePathDir );
+               di.Create( );
+               bool isValidStagePathDir = ds.IsValidStagePathDir;
+            }
+            catch( System.IO.DirectoryNotFoundException ex )
+            {
+               // do something with this error!...
+            }
+         }
+         if( string.IsNullOrWhiteSpace( ds.ConnectionString ) )
+         {
+            // error...
+         }
+      }
    }
 }

@@ -53,6 +53,7 @@
          this.openDataStoreBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
          this.openProjectBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
          this.openSolutionBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.testDataStoreConnectionBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
          this.startPageBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
          this.addBarSubItem = new DevExpress.XtraBars.BarSubItem();
          this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
@@ -107,7 +108,6 @@
          this.errorListDockPanel = new DevExpress.XtraBars.Docking.DockPanel();
          this.errorListDockPanel_Container = new DevExpress.XtraBars.Docking.ControlContainer();
          this.errorListXtraUserControl1 = new FrontEnd.ErrorListXtraUserControl();
-         this.hideContainerRight = new DevExpress.XtraBars.Docking.AutoHideContainer();
          this.rightPanelContainer = new DevExpress.XtraBars.Docking.DockPanel();
          this.dataStorePropertiesDockPanel = new DevExpress.XtraBars.Docking.DockPanel();
          this.propertiesDockPanel_Container = new DevExpress.XtraBars.Docking.ControlContainer();
@@ -119,15 +119,16 @@
          this.projectPropertiesDockPanel_Container = new DevExpress.XtraBars.Docking.ControlContainer();
          this.projectPropertiesXtraUserControl = new FrontEnd.PropertiesXtraUserControl();
          this.leftPanelContainer = new DevExpress.XtraBars.Docking.DockPanel();
-         this.solutionExplorerDockPanel = new DevExpress.XtraBars.Docking.DockPanel();
-         this.solutionExplorerDockPanel_Container = new DevExpress.XtraBars.Docking.ControlContainer();
-         this.solutionExplorerXtraUserControl1 = new FrontEnd.SolutionExplorerXtraUserControl();
          this.dataStoreDockPanel = new DevExpress.XtraBars.Docking.DockPanel();
          this.dataStoreDockPanel_Container = new DevExpress.XtraBars.Docking.ControlContainer();
          this.dataStoresXtraUserControl1 = new FrontEnd.DataStoresXtraUserControl();
-         this.solutionExplorerPopupMenu = new DevExpress.XtraBars.PopupMenu(this.components);
+         this.solutionExplorerDockPanel = new DevExpress.XtraBars.Docking.DockPanel();
+         this.solutionExplorerDockPanel_Container = new DevExpress.XtraBars.Docking.ControlContainer();
+         this.solutionExplorerXtraUserControl1 = new FrontEnd.SolutionExplorerXtraUserControl();
          this.dataStorePopupMenu = new DevExpress.XtraBars.PopupMenu(this.components);
+         this.solutionExplorerPopupMenu = new DevExpress.XtraBars.PopupMenu(this.components);
          this.tabbedView1 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.TabbedView(this.components);
+         this.hideContainerRight = new DevExpress.XtraBars.Docking.AutoHideContainer();
          ((System.ComponentModel.ISupportInitialize)(this.documentGroup1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.xtraUserControl1Document)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.metadataItemXtraUserControlDocument)).BeginInit();
@@ -143,7 +144,6 @@
          this.taskListDockPanel_Container.SuspendLayout();
          this.errorListDockPanel.SuspendLayout();
          this.errorListDockPanel_Container.SuspendLayout();
-         this.hideContainerRight.SuspendLayout();
          this.rightPanelContainer.SuspendLayout();
          this.dataStorePropertiesDockPanel.SuspendLayout();
          this.propertiesDockPanel_Container.SuspendLayout();
@@ -152,13 +152,14 @@
          this.projectPropertiesDockPanel.SuspendLayout();
          this.projectPropertiesDockPanel_Container.SuspendLayout();
          this.leftPanelContainer.SuspendLayout();
-         this.solutionExplorerDockPanel.SuspendLayout();
-         this.solutionExplorerDockPanel_Container.SuspendLayout();
          this.dataStoreDockPanel.SuspendLayout();
          this.dataStoreDockPanel_Container.SuspendLayout();
-         ((System.ComponentModel.ISupportInitialize)(this.solutionExplorerPopupMenu)).BeginInit();
+         this.solutionExplorerDockPanel.SuspendLayout();
+         this.solutionExplorerDockPanel_Container.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.dataStorePopupMenu)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.solutionExplorerPopupMenu)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.tabbedView1)).BeginInit();
+         this.hideContainerRight.SuspendLayout();
          this.SuspendLayout();
          // 
          // documentGroup1
@@ -253,9 +254,10 @@
             this.importDataStoreBarButtonItem,
             this.barButtonItem21,
             this.barButtonItem22,
-            this.barButtonItem23});
+            this.barButtonItem23,
+            this.testDataStoreConnectionBarButtonItem});
          this.barManager1.MainMenu = this.mainMenuBar;
-         this.barManager1.MaxItemId = 63;
+         this.barManager1.MaxItemId = 64;
          this.barManager1.OptionsStubGlyphs.AllowStubGlyphs = DevExpress.Utils.DefaultBoolean.True;
          this.barManager1.OptionsStubGlyphs.CaseMode = DevExpress.Utils.Drawing.GlyphTextCaseMode.LowerCase;
          this.barManager1.OptionsStubGlyphs.LetterCount = DevExpress.Utils.Drawing.GlyphTextSymbolCount.Two;
@@ -337,6 +339,7 @@
          this.fileBarSubItem.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.newBarSubItem),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.openBarSubItem, DevExpress.XtraBars.BarItemPaintStyle.Standard),
+            new DevExpress.XtraBars.LinkPersistInfo(this.testDataStoreConnectionBarButtonItem, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.startPageBarButtonItem, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.addBarSubItem, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.closeDataStoreBarButtonItem, true),
@@ -420,6 +423,13 @@
          this.openSolutionBarButtonItem.Id = 38;
          this.openSolutionBarButtonItem.Name = "openSolutionBarButtonItem";
          this.openSolutionBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.openSolutionBarButtonItem_ItemClick);
+         // 
+         // testDataStoreConnectionBarButtonItem
+         // 
+         this.testDataStoreConnectionBarButtonItem.Caption = "Test DataStore Connection";
+         this.testDataStoreConnectionBarButtonItem.Id = 63;
+         this.testDataStoreConnectionBarButtonItem.Name = "testDataStoreConnectionBarButtonItem";
+         this.testDataStoreConnectionBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.testDataStoreConnectionBarButtonItem_ItemClick);
          // 
          // startPageBarButtonItem
          // 
@@ -868,15 +878,6 @@
          this.errorListXtraUserControl1.Size = new System.Drawing.Size(1235, 172);
          this.errorListXtraUserControl1.TabIndex = 0;
          // 
-         // hideContainerRight
-         // 
-         this.hideContainerRight.BackColor = System.Drawing.SystemColors.Control;
-         this.hideContainerRight.Controls.Add(this.rightPanelContainer);
-         this.hideContainerRight.Dock = System.Windows.Forms.DockStyle.Right;
-         this.hideContainerRight.Location = new System.Drawing.Point(1274, 53);
-         this.hideContainerRight.Name = "hideContainerRight";
-         this.hideContainerRight.Size = new System.Drawing.Size(19, 715);
-         // 
          // rightPanelContainer
          // 
          this.rightPanelContainer.ActiveChild = this.dataStorePropertiesDockPanel;
@@ -890,7 +891,7 @@
          this.rightPanelContainer.OriginalSize = new System.Drawing.Size(331, 200);
          this.rightPanelContainer.SavedDock = DevExpress.XtraBars.Docking.DockingStyle.Right;
          this.rightPanelContainer.SavedIndex = 0;
-         this.rightPanelContainer.Size = new System.Drawing.Size(331, 698);
+         this.rightPanelContainer.Size = new System.Drawing.Size(331, 696);
          this.rightPanelContainer.Tabbed = true;
          this.rightPanelContainer.Text = "rightPanelContainer";
          this.rightPanelContainer.Visibility = DevExpress.XtraBars.Docking.DockVisibility.AutoHide;
@@ -903,8 +904,8 @@
          this.dataStorePropertiesDockPanel.Location = new System.Drawing.Point(5, 23);
          this.dataStorePropertiesDockPanel.Name = "dataStorePropertiesDockPanel";
          this.dataStorePropertiesDockPanel.Options.ShowCloseButton = false;
-         this.dataStorePropertiesDockPanel.OriginalSize = new System.Drawing.Size(322, 663);
-         this.dataStorePropertiesDockPanel.Size = new System.Drawing.Size(322, 671);
+         this.dataStorePropertiesDockPanel.OriginalSize = new System.Drawing.Size(322, 671);
+         this.dataStorePropertiesDockPanel.Size = new System.Drawing.Size(322, 669);
          this.dataStorePropertiesDockPanel.TabText = "DataStore";
          this.dataStorePropertiesDockPanel.Text = "DataStore Properties";
          // 
@@ -913,7 +914,7 @@
          this.propertiesDockPanel_Container.Controls.Add(this.dataStorePropertiesXtraUserControl);
          this.propertiesDockPanel_Container.Location = new System.Drawing.Point(0, 0);
          this.propertiesDockPanel_Container.Name = "propertiesDockPanel_Container";
-         this.propertiesDockPanel_Container.Size = new System.Drawing.Size(322, 671);
+         this.propertiesDockPanel_Container.Size = new System.Drawing.Size(322, 669);
          this.propertiesDockPanel_Container.TabIndex = 0;
          // 
          // dataStorePropertiesXtraUserControl
@@ -921,7 +922,7 @@
          this.dataStorePropertiesXtraUserControl.Dock = System.Windows.Forms.DockStyle.Fill;
          this.dataStorePropertiesXtraUserControl.Location = new System.Drawing.Point(0, 0);
          this.dataStorePropertiesXtraUserControl.Name = "dataStorePropertiesXtraUserControl";
-         this.dataStorePropertiesXtraUserControl.Size = new System.Drawing.Size(322, 671);
+         this.dataStorePropertiesXtraUserControl.Size = new System.Drawing.Size(322, 669);
          this.dataStorePropertiesXtraUserControl.TabIndex = 0;
          // 
          // snapshotPropertiesDockPanel
@@ -932,8 +933,8 @@
          this.snapshotPropertiesDockPanel.Location = new System.Drawing.Point(5, 23);
          this.snapshotPropertiesDockPanel.Name = "snapshotPropertiesDockPanel";
          this.snapshotPropertiesDockPanel.Options.ShowCloseButton = false;
-         this.snapshotPropertiesDockPanel.OriginalSize = new System.Drawing.Size(322, 663);
-         this.snapshotPropertiesDockPanel.Size = new System.Drawing.Size(322, 671);
+         this.snapshotPropertiesDockPanel.OriginalSize = new System.Drawing.Size(322, 671);
+         this.snapshotPropertiesDockPanel.Size = new System.Drawing.Size(322, 669);
          this.snapshotPropertiesDockPanel.TabText = "Snapshot";
          this.snapshotPropertiesDockPanel.Text = "Snapshot Properties";
          // 
@@ -942,7 +943,7 @@
          this.snapshotPropertiesDockPanel_Container.Controls.Add(this.propertiesXtraUserControl1);
          this.snapshotPropertiesDockPanel_Container.Location = new System.Drawing.Point(0, 0);
          this.snapshotPropertiesDockPanel_Container.Name = "snapshotPropertiesDockPanel_Container";
-         this.snapshotPropertiesDockPanel_Container.Size = new System.Drawing.Size(322, 671);
+         this.snapshotPropertiesDockPanel_Container.Size = new System.Drawing.Size(322, 669);
          this.snapshotPropertiesDockPanel_Container.TabIndex = 0;
          // 
          // propertiesXtraUserControl1
@@ -950,7 +951,7 @@
          this.propertiesXtraUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
          this.propertiesXtraUserControl1.Location = new System.Drawing.Point(0, 0);
          this.propertiesXtraUserControl1.Name = "propertiesXtraUserControl1";
-         this.propertiesXtraUserControl1.Size = new System.Drawing.Size(322, 671);
+         this.propertiesXtraUserControl1.Size = new System.Drawing.Size(322, 669);
          this.propertiesXtraUserControl1.TabIndex = 0;
          // 
          // projectPropertiesDockPanel
@@ -961,8 +962,8 @@
          this.projectPropertiesDockPanel.Location = new System.Drawing.Point(5, 23);
          this.projectPropertiesDockPanel.Name = "projectPropertiesDockPanel";
          this.projectPropertiesDockPanel.Options.ShowCloseButton = false;
-         this.projectPropertiesDockPanel.OriginalSize = new System.Drawing.Size(322, 663);
-         this.projectPropertiesDockPanel.Size = new System.Drawing.Size(322, 671);
+         this.projectPropertiesDockPanel.OriginalSize = new System.Drawing.Size(322, 671);
+         this.projectPropertiesDockPanel.Size = new System.Drawing.Size(322, 669);
          this.projectPropertiesDockPanel.TabText = "Project";
          this.projectPropertiesDockPanel.Text = "Project Properties";
          // 
@@ -971,7 +972,7 @@
          this.projectPropertiesDockPanel_Container.Controls.Add(this.projectPropertiesXtraUserControl);
          this.projectPropertiesDockPanel_Container.Location = new System.Drawing.Point(0, 0);
          this.projectPropertiesDockPanel_Container.Name = "projectPropertiesDockPanel_Container";
-         this.projectPropertiesDockPanel_Container.Size = new System.Drawing.Size(322, 671);
+         this.projectPropertiesDockPanel_Container.Size = new System.Drawing.Size(322, 669);
          this.projectPropertiesDockPanel_Container.TabIndex = 0;
          // 
          // projectPropertiesXtraUserControl
@@ -979,7 +980,7 @@
          this.projectPropertiesXtraUserControl.Dock = System.Windows.Forms.DockStyle.Fill;
          this.projectPropertiesXtraUserControl.Location = new System.Drawing.Point(0, 0);
          this.projectPropertiesXtraUserControl.Name = "projectPropertiesXtraUserControl";
-         this.projectPropertiesXtraUserControl.Size = new System.Drawing.Size(322, 671);
+         this.projectPropertiesXtraUserControl.Size = new System.Drawing.Size(322, 669);
          this.projectPropertiesXtraUserControl.TabIndex = 0;
          // 
          // leftPanelContainer
@@ -995,35 +996,6 @@
          this.leftPanelContainer.Size = new System.Drawing.Size(348, 696);
          this.leftPanelContainer.Tabbed = true;
          this.leftPanelContainer.Text = "leftPanelContainer";
-         // 
-         // solutionExplorerDockPanel
-         // 
-         this.solutionExplorerDockPanel.Controls.Add(this.solutionExplorerDockPanel_Container);
-         this.solutionExplorerDockPanel.Dock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
-         this.solutionExplorerDockPanel.ID = new System.Guid("4ce60e3c-c2ca-43a3-865b-1156eb2803c7");
-         this.solutionExplorerDockPanel.Location = new System.Drawing.Point(4, 23);
-         this.solutionExplorerDockPanel.Name = "solutionExplorerDockPanel";
-         this.solutionExplorerDockPanel.Options.ShowCloseButton = false;
-         this.solutionExplorerDockPanel.OriginalSize = new System.Drawing.Size(339, 663);
-         this.solutionExplorerDockPanel.Size = new System.Drawing.Size(339, 642);
-         this.solutionExplorerDockPanel.Text = "Solution Explorer";
-         // 
-         // solutionExplorerDockPanel_Container
-         // 
-         this.solutionExplorerDockPanel_Container.Controls.Add(this.solutionExplorerXtraUserControl1);
-         this.solutionExplorerDockPanel_Container.Location = new System.Drawing.Point(0, 0);
-         this.solutionExplorerDockPanel_Container.Name = "solutionExplorerDockPanel_Container";
-         this.solutionExplorerDockPanel_Container.Size = new System.Drawing.Size(339, 642);
-         this.solutionExplorerDockPanel_Container.TabIndex = 0;
-         // 
-         // solutionExplorerXtraUserControl1
-         // 
-         this.solutionExplorerXtraUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-         this.solutionExplorerXtraUserControl1.Location = new System.Drawing.Point(0, 0);
-         this.solutionExplorerXtraUserControl1.Name = "solutionExplorerXtraUserControl1";
-         this.barManager1.SetPopupContextMenu(this.solutionExplorerXtraUserControl1, this.solutionExplorerPopupMenu);
-         this.solutionExplorerXtraUserControl1.Size = new System.Drawing.Size(339, 642);
-         this.solutionExplorerXtraUserControl1.TabIndex = 0;
          // 
          // dataStoreDockPanel
          // 
@@ -1056,6 +1028,49 @@
          this.dataStoresXtraUserControl1.Size = new System.Drawing.Size(339, 642);
          this.dataStoresXtraUserControl1.TabIndex = 0;
          // 
+         // solutionExplorerDockPanel
+         // 
+         this.solutionExplorerDockPanel.Controls.Add(this.solutionExplorerDockPanel_Container);
+         this.solutionExplorerDockPanel.Dock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
+         this.solutionExplorerDockPanel.ID = new System.Guid("4ce60e3c-c2ca-43a3-865b-1156eb2803c7");
+         this.solutionExplorerDockPanel.Location = new System.Drawing.Point(4, 23);
+         this.solutionExplorerDockPanel.Name = "solutionExplorerDockPanel";
+         this.solutionExplorerDockPanel.Options.ShowCloseButton = false;
+         this.solutionExplorerDockPanel.OriginalSize = new System.Drawing.Size(339, 663);
+         this.solutionExplorerDockPanel.Size = new System.Drawing.Size(339, 642);
+         this.solutionExplorerDockPanel.Text = "Solution Explorer";
+         // 
+         // solutionExplorerDockPanel_Container
+         // 
+         this.solutionExplorerDockPanel_Container.Controls.Add(this.solutionExplorerXtraUserControl1);
+         this.solutionExplorerDockPanel_Container.Location = new System.Drawing.Point(0, 0);
+         this.solutionExplorerDockPanel_Container.Name = "solutionExplorerDockPanel_Container";
+         this.solutionExplorerDockPanel_Container.Size = new System.Drawing.Size(339, 642);
+         this.solutionExplorerDockPanel_Container.TabIndex = 0;
+         // 
+         // solutionExplorerXtraUserControl1
+         // 
+         this.solutionExplorerXtraUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.solutionExplorerXtraUserControl1.Location = new System.Drawing.Point(0, 0);
+         this.solutionExplorerXtraUserControl1.Name = "solutionExplorerXtraUserControl1";
+         this.barManager1.SetPopupContextMenu(this.solutionExplorerXtraUserControl1, this.solutionExplorerPopupMenu);
+         this.solutionExplorerXtraUserControl1.Size = new System.Drawing.Size(339, 642);
+         this.solutionExplorerXtraUserControl1.TabIndex = 0;
+         // 
+         // dataStorePopupMenu
+         // 
+         this.dataStorePopupMenu.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.refreshDataStoreBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.openDataStoreBarButtonItem, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.closeDataStoreBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.importDataStoreBarButtonItem, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.exportDataStoreBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.newDataStoreBarButtonItem, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.testDataStoreConnectionBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.deleteDataStoreBarButtonItem, true)});
+         this.dataStorePopupMenu.Manager = this.barManager1;
+         this.dataStorePopupMenu.Name = "dataStorePopupMenu";
+         // 
          // solutionExplorerPopupMenu
          // 
          this.solutionExplorerPopupMenu.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
@@ -1071,19 +1086,6 @@
          this.solutionExplorerPopupMenu.Manager = this.barManager1;
          this.solutionExplorerPopupMenu.Name = "solutionExplorerPopupMenu";
          // 
-         // dataStorePopupMenu
-         // 
-         this.dataStorePopupMenu.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.refreshDataStoreBarButtonItem),
-            new DevExpress.XtraBars.LinkPersistInfo(this.openDataStoreBarButtonItem, true),
-            new DevExpress.XtraBars.LinkPersistInfo(this.closeDataStoreBarButtonItem),
-            new DevExpress.XtraBars.LinkPersistInfo(this.importDataStoreBarButtonItem, true),
-            new DevExpress.XtraBars.LinkPersistInfo(this.exportDataStoreBarButtonItem),
-            new DevExpress.XtraBars.LinkPersistInfo(this.newDataStoreBarButtonItem, true),
-            new DevExpress.XtraBars.LinkPersistInfo(this.deleteDataStoreBarButtonItem, true)});
-         this.dataStorePopupMenu.Manager = this.barManager1;
-         this.dataStorePopupMenu.Name = "dataStorePopupMenu";
-         // 
          // tabbedView1
          // 
          this.tabbedView1.DocumentGroups.AddRange(new DevExpress.XtraBars.Docking2010.Views.Tabbed.DocumentGroup[] {
@@ -1094,6 +1096,15 @@
          dockingContainer1.Element = this.documentGroup1;
          this.tabbedView1.RootContainer.Nodes.AddRange(new DevExpress.XtraBars.Docking2010.Views.Tabbed.DockingContainer[] {
             dockingContainer1});
+         // 
+         // hideContainerRight
+         // 
+         this.hideContainerRight.BackColor = System.Drawing.SystemColors.Control;
+         this.hideContainerRight.Controls.Add(this.rightPanelContainer);
+         this.hideContainerRight.Dock = System.Windows.Forms.DockStyle.Right;
+         this.hideContainerRight.Location = new System.Drawing.Point(1274, 53);
+         this.hideContainerRight.Name = "hideContainerRight";
+         this.hideContainerRight.Size = new System.Drawing.Size(19, 715);
          // 
          // Form1
          // 
@@ -1125,7 +1136,6 @@
          this.taskListDockPanel_Container.ResumeLayout(false);
          this.errorListDockPanel.ResumeLayout(false);
          this.errorListDockPanel_Container.ResumeLayout(false);
-         this.hideContainerRight.ResumeLayout(false);
          this.rightPanelContainer.ResumeLayout(false);
          this.dataStorePropertiesDockPanel.ResumeLayout(false);
          this.propertiesDockPanel_Container.ResumeLayout(false);
@@ -1134,13 +1144,14 @@
          this.projectPropertiesDockPanel.ResumeLayout(false);
          this.projectPropertiesDockPanel_Container.ResumeLayout(false);
          this.leftPanelContainer.ResumeLayout(false);
-         this.solutionExplorerDockPanel.ResumeLayout(false);
-         this.solutionExplorerDockPanel_Container.ResumeLayout(false);
          this.dataStoreDockPanel.ResumeLayout(false);
          this.dataStoreDockPanel_Container.ResumeLayout(false);
-         ((System.ComponentModel.ISupportInitialize)(this.solutionExplorerPopupMenu)).EndInit();
+         this.solutionExplorerDockPanel.ResumeLayout(false);
+         this.solutionExplorerDockPanel_Container.ResumeLayout(false);
          ((System.ComponentModel.ISupportInitialize)(this.dataStorePopupMenu)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.solutionExplorerPopupMenu)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.tabbedView1)).EndInit();
+         this.hideContainerRight.ResumeLayout(false);
          this.ResumeLayout(false);
          this.PerformLayout();
 
@@ -1216,7 +1227,6 @@
       private DevExpress.XtraBars.BarSubItem recentSolutionsBarSubItem;
       private DevExpress.XtraBars.BarButtonItem exitBarButtonItem;
       private DevExpress.XtraBars.Docking.AutoHideContainer hideContainerBottom;
-      private DevExpress.XtraBars.Docking.AutoHideContainer hideContainerRight;
       private DevExpress.XtraBars.BarButtonItem openProjectBarButtonItem;
       private DevExpress.XtraBars.BarButtonItem openSolutionBarButtonItem;
       private DevExpress.XtraBars.PopupMenu solutionExplorerPopupMenu;
@@ -1245,6 +1255,8 @@
       private DevExpress.XtraBars.BarButtonItem barButtonItem22;
       private DevExpress.XtraBars.BarButtonItem barButtonItem19;
       private DevExpress.XtraBars.BarButtonItem barButtonItem23;
+      private DevExpress.XtraBars.BarButtonItem testDataStoreConnectionBarButtonItem;
+      private DevExpress.XtraBars.Docking.AutoHideContainer hideContainerRight;
    }
 }
 

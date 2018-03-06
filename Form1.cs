@@ -210,7 +210,6 @@ namespace FrontEnd
          {
             return;
          }
-
       }
 
       private void closeDataStoreBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
@@ -227,6 +226,23 @@ namespace FrontEnd
 
       private void newDataStoreBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
+      }
+
+      private void testDataStoreConnectionBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
+      {
+         // Execute in Background...
+         //         this._dsRow = sender as System.Data.DataRow;
+         if( this._dsRow == null )
+         {
+            this._dsRow = this.dataStoresXtraUserControl1.GET_SELECTED_DATASTORE( );
+         }
+         ConfigurationSetting.DataStore ds = this._dsRow[ ConfigurationSetting.DataStore.TAG_COLNAME ] as ConfigurationSetting.DataStore;
+         if( !ds.IsValidProviderName || !ds.IsValidStagePathDir)
+         {
+            return; // STATUS BAR MESSAGEM OR OUTPUT MESSAGE AND PROPERTIES SIGNAL AND TREE ICON SIGNAL!...
+         }
+         bool isOk = Program.TestAqbSqlContext4SQLiteConnection( ds.ConnectionString );
+         return;
       }
 
       private void deleteDataStoreBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )

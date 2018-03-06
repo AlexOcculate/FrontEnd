@@ -28,9 +28,9 @@ namespace FrontEnd
          //
          Application.EnableVisualStyles( );
          Application.SetCompatibleTextRenderingDefault( false );
-         Application.Run( new Form1( ) );
+         //         Application.Run( new Form1( ) );
+         x( );
       }
-
       private static Assembly currentAssemblyCore;
       private static Assembly CurrentAssembly
       {
@@ -44,7 +44,113 @@ namespace FrontEnd
          }
       }
 
+      // -------------------------------------------------------
+
+      private static void x()
+      {
+         FrontEnd.XYZ o = new XYZ( );
+
+         o.LoadingDataStores += O_LoadingDataStores;
+         o.LoadedDataStores += O_LoadedDataStores;
+         o.SavingDataStores += O_SavingDataStores;
+         o.SavedDataStores += O_SavedDataStores;
+         o.CreatingDataStore += O_CreatingDataStore;
+         o.CreatedDataStore += O_CreatedDataStore;
+         o.UpdatingDataStore += O_UpdatingDataStore;
+         o.UpdatedDataStore += O_UpdatedDataStore;
+         o.DeletingDataStore += O_DeletingDataStore;
+         o.DeletedDataStore += O_DeletedDataStore;
+         //
+         o.Trigger( );
+      }
+
+
+      private static void O_CreatingDataStore( object sender, XYZ.CreatingDataStoreArgs ea )
+      {
+         ea.Cancel = true;
+      }
+      private static void O_CreatedDataStore( object sender, XYZ.CreatedDataStoreArgs ea )
+      {
+         if( ea.Canceled )
+         {
+            return;
+         }
+      }
+
+      private static void O_UpdatingDataStore( object sender, XYZ.UpdatingDataStoreArgs ea )
+      {
+         ea.Cancel = true;
+      }
+      private static void O_UpdatedDataStore( object sender, XYZ.UpdatedDataStoreArgs ea )
+      {
+         if( ea.Canceled )
+         {
+            return;
+         }
+      }
+
+      private static void O_DeletingDataStore( object sender, XYZ.DeletingDataStoreArgs ea )
+      {
+         ea.Cancel = true;
+      }
+      private static void O_DeletedDataStore( object sender, XYZ.DeletedDataStoreArgs ea )
+      {
+         if( ea.Canceled )
+         {
+            return;
+         }
+      }
+
+      private static void O_SavingDataStores( object sender, XYZ.SavingDataStoresArgs ea )
+      {
+         ea.Cancel = true;
+      }
+      private static void O_SavedDataStores( object sender, XYZ.SavedDataStoresArgs ea )
+      {
+         if( ea.Canceled )
+         {
+            return;
+         }
+      }
+
+      private static void O_LoadingDataStores( object sender, XYZ.LoadingDataStoresArgs ea )
+      {
+         ea.Cancel = true;
+      }
+      private static void O_LoadedDataStores( object sender, XYZ.LoadedDataStoresArgs ea )
+      {
+         if( ea.Canceled )
+         {
+            return;
+         }
+      }
+
       #region --- Active Query Builder ---
+      public static bool TestAqbSqlContext4SQLiteConnection( string cs )
+      {
+         ActiveQueryBuilder.Core.SQLContext sc = new ActiveQueryBuilder.Core.SQLContext( )
+         {
+            SyntaxProvider = new ActiveQueryBuilder.Core.SQLiteSyntaxProvider( ),
+            MetadataProvider = new ActiveQueryBuilder.Core.SQLiteMetadataProvider( )
+            {
+               Connection = new System.Data.SQLite.SQLiteConnection( )
+               {
+                  ConnectionString = cs
+               }
+            }
+         };
+         {
+            // sc.MetadataContainer.LoadingOptions.OfflineMode = false;
+            // sc.MetadataContainer.LoadingOptions.LoadSystemObjects = false;
+            // sc.MetadataContainer.LoadingOptions.LoadDefaultDatabaseOnly = true;
+            sc.LoadingOptions.OfflineMode = false;
+            sc.LoadingOptions.LoadSystemObjects = false;
+            sc.LoadingOptions.LoadDefaultDatabaseOnly = true;
+            sc.MetadataContainer.LoadAll( false );
+         }
+         ActiveQueryBuilder.Core.MetadataList items = sc.MetadataContainer.Items;
+         return items == null ? false : true;
+      }
       public static ActiveQueryBuilder.Core.SQLContext CreateAqbSqlContext4SQLiteOffline( string filepath )
       {
          ActiveQueryBuilder.Core.SQLContext sc = new ActiveQueryBuilder.Core.SQLContext( )
@@ -78,6 +184,7 @@ namespace FrontEnd
             }
          };
          //{
+         //   sc.MetadataContainer.LoadAll( WithField );
          //   sc.MetadataContainer.LoadingOptions.OfflineMode = true;
          //   sc.MetadataContainer.ImportFromXML( filepath );
          //}
@@ -664,6 +771,8 @@ namespace FrontEnd
          return t;
       }
       #endregion
+
+      // --------------------------------------
 
    }
 }

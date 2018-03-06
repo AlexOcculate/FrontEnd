@@ -22,6 +22,7 @@ namespace FrontEnd
          {
             this.LoadNodes( );
          }
+         this.treeView_FocusedNodeChanged( null, new FocusedNodeChangedEventArgs( null, null ) );
       }
       //
       private bool IsInDesignMode()
@@ -196,7 +197,7 @@ namespace FrontEnd
       // The delegate procedure we are assigning to our object
       //public delegate void DataStoresPropertiesHandlerHandler( object myObject, System.Data.DataRow row );
       //public event DataStoresPropertiesHandlerHandler OnDataStoresProperties;
-      public event EventHandler PropertiesItemClick;
+      public event System.EventHandler PropertiesItemClick;
       private void iProperties_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
          System.Data.DataRow row = this.GET_SELECTED_DATASTORE( );
@@ -235,7 +236,7 @@ namespace FrontEnd
          }
       }
 
-      private System.Data.DataRow GET_SELECTED_DATASTORE()
+      public System.Data.DataRow GET_SELECTED_DATASTORE()
       {
          TreeListMultiSelection selection = this.treeView.Selection;
          if( selection == null || selection.Count == 0 )

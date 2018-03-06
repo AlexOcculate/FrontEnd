@@ -158,6 +158,7 @@
     <Compile Include="Modules\XtraUserControl2.Designer.cs">
       <DependentUpon>XtraUserControl2.cs</DependentUpon>
     </Compile>
+    <Compile Include="XYZ.cs" />
     <EmbeddedResource Include="Modules\MetadataItemXtraUserControl.resx">
       <DependentUpon>MetadataItemXtraUserControl.cs</DependentUpon>
     </EmbeddedResource>
