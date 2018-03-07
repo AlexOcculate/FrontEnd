@@ -4,10 +4,30 @@
    using System.Collections.Generic;
    using System.Linq;
    using System.Xml.Linq;
-   internal class LinqXml
+   internal partial class LinqXml
    {
       public static void EntryPoint()
       {
+         {
+            XDocument doc = SaveDsCfgDocDataToAnXmlFile( @"DsCfgData.xml" );
+            List<ConnectionString> csPrvList = ConnectionString.LoadConnectionStringCollection( doc );
+            List<ConnectionString> csList = ConnectionString.LoadConnectionStringCollection( );
+            List<DataStore> dsColl = DataStore.LoadDataStoreCollection( doc );
+            //
+            List<DataStore> loadDsCfgDoc = LoadDsCollDoc( doc );
+            //List<ConnectionString> privCsList = LoadCsCollDoc( doc );
+         }
+         //
+         //         OtherTests( );
+      }
+
+      private static void OtherTests()
+      {
+         {
+            XDocument doc = SaveEmployeesDocDataToAnXmlFile( @"EmployeesData.xml" );
+            List<Employee> loadEmployeesDoc = LoadEmployeesDoc( doc );
+         }
+
          { // https://msdn.microsoft.com/en-us/library/bb308960.aspx
             SaveContacsDocDataToAnXmlFile( @"contacsdata.xml" );
          }
@@ -38,10 +58,198 @@
                                       select new Post( post );
 
             // Print each post to the console
-            foreach( var post in posts )
+            foreach( Post post in posts )
+            {
                Console.WriteLine( post.ToString( ) );
+            }
          }
       }
+
+      /////////////////////////////////////////////////////////////////////////
+
+      private static XDocument SaveDsCfgDocDataToAnXmlFile( string filename )
+      {
+         XDocument doc = GetDsCfgDoc( );
+         doc.Save( filename );
+         return doc;
+      }
+
+      public static System.Collections.Generic.List<ConnectionString> LoadCsCollDoc( XDocument doc )
+      {
+         System.Collections.Generic.List<ConnectionString> list =
+            (
+               from e in doc.Descendants( "cs" )
+               select new ConnectionString
+               {
+                  Name = (string) e.Attribute( "nm" ),
+                  ProviderName = (string) e.Attribute( "pn" ),
+                  isPrivate = (bool) e.Attribute( "pvt" ),
+                  String = (string) e.Element( "str" )
+               }
+            ).ToList( );
+         return list;
+      }
+      public static System.Collections.Generic.List<DataStore> LoadDsCollDoc( XDocument doc )
+      {
+         System.Collections.Generic.List<DataStore> list =
+            (
+               from e in doc.Descendants( "ds" )
+               select new DataStore
+               {
+                  Name = (string) e.Attribute( "nm" ).Value, // ?? "Invalid Name",
+                  ConnectionStringName = (string) e.Attribute( "csNm" ), // ?? "Invalid Name",
+                  LoadDefaultDatabaseOnly = (bool) e.Attribute( "lddo" ), // ?? false,
+                  LoadSystemObjects = (bool) e.Attribute( "lso" ), //?? ,
+                  WithFields = (bool) e.Attribute( "wf" ),
+                  PathDir = (string) e.Element( "stgDir" )
+               }
+            ).ToList( );
+         return list;
+      }
+
+      public static XDocument GetDsCfgDoc()
+      {
+         XDocument doc =
+            new XDocument(
+               new XDeclaration( "1.0", "utf-8", "yes" ),
+               new XComment( "LINQ to XML Contacts XML Example" ),
+               new XProcessingInstruction( "MyApp", "123-44-4444" ),
+               new XElement( "cfg",
+                  new XElement( "dsCfg",
+                     new XElement( "stgDir", "./../.." ), // StagePathDir
+                     new XElement( "dsColl",
+                        new XElement( "ds",
+                           new XAttribute( "nm", "Patrick Hines" ),
+                           new XAttribute( "csNm", "144" ),
+                           new XAttribute( "lddo", true ), // LoadDefaultDatabaseOnly
+                           new XAttribute( "lso", true ), // LoadSystemObjects
+                           new XAttribute( "wf", true ), // WithFields
+                           new XElement( "stgDir", "./../.." ) // stage path dir
+                        ),
+                        new XElement( "ds",
+                           new XAttribute( "nm", "Alex" ),
+                           new XAttribute( "csNm", "x144" ),
+                           new XAttribute( "lddo", true ), // LoadDefaultDatabaseOnly
+                           new XAttribute( "lso", true ), // LoadSystemObjects
+                           new XAttribute( "wf", true ), // WithFields
+                           new XElement( "stgDir", "./../.." )  // StagePathDir
+                        )
+                     )
+                  ),
+                  new XElement( "csColl",
+                     new XElement( "cs",
+                        new XAttribute( "pvt", true ), // isPrivate
+                        new XAttribute( "nm", "144" ),
+                        new XAttribute( "pn", "System.Data.SqlClient" ), // ProviderName
+                        new XElement( "str", "zzzasda:xcxxxc.xcxc.xcxc" ) // ConnectionString
+                     ),
+                     new XElement( "cs",
+                        new XAttribute( "pvt", true ), // isPrivate
+                        new XAttribute( "nm", "144" ),
+                        new XAttribute( "pn", "System.Data.SqlClient" ), // ProviderName
+                        new XElement( "str", "zzzasda:xcxxxc.xcxc.xcxc" ) // ConnectionString
+                     ),
+                     new XElement( "cs",
+                        new XAttribute( "pvt", true ), // isPrivate
+                        new XAttribute( "nm", "x144" ),
+                        new XAttribute( "pn", "System.Data.SqlClient" ), // ProviderName
+                        new XElement( "str", "sql:url.qwerty" ) // ConnectionString
+                     )
+                  )
+               )
+            );
+         return doc;
+      }
+
+      public partial class DataStoreConfig
+      {
+         public string StagePathDir { get; set; }
+         public System.Collections.Generic.List<DataStore> DataStores { get; set; }
+         public System.Collections.Generic.List<ConnectionString> ConnectionStrings { get; set; }
+      }
+
+      /////////////////////////////////////////////////////////////////////////
+
+      public class Employee
+      {
+         public int ID { get; set; }
+         public string Nm { get; set; }
+         public int Pos { get; set; }
+         public string Xyz { get; set; }
+         public List<Proj> Projs { get; set; }
+      }
+      public class Proj
+      {
+         public string Nm { get; set; }
+         public int Age { get; set; }
+      }
+
+      public static List<Employee> LoadEmployeesDoc( XDocument doc )
+      {
+         List<Employee> eList = (
+            from e in doc.Root.Elements( "employee" )
+            select new Employee
+            {
+               ID = (int) e.Element( "id" ),
+               Nm = (string) e.Element( "nm" ),
+               Pos = (int) e.Element( "pos" ),
+               Xyz = (string) e.Element( "xyz" ),
+               Projs =
+               (
+                  from p in e.Elements( "projs" ).Elements( "proj" )
+                  select new Proj
+                  {
+                     Nm = (string) p.Element( "nm" ),
+                     Age = (int) p.Element( "age" )
+                  }
+               ).ToList( )
+            }
+         ).ToList( );
+         return eList;
+      }
+
+      private static XDocument SaveEmployeesDocDataToAnXmlFile( string filename )
+      {
+         XDocument doc = GetEmployeesDoc( );
+         doc.Save( filename );
+         return doc;
+      }
+
+      public static XDocument GetEmployeesDoc()
+      {
+         XDocument doc =
+            new XDocument(
+               new XDeclaration( "1.0", "utf-8", "yes" ),
+               new XComment( "LINQ to XML Contacts XML Example" ),
+               new XProcessingInstruction( "MyApp", "123-44-4444" ),
+               new XElement( "employees",
+                  new XElement( "employee",
+                     new XElement( "id", "10" ),
+                     new XElement( "nm", "Patrick Hines" ),
+                     new XElement( "pos", "144" ),
+                     new XElement( "xyz", "206-555-0144",
+                        new XAttribute( "type", "home" ) ),
+                     new XElement( "projs",
+                        new XElement( "proj",
+                           new XElement( "nm", "qwerty" ),
+                           new XElement( "age", "188" ) ),
+                        new XElement( "proj",
+                           new XElement( "nm", "qwerty" ),
+                           new XElement( "age", "188" ) ),
+                        new XElement( "proj",
+                           new XElement( "nm", "qwerty" ),
+                           new XElement( "age", "188" ) ),
+                        new XElement( "proj",
+                           new XElement( "nm", "qwerty" ),
+                           new XElement( "age", "188" ) )
+                     )
+                  )
+               )
+            );
+         return doc;
+      }
+
+      /////////////////////////////////////////////////////////////////////////
 
       private static void SaveContacsDocDataToAnXmlFile( string filename )
       {
@@ -71,7 +279,7 @@
                         new XElement( "state", "WA" ),
                         new XElement( "postal", "68042" ) ),
                      new XElement( ns + "e",
-                        new XAttribute( XNamespace.Xmlns + "p", ns ) )
+                        new XAttribute( XNamespace.Xmlns + nameof( Proj ), ns ) )
                   )
                )
             );

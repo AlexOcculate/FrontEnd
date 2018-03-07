@@ -84,7 +84,7 @@ namespace FrontEnd.ProjectSetting
                   if( dse.Found )
                   {
                      // PATH = DS_STAGE_PATH + DS_NAME + SNAPSHOT_NAME
-                     ssp = System.IO.Path.Combine( dse.DataStore.StagePathDir, dse.Name, dse.SnapshotFile );
+                     ssp = System.IO.Path.Combine( (string) dse.DataStore.StagePathDir, dse.Name, dse.SnapshotFile );
                      exists = System.IO.File.Exists( ssp );
                      if( exists )
                      {
