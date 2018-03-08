@@ -101,7 +101,7 @@
                   LoadDefaultDatabaseOnly = (bool) e.Attribute( "lddo" ), // ?? false,
                   LoadSystemObjects = (bool) e.Attribute( "lso" ), //?? ,
                   WithFields = (bool) e.Attribute( "wf" ),
-                  PathDir = (string) e.Element( "stgDir" )
+                  StagePathDir = (string) e.Element( "stgDir" )
                }
             ).ToList( );
          return list;

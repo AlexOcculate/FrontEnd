@@ -20,7 +20,7 @@ namespace LinqXml
          Application.EnableVisualStyles( );
          Application.SetCompatibleTextRenderingDefault( false );
          {
-            LinqXml.EntryPoint( );
+//            LinqXml.EntryPoint( );
          }
          Application.Run( new Form1( ) );
       }

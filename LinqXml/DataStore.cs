@@ -9,7 +9,7 @@
       public bool LoadDefaultDatabaseOnly { get; set; }
       public bool LoadSystemObjects { get; set; }
       public bool WithFields { get; set; }
-      public string PathDir { get; set; }
+      public string StagePathDir { get; set; }
 
       public static System.Collections.Generic.List<DataStore> LoadDataStoreCollection( System.Xml.Linq.XDocument doc )
       {
@@ -23,7 +23,7 @@
                   LoadDefaultDatabaseOnly = (bool) e.Attribute( "lddo" ), // ?? false,
                   LoadSystemObjects = (bool) e.Attribute( "lso" ), //?? ,
                   WithFields = (bool) e.Attribute( "wf" ),
-                  PathDir = (string) e.Element( "stgDir" )
+                  StagePathDir = (string) e.Element( "stgDir" )
                }
             ).ToList( );
          return list;
