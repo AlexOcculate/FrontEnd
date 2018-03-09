@@ -12,7 +12,7 @@ namespace LinqXml
          //this.systemConnectionStringHandler1.Load( );
       }
 
-      private void systemConnectionStringHandler1_ProgressUpdateEvent( object sender, SystemConnectionStringHandler.ProgressUpdateEventArgs ea )
+      private void systemConnectionStringHandler1_ProgressUpdateEvent( object sender, SystemConnectionStringHandler.LoadProgressEventArgs ea )
       {
       }
 

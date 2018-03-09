@@ -29,7 +29,7 @@
       private void InitializeComponent()
       {
          this.components = new System.ComponentModel.Container();
-         this.connectionStringHandler1 = new LinqXml.ConnectionStringHandler(this.components);
+         this.connectionStringHandler1 = new ConnectionStringHandler(this.components);
          this.SuspendLayout();
          // 
          // Form1
@@ -45,7 +45,7 @@
 
       #endregion
 
-      private LinqXml.ConnectionStringHandler connectionStringHandler1;
+      private ConnectionStringHandler connectionStringHandler1;
    }
 }
 

@@ -9,6 +9,19 @@
       public static void EntryPoint()
       {
          {
+            ConnectionString o = new ConnectionString( )
+            {
+               Name = "   Alex Mello          ",
+               ProviderName = "   System.Data.SqlClient          ",
+               String = " 1234567890   "
+            };
+            o.PropertyChanged += O_PropertyChanged;
+            XElement xElement = o.GetXElement( );
+            ConnectionString parser = ConnectionString.GetPoco( xElement );
+            o.Name = "Alex M Occulate";
+            
+         }
+         { 
             XDocument doc = SaveDsCfgDocDataToAnXmlFile( @"DsCfgData.xml" );
             List<ConnectionString> csPrvList = ConnectionString.LoadConnectionStringCollection( doc );
             List<ConnectionString> csList = ConnectionString.LoadConnectionStringCollection( );
@@ -19,6 +32,10 @@
          }
          //
          //         OtherTests( );
+      }
+
+      private static void O_PropertyChanged( object sender, System.ComponentModel.PropertyChangedEventArgs e )
+      {
       }
 
       private static void OtherTests()
@@ -83,7 +100,7 @@
                {
                   Name = (string) e.Attribute( "nm" ),
                   ProviderName = (string) e.Attribute( "pn" ),
-                  isPrivate = (bool) e.Attribute( "pvt" ),
+//                  isPrivate = (bool) e.Attribute( "pvt" ),
                   String = (string) e.Element( "str" )
                }
             ).ToList( );

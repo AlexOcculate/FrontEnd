@@ -27,14 +27,14 @@ namespace LinqXml
          }
       }
 
-      #region --- ProgressUpdate EVENTS + HANDLERS + EXCEPTIONS ---
-      public delegate void ProgressUpdateEventHandler( object sender, ProgressUpdateEventArgs ea );
-      public event ProgressUpdateEventHandler ProgressUpdateEvent;
-      public class ProgressUpdateEventArgs : System.EventArgs
+      #region --- LoadProgress EVENTS + HANDLERS + EXCEPTIONS ---
+      public delegate void LoadProgressEventHandler( object sender, LoadProgressEventArgs ea );
+      public event LoadProgressEventHandler LoadProgressEvent;
+      public class LoadProgressEventArgs : System.EventArgs
       {
          private ProgressChangedEventArgs e;
 
-         public ProgressUpdateEventArgs( ProgressChangedEventArgs e )
+         public LoadProgressEventArgs( ProgressChangedEventArgs e )
          {
             this.e = e;
          }
@@ -53,26 +53,26 @@ namespace LinqXml
          // Returns:
          //     A unique System.Object indicating the user state.
          public object UserState { get { return this.e.UserState; } }
-         public ProgressUpdateException Exception { get; set; }
+         public LoadProgressException Exception { get; set; }
       }
       //
       [System.Serializable]
-      public class ProgressUpdateException : System.Exception
+      public class LoadProgressException : System.Exception
       {
-         public ProgressUpdateException() : base( ) { }
+         public LoadProgressException() : base( ) { }
 
-         public ProgressUpdateException( string message ) : base( message ) { }
+         public LoadProgressException( string message ) : base( message ) { }
 
-         public ProgressUpdateException( string format, params object[ ] args )
+         public LoadProgressException( string format, params object[ ] args )
              : base( string.Format( format, args ) ) { }
 
-         public ProgressUpdateException( string message, System.Exception innerException )
+         public LoadProgressException( string message, System.Exception innerException )
              : base( message, innerException ) { }
 
-         public ProgressUpdateException( string format, System.Exception innerException, params object[ ] args )
+         public LoadProgressException( string format, System.Exception innerException, params object[ ] args )
              : base( string.Format( format, args ), innerException ) { }
 
-         protected ProgressUpdateException( System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context )
+         protected LoadProgressException( System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context )
              : base( info, context ) { }
       }
       #endregion
@@ -181,10 +181,10 @@ namespace LinqXml
 
       private void backgroundWorker_ProgressChanged( object sender, ProgressChangedEventArgs e )
       {
-         if( this.ProgressUpdateEvent == null )
+         if( this.LoadProgressEvent == null )
             return;
-         ProgressUpdateEventArgs args = new ProgressUpdateEventArgs( e );
-         this.ProgressUpdateEvent?.Invoke( this, args );
+         LoadProgressEventArgs args = new LoadProgressEventArgs( e );
+         this.LoadProgressEvent?.Invoke( this, args );
       }
 
       private void backgroundWorker_RunWorkerCompleted( object sender, RunWorkerCompletedEventArgs e )
