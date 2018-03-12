@@ -1,0 +1,1143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XmlTemplateCategoryInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="MyTemplates" OptExpanded="true">
+  <TemplateCategory Name="ActiveQueryBuilder" OptExpanded="true">
+    <TemplateCategory Name="ZYZ" OptExpanded="true">
+      <Template Name="qwerty">
+        <Expansion Priority="0">
+          <Body>«?Set(EventName,EventName)»
+«?Set(ExceptionName,ExceptionName)»
+
+// «Link(«?Get(EventName)»)»
+// «Link(«?Get(ExceptionName)»)»
+
+
+«Caret»«FieldStart»«Link(«?Get(EventName)»)»«FieldEnd» «Link(«?Get(ExceptionName)»)»
+
+«Link(«?Get(EventName)»)»«Link(«?Get(ExceptionName)»)»
+</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="qwerty02">
+        <Expansion Priority="0">
+          <Body>// «Link(EventName)»
+// «Link(ExceptionName)»
+
+
+«Caret»«FieldStart»«Link(EventName)»«FieldEnd» «Link(ExceptionName)» ;
+
+«Link(EventName)»«Link(ExceptionName)»
+</Body>
+          <Context />
+        </Expansion>
+      </Template>
+    </TemplateCategory>
+    <Template Name="neahba">
+      <Expansion Priority="0">
+        <Body>#define «Paste»_EVENT_DEFINED
+#if «Paste»_EVENT_DEFINED
+//
+      #region --- Before and After «Paste» EVENTS + HANDLERS + EXCEPTIONS ---
+      public delegate void Before«Paste»EventHandler( object sender, Before«Paste»EventArgs ea );
+      public event Before«Paste»EventHandler Before«Paste»Event;
+      public class Before«Paste»EventArgs : System.EventArgs
+      {
+         public bool Cancel { get; set; }
+         public string Filename { get; set; }
+         public «Paste»Exception Exception { get; set; }
+      }
+//
+      public delegate void After«Paste»EventHandler( object sender, After«Paste»EventArgs ea );
+      public event After«Paste»EventHandler After«Paste»Event;
+      public class After«Paste»EventArgs : System.EventArgs
+      {
+         private Before«Paste»EventArgs args;
+         public bool wasCanceled { get { return this.args == null ? false : this.args.Cancel; } }
+         public bool hasException { get { return this.args.Exception != null; } }
+         public bool isOk { get { return !this.wasCanceled &amp;&amp; !this.hasException; } }
+         public After«Paste»EventArgs( Before«Paste»EventArgs args1 )
+         {
+            this.args = args1;
+         }
+      }
+//
+      [System.Serializable]
+      public class «Paste»Exception : System.Exception
+      {
+         public «Paste»Exception() : base( ) { }
+
+         public «Paste»Exception( string message ) : base( message ) { }
+
+         public «Paste»Exception( string format, params object[ ] args )
+             : base( string.Format( format, args ) ) { }
+
+         public «Paste»Exception( string message, System.Exception innerException )
+             : base( message, innerException ) { }
+
+         public «Paste»Exception( string format, System.Exception innerException, params object[ ] args )
+             : base( string.Format( format, args ), innerException ) { }
+
+         protected «Paste»Exception( System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context )
+             : base( info, context ) { }
+      }
+//
+      public void «Paste»( string filename )
+      {
+         Before«Paste»EventArgs args1 = new Before«Paste»EventArgs( );
+         After«Paste»EventArgs args2 = new After«Paste»EventArgs( args1 );
+         args1.Filename = filename;
+         this.Before«Paste»Event?.Invoke( this, args1 );
+         if( !args1.Cancel )
+         {
+            this.«Paste»Event( args1 );
+         }
+         this.After«Paste»Event?.Invoke( this, args2 );
+      }
+//
+      private void «Paste»Event( Before«Paste»EventArgs args )
+      {
+         try
+         {
+            «Caret»
+         }
+         catch( System.Exception ex )
+         {
+            args.Exception = new «Paste»Exception( null, ex ) ;
+         }
+         finally
+         {
+
+         }
+      }
+      #endregion
+#endif
+</Body>
+        <Context />
+        <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InString])</ContextString>
+      </Expansion>
+    </Template>
+    <Template Name="neah">
+      <Expansion Priority="0">
+        <Body>//
+      #region --- «Paste» EVENTS + HANDLERS + EXCEPTIONS ---
+      public delegate void «Paste»EventHandler( object sender, «Paste»EventArgs ea );
+      public event «Paste»EventHandler «Paste»Event;
+      public class «Paste»EventArgs : System.EventArgs
+      {
+         public bool Cancel { get; set; }
+         public string Filename { get; set; }
+         public «Paste»Exception Exception { get; set; }
+      }
+//
+      [System.Serializable]
+      public class «Paste»Exception : System.Exception
+      {
+         public «Paste»Exception() : base( ) { }
+
+         public «Paste»Exception( string message ) : base( message ) { }
+
+         public «Paste»Exception( string format, params object[ ] args )
+             : base( string.Format( format, args ) ) { }
+
+         public «Paste»Exception( string message, System.Exception innerException )
+             : base( message, innerException ) { }
+
+         public «Paste»Exception( string format, System.Exception innerException, params object[ ] args )
+             : base( string.Format( format, args ), innerException ) { }
+
+         protected «Paste»Exception( System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context )
+             : base( info, context ) { }
+      }
+//
+//         «Paste»EventArgs args1 = new «Paste»EventArgs( );
+//         args1.Filename = filename;
+//         this.«Paste»Event?.Invoke( this, args2 );
+//
+      #endregion
+</Body>
+        <Context />
+        <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InString])</ContextString>
+      </Expansion>
+    </Template>
+    <Template Name="neahpc">
+      <Expansion Priority="0">
+        <Body>#region --- OnPropertyChanged EVENTS + HANDLERS + EXCEPTIONS --- 
+public event PropertyChangedEventHandler PropertyChanged;
+protected void OnPropertyChanged( PropertyChangedEventArgs e )
+{
+   PropertyChanged?.Invoke( this, e );
+}
+protected void OnPropertyChanged( string propertyName )
+{
+   OnPropertyChanged( new PropertyChangedEventArgs( propertyName ) );
+}
+#endregion
+«Caret»</Body>
+        <Context />
+        <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InString])</ContextString>
+      </Expansion>
+    </Template>
+    <Template Name="#Exception#">
+      <Expansion Priority="0">
+        <Body>// «?Get(EventName)»
+// «?Get(ExceptionName)»
+      #region --- «?Get(EventName)» «?Get(ExceptionName)» EXCEPTION ---
+      [System.Serializable]
+      public class «?Get(EventName)»Exception : System.Exception
+      {
+         public «Link(«?Get(ExceptionName)»)»Exception() : base( ) { }
+
+         public «Link(«?Get(ExceptionName)»)»Exception( string message ) : base( message ) { }
+
+         public «Link(«?Get(ExceptionName)»)»Exception( string format, params object[ ] args )
+             : base( string.Format( format, args ) ) { }
+
+         public «Link(«?Get(ExceptionName)»)»Exception( string message, System.Exception innerException )
+             : base( message, innerException ) { }
+
+         public «Link(«?Get(ExceptionName)»)»Exception( string format, System.Exception innerException, params object[ ] args )
+             : base( string.Format( format, args ), innerException ) { }
+
+         protected «Link(«?Get(ExceptionName)»)»Exception( System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context )
+             : base( info, context ) { }
+      }
+      #endregion
+</Body>
+        <Context />
+      </Expansion>
+    </Template>
+    <Template Name="ebgw">
+      <Expansion Priority="0">
+        <Body>public void «Caret»«FieldStart»«Link(EventName)»«FieldEnd»( object e ) { this.«Link(EventName)»BackgroundWorker.RunWorkerAsync( e ); }
+public bool IsBusy«Link(EventName)» { get { return this.«Link(EventName)»BackgroundWorker.IsBusy; } }
+public void Cancel«Link(EventName)»()
+{
+   if( this.IsBusy«Link(EventName)» )
+   {
+      this.«Link(EventName)»BackgroundWorker.CancelAsync( );
+   }
+}
+
+#region --- «Link(EventName)» BackgroundWorker Init, Events, Handlers &amp; Exceptions... ---
+
+private System.ComponentModel.BackgroundWorker «Link(EventName)»BackgroundWorker;
+
+private void Initialize«Link(EventName)»BackgroundWorkerComponent()
+{
+   this.«Link(EventName)»BackgroundWorker = new System.ComponentModel.BackgroundWorker();
+   this.«Link(EventName)»BackgroundWorker.WorkerReportsProgress = true;
+   this.«Link(EventName)»BackgroundWorker.WorkerSupportsCancellation = true;
+   this.«Link(EventName)»BackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.«Link(EventName)»BackgroundWorker_DoWork);
+   this.«Link(EventName)»BackgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.«Link(EventName)»BackgroundWorker_ProgressChanged);
+   this.«Link(EventName)»BackgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.«Link(EventName)»BackgroundWorker_RunWorkerCompleted);
+}
+
+private void «Link(EventName)»BackgroundWorker_DoWork( object sender, DoWorkEventArgs e )
+{
+   e.Cancel = true;
+   this.«Link(EventName)»BackgroundWorker.ReportProgress( 0 );
+   if( !(e.Argument is Object) )
+      return;
+   Object argument = e.Argument as Object; // get argument...
+   if( !this.«Link(EventName)»BackgroundWorker.CancellationPending )
+   {
+      int total = 10;
+      for( int i = 0; i &lt; total; i++ )
+      {
+         if( !this.«Link(EventName)»BackgroundWorker.CancellationPending )
+         {
+            int value = (i + 1) * (100 / total);
+            this.«Link(EventName)»BackgroundWorker.ReportProgress( value, total );
+         }
+         else
+         {
+            this.«Link(EventName)»BackgroundWorker.ReportProgress( 0 );
+            return;
+         }
+      }
+      e.Result = new object(); // return result...
+      e.Cancel = false;
+   }
+}
+
+private void «Link(EventName)»BackgroundWorker_ProgressChanged( object sender, ProgressChangedEventArgs e )
+{
+   if( this.«Link(EventName)»ProgressEvent == null )
+            return;
+   «Link(EventName)»ProgressEventArgs args = new «Link(EventName)»ProgressEventArgs( e );
+   this.«Link(EventName)»ProgressEvent?.Invoke( this, args );
+}
+
+private void «Link(EventName)»BackgroundWorker_RunWorkerCompleted( object sender, RunWorkerCompletedEventArgs e )
+{
+   if( e.Cancelled )
+   {
+      // "Process was cancelled";
+   }
+   else if( e.Error != null )
+   {
+      // "There was an error running the process. The thread aborted";
+   }
+   else
+   {
+      // "Process was completed";
+   }
+   if( this.«Link(EventName)»CompletedEvent == null )
+      return;
+   «Link(EventName)»CompletedEventArgs args = new «Link(EventName)»CompletedEventArgs( e );
+   this.«Link(EventName)»CompletedEvent?.Invoke( this, args );
+}
+
+#region --- «Link(EventName)»Progress EVENTS + HANDLERS + EXCEPTIONS ---
+public delegate void «Link(EventName)»ProgressEventHandler( object sender, «Link(EventName)»ProgressEventArgs ea );
+public event «Link(EventName)»ProgressEventHandler «Link(EventName)»ProgressEvent;
+public class «Link(EventName)»ProgressEventArgs : System.EventArgs
+{
+   private ProgressChangedEventArgs e;
+
+   public «Link(EventName)»ProgressEventArgs( ProgressChangedEventArgs e )
+   {
+      this.e = e;
+   }
+   public bool Cancel { get; set; }
+   //
+   // Summary:
+   //     Gets the asynchronous task progress percentage.
+   //
+   // Returns:
+   //     A percentage value indicating the asynchronous task progress.
+   public int ProgressPercentage { get { return this.e.ProgressPercentage; } }
+   //
+   // Summary:
+   //     Gets a unique user state.
+   //
+   // Returns:
+   //     A unique System.Object indicating the user state.
+   public object UserState { get { return this.e.UserState; } }
+   public «Link(EventName)»ProgressException Exception { get; set; }
+}
+//
+[System.Serializable]
+public class «Link(EventName)»ProgressException : System.Exception
+{
+   public «Link(EventName)»ProgressException() : base( ) { }
+
+   public «Link(EventName)»ProgressException( string message ) : base( message ) { }
+
+   public «Link(EventName)»ProgressException( string format, params object[ ] args )
+       : base( string.Format( format, args ) ) { }
+
+   public «Link(EventName)»ProgressException( string message, System.Exception innerException )
+       : base( message, innerException ) { }
+
+   public «Link(EventName)»ProgressException( string format, System.Exception innerException, params object[ ] args )
+       : base( string.Format( format, args ), innerException ) { }
+
+   protected «Link(EventName)»ProgressException( System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context )
+       : base( info, context ) { }
+}
+#endregion
+
+#region --- «Link(EventName)»Completed EVENTS + HANDLERS + EXCEPTIONS ---
+public delegate void «Link(EventName)»CompletedEventHandler( object sender, «Link(EventName)»CompletedEventArgs ea );
+public event «Link(EventName)»CompletedEventHandler «Link(EventName)»CompletedEvent;
+public class «Link(EventName)»CompletedEventArgs : System.EventArgs
+{
+   private RunWorkerCompletedEventArgs e;
+
+   public «Link(EventName)»CompletedEventArgs( RunWorkerCompletedEventArgs e )
+   {
+      this.e = e;
+      if( this.e.Error != null )
+      {
+         this.Exception = new «Link(EventName)»CompletedException( "", this.e.Error );
+      }
+   }
+
+   public bool Cancelled { get { return this.e.Cancelled; } }
+   //
+   // Summary:
+   //     Gets a value that represents the result of an asynchronous operation.
+   //
+   // Returns:
+   //     An System.Object representing the result of an asynchronous operation.
+   //
+   // Exceptions:
+   //   T:System.Reflection.TargetInvocationException:
+   //     System.ComponentModel.AsyncCompletedEventArgs.Error is not null. The System.Exception.InnerException
+   //     property holds a reference to System.ComponentModel.AsyncCompletedEventArgs.Error.
+   //
+   //   T:System.InvalidOperationException:
+   //     System.ComponentModel.AsyncCompletedEventArgs.Cancelled is true.
+   public object Result { get { return this.e?.Result; } }
+   //
+   // Summary:
+   //     Gets a value that represents the user state.
+   //
+   // Returns:
+   //     An System.Object representing the user state.
+   [Browsable( false )]
+   [EditorBrowsable( EditorBrowsableState.Never )]
+   public object UserState { get { return this.e?.UserState; } }
+   public «Link(EventName)»CompletedException Exception { get; set; }
+}
+//
+[System.Serializable]
+public class «Link(EventName)»CompletedException : System.Exception
+{
+   public «Link(EventName)»CompletedException() : base( ) { }
+
+   public «Link(EventName)»CompletedException( string message ) : base( message ) { }
+
+   public «Link(EventName)»CompletedException( string format, params object[ ] args )
+       : base( string.Format( format, args ) ) { }
+
+   public «Link(EventName)»CompletedException( string message, System.Exception innerException )
+       : base( message, innerException ) { }
+
+   public «Link(EventName)»CompletedException( string format, System.Exception innerException, params object[ ] args )
+       : base( string.Format( format, args ), innerException ) { }
+
+   protected «Link(EventName)»CompletedException( System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context )
+       : base( info, context ) { }
+}
+#endregion
+
+#endregion
+</Body>
+        <Context />
+        <UsingClause>System.ComponentModel</UsingClause>
+      </Expansion>
+    </Template>
+    <Template Name="AQBTC">
+      <Expansion Priority="0">
+        <Body>
+      #region --- Active Query Builder ---
+      public static bool TestAqbSqlContext4SQLiteConnection( string cs )
+      {
+         ActiveQueryBuilder.Core.SQLContext sc = new ActiveQueryBuilder.Core.SQLContext( )
+         {
+            SyntaxProvider = new ActiveQueryBuilder.Core.SQLiteSyntaxProvider( ),
+            MetadataProvider = new ActiveQueryBuilder.Core.SQLiteMetadataProvider( )
+            {
+               Connection = new System.Data.SQLite.SQLiteConnection( )
+               {
+                  ConnectionString = cs
+               }
+            }
+         };
+         {
+            // sc.MetadataContainer.LoadingOptions.OfflineMode = false;
+            // sc.MetadataContainer.LoadingOptions.LoadSystemObjects = false;
+            // sc.MetadataContainer.LoadingOptions.LoadDefaultDatabaseOnly = true;
+            sc.LoadingOptions.OfflineMode = false;
+            sc.LoadingOptions.LoadSystemObjects = false;
+            sc.LoadingOptions.LoadDefaultDatabaseOnly = true;
+            sc.MetadataContainer.LoadAll( false );
+         }
+         ActiveQueryBuilder.Core.MetadataList items = sc.MetadataContainer.Items;
+         return items == null ? false : true;
+      }
+      public static ActiveQueryBuilder.Core.SQLContext CreateAqbSqlContext4SQLiteOffline( string filepath )
+      {
+         ActiveQueryBuilder.Core.SQLContext sc = new ActiveQueryBuilder.Core.SQLContext( )
+         {
+            SyntaxProvider = new ActiveQueryBuilder.Core.SQLiteSyntaxProvider( ),
+            //MetadataProvider = new ActiveQueryBuilder.Core.SQLiteMetadataProvider( )
+            //{
+            //   Connection = new System.Data.SQLite.SQLiteConnection( )
+            //   {
+            //      ConnectionString = cs.ConnectionString
+            //   }
+            //}
+         };
+         {
+            sc.MetadataContainer.LoadingOptions.OfflineMode = true;
+            sc.MetadataContainer.ImportFromXML( filepath );
+         }
+         return sc;
+      }
+      public static ActiveQueryBuilder.Core.SQLContext CreateAqbSqlContext4SQLiteOnline( string cs )
+      {
+         ActiveQueryBuilder.Core.SQLContext sc = new ActiveQueryBuilder.Core.SQLContext( )
+         {
+            SyntaxProvider = new ActiveQueryBuilder.Core.SQLiteSyntaxProvider( ),
+            MetadataProvider = new ActiveQueryBuilder.Core.SQLiteMetadataProvider( )
+            {
+               Connection = new System.Data.SQLite.SQLiteConnection( )
+               {
+                  ConnectionString = cs
+               }
+            }
+         };
+         //{
+         //   sc.MetadataContainer.LoadAll( WithField );
+         //   sc.MetadataContainer.LoadingOptions.OfflineMode = true;
+         //   sc.MetadataContainer.ImportFromXML( filepath );
+         //}
+         return sc;
+      }
+
+      private class StackItem
+      {
+         public ActiveQueryBuilder.Core.MetadataList list;
+         public int index;
+         public int parentID;
+         public int grandParentID;
+      }
+
+      public static void DrillDownAqbSqlContext(
+         ActiveQueryBuilder.Core.SQLContext sc
+         , System.Data.DataTable tbl
+         , string dataStoreName
+         )
+      {
+         ActiveQueryBuilder.Core.MetadataList items = sc.MetadataContainer.Items;
+         //
+         System.Collections.Generic.Stack&lt;StackItem&gt; stack = new System.Collections.Generic.Stack&lt;StackItem&gt;( );
+         stack.Push( new StackItem { list = items, index = 0, parentID = -1, grandParentID = -1 } );
+         do
+         {
+            StackItem si = stack.Pop( );
+            ActiveQueryBuilder.Core.MetadataList actualMIList = si.list;
+            int actualIndex = si.index;
+            int actualParentID = si.grandParentID; // IMPORTANT!!!
+            for( ; actualIndex &lt; actualMIList.Count; actualIndex++ )
+            {
+               System.Data.DataRow row = tbl.NewRow( );
+               row[ "DataStoreName" ] = dataStoreName;
+               ExtractMetadataItem( row, actualMIList[ actualIndex ], actualParentID, tbl );
+               tbl.Rows.Add( row );
+               if( actualMIList[ actualIndex ].Items.Count &gt; 0 ) // branch...
+               {
+                  int count = tbl.Rows.Count;
+                  System.Data.DataRowCollection rows = tbl.Rows;
+                  int parentId = (int) rows[ count - 1 ][ "ID" ];
+                  // Push the "next" Item...
+                  stack.Push( new StackItem
+                  {
+                     list = actualMIList,
+                     index = actualIndex + 1,
+                     parentID = parentId,
+                     grandParentID = actualParentID
+                  } );
+                  // Reset the loop to process the "actual" Item...
+                  actualParentID = parentId;
+                  actualMIList = actualMIList[ actualIndex ].Items;
+                  actualIndex = -1;
+               }
+            } // for(;;)...
+
+         } while( stack.Count &gt; 0 );
+      }
+
+      private static void ExtractMetadataItem(
+         System.Data.DataRow row
+         , ActiveQueryBuilder.Core.MetadataItem mi
+         , int parentID
+         , System.Data.DataTable tbl
+         )
+      {
+         switch( mi.Type )
+         {
+            case ActiveQueryBuilder.Core.MetadataType.Database:
+            case ActiveQueryBuilder.Core.MetadataType.Schema:
+               ExtractNamespace( row, mi, parentID, tbl );
+               break;
+            case ActiveQueryBuilder.Core.MetadataType.Table:
+            case ActiveQueryBuilder.Core.MetadataType.View:
+               ExtractTable( row, mi, parentID, tbl );
+               break;
+            case ActiveQueryBuilder.Core.MetadataType.Procedure:
+               ExtractProcedure( row, mi, parentID, tbl );
+               break;
+            case ActiveQueryBuilder.Core.MetadataType.Synonym:
+               ExtractSynonym( row, mi, parentID, tbl );
+               break;
+            case ActiveQueryBuilder.Core.MetadataType.Field:
+               ExtractField( row, mi, parentID, tbl );
+               break;
+            case ActiveQueryBuilder.Core.MetadataType.ForeignKey:
+               ExtractForeignKey( row, mi, parentID, tbl );
+               break;
+            case ActiveQueryBuilder.Core.MetadataType.Root:
+            case ActiveQueryBuilder.Core.MetadataType.Server:
+            case ActiveQueryBuilder.Core.MetadataType.Package:
+            case ActiveQueryBuilder.Core.MetadataType.Namespaces:
+            case ActiveQueryBuilder.Core.MetadataType.ObjectMetadata:
+            case ActiveQueryBuilder.Core.MetadataType.Objects:
+            case ActiveQueryBuilder.Core.MetadataType.Aggregate:
+            case ActiveQueryBuilder.Core.MetadataType.Parameter:
+            case ActiveQueryBuilder.Core.MetadataType.UserQuery:
+            case ActiveQueryBuilder.Core.MetadataType.UserField:
+            case ActiveQueryBuilder.Core.MetadataType.All:
+            default:
+               ExtractItem( row, mi, parentID, tbl );
+               break;
+         }
+      }
+
+      private static void ExtractNamespace(
+         System.Data.DataRow row
+         , ActiveQueryBuilder.Core.MetadataItem mi
+         , int parentID
+         , System.Data.DataTable tbl
+         )
+      {
+         if( mi == null )
+         {
+            return;
+         }
+
+         ExtractItem( row, mi, parentID, tbl );
+         {
+            //ActiveQueryBuilder.Core.MetadataNamespace m = mi as ActiveQueryBuilder.Core.MetadataNamespace;
+         }
+      }
+
+      private static void ExtractProcedure(
+         System.Data.DataRow row
+         , ActiveQueryBuilder.Core.MetadataItem mi
+         , int parentID
+         , System.Data.DataTable tbl
+         )
+      {
+         if( mi == null )
+         {
+            return;
+         }
+
+         ExtractItem( row, mi, parentID, tbl );
+         {
+            ActiveQueryBuilder.Core.MetadataObject m = mi as ActiveQueryBuilder.Core.MetadataObject;
+         }
+      }
+
+      private static void ExtractSynonym(
+         System.Data.DataRow row
+         , ActiveQueryBuilder.Core.MetadataItem mi
+         , int parentID
+         , System.Data.DataTable tbl
+         )
+      {
+         if( mi == null )
+         {
+            return;
+         }
+
+         ExtractItem( row, mi, parentID, tbl );
+         {
+            ActiveQueryBuilder.Core.MetadataObject m = mi as ActiveQueryBuilder.Core.MetadataObject;
+            row[ "ReferencedObject" ] = m.ReferencedObject?.NameFull;
+            //
+            for( int i = 0; i &lt; m.ReferencedObjectName.Count; i++ )
+            {
+               ActiveQueryBuilder.Core.MetadataQualifiedNamePart x = m.ReferencedObjectName[ i ];
+               row[ "ReferencedObjectName" ] += "["
+               + System.Enum.GetName( typeof( ActiveQueryBuilder.Core.MetadataType ), x.Type )
+               + ":"
+               + x.Name
+               + "]"
+            ;
+            }
+         }
+      }
+
+      private static void ExtractTable(
+         System.Data.DataRow row
+         , ActiveQueryBuilder.Core.MetadataItem mi
+         , int parentID
+         , System.Data.DataTable tbl
+         )
+      {
+         if( mi == null )
+         {
+            return;
+         }
+
+         ExtractItem( row, mi, parentID, tbl );
+         {
+            //ActiveQueryBuilder.Core.MetadataObject m = mi as ActiveQueryBuilder.Core.MetadataObject;
+         }
+      }
+
+      private static void ExtractField(
+         System.Data.DataRow row
+         , ActiveQueryBuilder.Core.MetadataItem mi
+         , int parentID
+         , System.Data.DataTable tbl
+         )
+      {
+         if( mi == null )
+         {
+            return;
+         }
+
+         ExtractItem( row, mi, parentID, tbl );
+         {
+            ActiveQueryBuilder.Core.MetadataField m = mi as ActiveQueryBuilder.Core.MetadataField;
+            row[ "Expression" ] = m.Expression;
+            row[ "FieldType" ] = System.Enum.GetName( typeof( System.Data.DbType ), m.FieldType );
+            row[ "FieldTypeName" ] = m.FieldTypeName;
+            row[ "IsNullable" ] = m.Nullable;
+            row[ "Precision" ] = m.Precision;
+            row[ "Scale" ] = m.Scale;
+            row[ nameof( Size ) ] = m.Size;
+            row[ "IsPK" ] = m.PrimaryKey;
+            row[ "IsRO" ] = m.ReadOnly;
+         }
+      }
+
+      private static void ExtractForeignKey(
+         System.Data.DataRow row
+         , ActiveQueryBuilder.Core.MetadataItem mi
+         , int parentID
+         , System.Data.DataTable tbl
+         )
+      {
+         if( mi == null )
+         {
+            return;
+         }
+
+         ExtractItem( row, mi, parentID, tbl );
+         row[ "FieldType" ] = null;
+         {
+            ActiveQueryBuilder.Core.MetadataForeignKey m = mi as ActiveQueryBuilder.Core.MetadataForeignKey;
+            row[ "ReferencedObject" ] = m.ReferencedObject.NameFull;
+            //
+            for( int i = 0; i &lt; m.ReferencedObjectName.Count; i++ )
+            {
+               ActiveQueryBuilder.Core.MetadataQualifiedNamePart x = m.ReferencedObjectName[ i ];
+               row[ "ReferencedObjectName" ] += "["
+               + System.Enum.GetName( typeof( ActiveQueryBuilder.Core.MetadataType ), x.Type )
+               + ":"
+               + x.Name
+               + "]"
+            ;
+            }
+            //
+            row[ "ReferencedFieldsCount" ] = m.ReferencedFields.Count;
+            for( int i = 0; i &lt; m.ReferencedFields.Count; i++ )
+            {
+               row[ "ReferencedFields" ] += "[" + m.ReferencedFields[ i ] + "]";
+            }
+            //
+            row[ "ReferencedCardinality" ] = System.Enum.GetName( typeof( ActiveQueryBuilder.Core.MetadataForeignKeyCardinality ), m.ReferencedCardinality );
+            //
+            row[ "FieldsCount" ] = m.Fields.Count;
+            for( int i = 0; i &lt; m.Fields.Count; i++ )
+            {
+               row[ "Fields" ] += "[" + m.Fields[ i ] + "]"
+            ;
+            }
+            //
+            row[ "Cardinality" ] = System.Enum.GetName( typeof( ActiveQueryBuilder.Core.MetadataForeignKeyCardinality ), m.Cardinality );
+         }
+      }
+
+      private static void ExtractItem(
+         System.Data.DataRow row
+         , ActiveQueryBuilder.Core.MetadataItem mi
+         , int parentID
+         , System.Data.DataTable tbl
+         )
+
+      {
+         row[ "ID" ] = tbl.Rows.Count;
+         row[ "ParentID" ] = parentID;
+         row[ "MetadataProvider" ] = mi.SQLContext?.MetadataProvider?.Description;
+         row[ "SyntaxProvider" ] = mi.SQLContext?.SyntaxProvider?.Description;
+         if( mi.Parent != null )
+         {
+            row[ "ParentType" ] = System.Enum.GetName( typeof( ActiveQueryBuilder.Core.MetadataType ), mi.Parent.Type );
+         }
+         row[ nameof( Type ) ] = System.Enum.GetName( typeof( ActiveQueryBuilder.Core.MetadataType ), mi.Type );
+         row[ "IsSystem" ] = mi.System;
+         ////
+         //string rootName = mi.Root?.Name;
+         row[ "Server" ] = mi.Server?.Name;
+         row[ "Database" ] = mi.Database?.Name;
+         row[ "Schema" ] = mi.Schema?.Name;
+         row[ "ObjectName" ] = mi.Object?.Name;
+         ////
+         row[ "NameFullQualified" ] = mi.NameFull + (mi.NameFull.EndsWith( "." ) ? "&lt;?&gt;" : string.Empty);
+         row[ "NameQuoted" ] = mi.NameQuoted;
+         row[ "AltName" ] = mi.AltName;
+         row[ "Field" ] = mi.Name != null ? mi.Name : "&lt;?&gt;";
+         ////
+         row[ "HasDefault" ] = mi.Default;
+         row[ "Description" ] = mi.Description;
+         row[ "Tag" ] = mi.Tag;
+         row[ "UserData" ] = mi.UserData;
+      }
+      #endregion
+
+      #region --- DATASET ---
+      public const string DataStoreConfig_TblName = "DataStoreConfig";
+      public const string DataStoreSnapshotFile_TblName = "DataStoreSnapshotFiles";
+      public const string MetadataItem_TblName = "MetadataItem";
+      public static System.Data.DataTable CreateMetadataItemTable( string name = MetadataItem_TblName )
+      {
+         System.Data.DataTable t = new System.Data.DataTable( name );
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( int );
+            c.ColumnName = "ID";
+            c.Caption = "Id";
+            c.ReadOnly = true;
+            c.Unique = false;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( string );
+            c.ColumnName = "DataStoreName";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( string ); // typeof( System.IO.FileInfo );
+            c.ColumnName = "SnapshotFile";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( System.DateTime );
+            c.ColumnName = "LastWriteTimeUtc";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( string );
+            c.ColumnName = "MetadataProvider";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( string );
+            c.ColumnName = "SyntaxProvider";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( int );
+            c.ColumnName = "ParentID";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( bool );
+            c.ColumnName = "IsSystem";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( string );
+            c.ColumnName = nameof( Type );
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( string );
+            c.ColumnName = "ParentType";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( string );
+            c.ColumnName = "Cardinality";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( int );
+            c.ColumnName = "FieldsCount";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( string );
+            c.ColumnName = "Fields";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( string );
+            c.ColumnName = "ReferencedCardinality";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( string );
+            c.ColumnName = "ReferencedObject";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( string );
+            c.ColumnName = "ReferencedObjectName";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( int );
+            c.ColumnName = "ReferencedFieldsCount";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( string );
+            c.ColumnName = "ReferencedFields";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( string );
+            c.ColumnName = "Server";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( string );
+            c.ColumnName = "Database";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( string );
+            c.ColumnName = "Schema";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( string );
+            c.ColumnName = "ObjectName";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( string );
+            c.ColumnName = "NameFullQualified";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( string );
+            c.ColumnName = "NameQuoted";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( string );
+            c.ColumnName = "AltName";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( string );
+            c.ColumnName = "Field";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( bool );
+            c.ColumnName = "HasDefault";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( string );
+            c.ColumnName = "Expression";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( string );
+            c.ColumnName = "FieldType";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( string );
+            c.ColumnName = "FieldTypeName";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( bool );
+            c.ColumnName = "IsNullable";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( int );
+            c.ColumnName = "Precision";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( int );
+            c.ColumnName = "Scale";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( int );
+            c.ColumnName = nameof( Size );
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( bool );
+            c.ColumnName = "IsPK";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( bool );
+            c.ColumnName = "IsRO";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( string );
+            c.ColumnName = "Description";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( object );
+            c.ColumnName = "Tag";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         {
+            System.Data.DataColumn c = new System.Data.DataColumn( );
+            c.DataType = typeof( string );
+            c.ColumnName = "UserData";
+            c.ReadOnly = true;
+            t.Columns.Add( c );
+         }
+         return t;
+      }
+      #endregion
+</Body>
+        <Context />
+        <ContextString>[InClass]</ContextString>
+      </Expansion>
+    </Template>
+  </TemplateCategory>
+  <Template Name="NewEventAndHandlers">
+    <Comment>New Event and Handlers via paste a Event Name</Comment>
+    <Expansion Priority="0">
+      <Body>#define «Link(«?Get(eventname)»)»_EVENT_DEFINED
+#if «Link(«?Get(eventname)»)»_EVENT_DEFINED
+      #region --- Before / After «Link(«?Get(eventname)»)» EVENTS + HANDLERS ---
+      /// &lt;summary&gt;
+      /// Delegate/Handler for the Before&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt; event.
+      /// &lt;/summary&gt;
+      public delegate void Before&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt;EventHandler( object sender, Before&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt;EventArgs ea );
+      /// &lt;summary&gt;
+      /// Arguments for the Before&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt; event.
+      /// &lt;/summary&gt;
+      public class Before&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt;EventArgs : System.EventArgs
+      {
+         public bool Cancel = false;
+         public string Filename = null;
+         public System.Exception Exception = null;
+      }
+      /// &lt;summary&gt;
+      /// Delegate/Handler for the After&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt; event.
+      /// &lt;/summary&gt;
+      public delegate void After&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt;EventHandler( object sender, After&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt;EventArgs ea );
+      /// &lt;summary&gt;
+      /// Arguments for the After&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt; event.
+      /// &lt;/summary&gt;
+      public class After&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt;EventArgs : System.EventArgs
+      {
+         private Before&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt;EventArgs args;
+         public bool wasCanceled { get { return this.args == null ? false : this.args.Cancel; } }
+         public bool hasException { get { return this.args.Exception != null; } }
+         public bool isOk { get { return !this.wasCanceled &amp;&amp; !this.hasException; } }
+         public After&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt;EventArgs( Before&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt;EventArgs args1 )
+         {
+            this.args = args1;
+         }
+      }
+      public event Before&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt;EventHandler Before&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt;Event;
+      public event After&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt;EventHandler After&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt;Event;
+      private void &lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt;Event( Before&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt;EventArgs args )
+      {
+         try
+         {
+            // Before&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt;...
+         }
+         catch( System.Exception ex )
+         {
+            args.Exception = ex;
+         }
+         finally
+         {
+
+         }
+      }
+      public void &lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt;( string filename )
+      {
+         Before&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt;EventArgs args1 = new Before&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt;EventArgs( );
+         After&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt;EventArgs args2 = new After&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt;EventArgs( args1 );
+         args1.Filename = filename;
+         this.Before&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt;Event?.Invoke( this, args1 );
+         if( !args1.Cancel )
+         {
+            this.&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt;Event( args1 );
+         }
+         // Before&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt;...
+         // TODO: Insert you code here!
+         «Caret»
+         this.After&lt;&lt;Link(&lt;&lt;?Get(eventname)&gt;&gt;)&gt;&gt;Event?.Invoke( this, args2 );
+      }
+      #endregion
+#endif
+</Body>
+      <Context />
+      <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InString])</ContextString>
+    </Expansion>
+  </Template>
+</XmlTemplateCategoryInfo>
