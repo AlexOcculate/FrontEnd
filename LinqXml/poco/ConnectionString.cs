@@ -154,7 +154,6 @@ namespace LinqXml
             ).ToList( );
          return list;
       }
-
       //
       public static System.Collections.Generic.List<ConnectionString> LoadConnectionStringCollection()
       {

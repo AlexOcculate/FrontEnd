@@ -46,18 +46,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConnectionString.cs" />
-    <Compile Include="ConnectionStringHandler.cs">
+    <Compile Include="poco\ConnectionString.cs" />
+    <Compile Include="Component\ConnectionStringHandler.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ConnectionStringHandler.Designer.cs">
+    <Compile Include="Component\ConnectionStringHandler.Designer.cs">
       <DependentUpon>ConnectionStringHandler.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataStore.cs" />
-    <Compile Include="DataStoreConfigurationManager.cs">
+    <Compile Include="poco\DataStore.cs" />
+    <Compile Include="Component\DataStoreConfigurationHandler.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="DataStoreConfigurationManager.Designer.cs">
+    <Compile Include="Component\DataStoreConfigurationHandler.Designer.cs">
+      <DependentUpon>DataStoreConfigurationHandler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Component\DataStoreConfigurationManager.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Component\DataStoreConfigurationManager.Designer.cs">
       <DependentUpon>DataStoreConfigurationManager.cs</DependentUpon>
     </Compile>
     <Compile Include="Form1.cs">
@@ -69,13 +75,13 @@
     <Compile Include="LinqXml.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SystemConnectionStringHandler.cs">
+    <Compile Include="Component\SystemConnectionStringHandler.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="SystemConnectionStringHandler.Designer.cs">
+    <Compile Include="Component\SystemConnectionStringHandler.Designer.cs">
       <DependentUpon>SystemConnectionStringHandler.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="ConnectionStringHandler.resx">
+    <EmbeddedResource Include="Component\ConnectionStringHandler.resx">
       <DependentUpon>ConnectionStringHandler.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
@@ -90,7 +96,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="SystemConnectionStringHandler.resx">
+    <EmbeddedResource Include="Component\SystemConnectionStringHandler.resx">
       <DependentUpon>SystemConnectionStringHandler.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -105,6 +111,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UserControl\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

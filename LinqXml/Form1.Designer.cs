@@ -29,8 +29,25 @@
       private void InitializeComponent()
       {
          this.components = new System.ComponentModel.Container();
-         this.connectionStringHandler1 = new ConnectionStringHandler(this.components);
+         this.sysConnectionStringHandler = new LinqXml.SystemConnectionStringHandler(this.components);
+         this.connectionStringHandler = new LinqXml.ConnectionStringHandler(this.components);
+         this.dataStoreConfigurationHandler = new LinqXml.DataStoreConfigurationHandler(this.components);
          this.SuspendLayout();
+         // 
+         // sysConnectionStringHandler
+         // 
+         this.sysConnectionStringHandler.LoadProgressEvent += new LinqXml.SystemConnectionStringHandler.LoadProgressEventHandler(this.systemConnectionStringHandler_ProgressUpdateEvent);
+         this.sysConnectionStringHandler.LoadCompletedEvent += new LinqXml.SystemConnectionStringHandler.LoadCompletedEventHandler(this.systemConnectionStringHandler_LoadCompletedEvent);
+         // 
+         // connectionStringHandler
+         // 
+         this.connectionStringHandler.LoadProgressEvent += new LinqXml.ConnectionStringHandler.LoadProgressEventHandler(this.connectionStringHandler_LoadProgressEvent);
+         this.connectionStringHandler.LoadCompletedEvent += new LinqXml.ConnectionStringHandler.LoadCompletedEventHandler(this.connectionStringHandler_LoadCompletedEvent);
+         // 
+         // dataStoreConfigurationHandler
+         // 
+         this.dataStoreConfigurationHandler.LoadProgressEvent += new LinqXml.DataStoreConfigurationHandler.LoadProgressEventHandler(this.dataStoreConfigurationHandler_LoadProgressEvent);
+         this.dataStoreConfigurationHandler.LoadCompletedEvent += new LinqXml.DataStoreConfigurationHandler.LoadCompletedEventHandler(this.dataStoreConfigurationHandler_LoadCompletedEvent);
          // 
          // Form1
          // 
@@ -39,13 +56,16 @@
          this.ClientSize = new System.Drawing.Size(284, 261);
          this.Name = "Form1";
          this.Text = "Form1";
+         this.Load += new System.EventHandler(this.Form1_Load);
          this.ResumeLayout(false);
 
       }
 
       #endregion
 
-      private ConnectionStringHandler connectionStringHandler1;
+      private SystemConnectionStringHandler sysConnectionStringHandler;
+      private ConnectionStringHandler connectionStringHandler;
+      private DataStoreConfigurationHandler dataStoreConfigurationHandler;
    }
 }
 

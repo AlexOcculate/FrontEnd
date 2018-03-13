@@ -18,10 +18,10 @@ namespace LinqXml
       }
 
       public void Load() { this.backgroundWorker.RunWorkerAsync( ); }
-      public bool IsBusy { get { return this.backgroundWorker.IsBusy; } }
-      public void Cancel()
+      public bool IsBusyLoad { get { return this.backgroundWorker.IsBusy; } }
+      public void CancelLoad()
       {
-         if( this.IsBusy )
+         if( this.IsBusyLoad )
          {
             this.backgroundWorker.CancelAsync( );
          }

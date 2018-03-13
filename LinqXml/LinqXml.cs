@@ -4,34 +4,58 @@
    using System.Collections.Generic;
    using System.Linq;
    using System.Xml.Linq;
-   internal partial class LinqXml
+   internal partial class LinqXmlTest
    {
       public static void EntryPoint()
       {
          {
-            ConnectionString o = new ConnectionString( )
+            DataStore ds = new DataStore( );
             {
-               Name = "   Alex Mello          ",
-               ProviderName = "   System.Data.SqlClient          ",
-               String = " 1234567890   "
-            };
-            o.PropertyChanged += O_PropertyChanged;
-            XElement xElement = o.GetXElement( );
-            ConnectionString parser = ConnectionString.GetPoco( xElement );
-            o.Name = "Alex M Occulate";
-            
+               ds.Name = "ds001";
+               ds.ConnectionStringName = "xpto";
+               ds.WithFields = true;
+               ds.LoadDefaultDatabaseOnly = true;
+               ds.StagePathDir = "./../../..";
+            }
+            XElement e = ds.GetXElement( );
+            DataStore poco = DataStore.GetPoco( e );
+            XElement element = GetDsCfgDoc().Root.Element( "dsCfg" );
+            List<DataStore> pocoList = DataStore.GetPocoList( element );
          }
-         { 
-            XDocument doc = SaveDsCfgDocDataToAnXmlFile( @"DsCfgData.xml" );
-            List<ConnectionString> csPrvList = ConnectionString.LoadConnectionStringCollection( doc );
-            List<ConnectionString> csList = ConnectionString.LoadConnectionStringCollection( );
-            List<DataStore> dsColl = DataStore.LoadDataStoreCollection( doc );
-            //
-            List<DataStore> loadDsCfgDoc = LoadDsCollDoc( doc );
-            //List<ConnectionString> privCsList = LoadCsCollDoc( doc );
-         }
-         //
-         //         OtherTests( );
+         //{
+         //   XDocument doc = GetDsCfgDoc( );
+         //   IEnumerable<XElement> csList = doc.Root.Element( "csColl" ).Descendants( "cs" );
+         //   XElement csColl = doc.Root.Element( "csColl" );
+         //   using( ConnectionStringHandler x = new ConnectionStringHandler( ) )
+         //   {
+         //      x.Load( csColl );
+         //   }
+         //   System.Threading.Thread.Sleep( 50000 );
+         //}
+         //{
+         //   ConnectionString o = new ConnectionString( )
+         //   {
+         //      Name = "   Alex Mello          ",
+         //      ProviderName = "   System.Data.SqlClient          ",
+         //      String = " 1234567890   "
+         //   };
+         //   o.PropertyChanged += O_PropertyChanged;
+         //   XElement xElement = o.GetXElement( );
+         //   ConnectionString parser = ConnectionString.GetPoco( xElement );
+         //   o.Name = "Alex M Occulate";
+
+         //}
+         //{
+         //   XDocument doc = SaveDsCfgDocDataToAnXmlFile( @"DsCfgData.xml" );
+         //   List<ConnectionString> csPrvList = ConnectionString.LoadConnectionStringCollection( doc );
+         //   List<ConnectionString> csList = ConnectionString.LoadConnectionStringCollection( );
+         //   List<DataStore> dsColl = DataStore.LoadDataStoreCollection( doc );
+         //   //
+         //   List<DataStore> loadDsCfgDoc = LoadDsCollDoc( doc );
+         //   //List<ConnectionString> privCsList = LoadCsCollDoc( doc );
+         //}
+         ////
+         ////         OtherTests( );
       }
 
       private static void O_PropertyChanged( object sender, System.ComponentModel.PropertyChangedEventArgs e )
@@ -100,7 +124,7 @@
                {
                   Name = (string) e.Attribute( "nm" ),
                   ProviderName = (string) e.Attribute( "pn" ),
-//                  isPrivate = (bool) e.Attribute( "pvt" ),
+                  //                  isPrivate = (bool) e.Attribute( "pvt" ),
                   String = (string) e.Element( "str" )
                }
             ).ToList( );

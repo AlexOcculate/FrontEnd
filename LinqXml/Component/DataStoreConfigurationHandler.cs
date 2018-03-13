@@ -1,36 +1,113 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
+using System.Drawing;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml.Linq;
 
 namespace LinqXml
 {
-   public partial class ConnectionStringHandler : Component
+   public partial class DataStoreConfigurationHandler : Component
    {
-      public ConnectionStringHandler()
+      public DataStoreConfigurationHandler()
       {
          InitializeComponent( );
+         InitializeLoadBackgroundWorkerComponent( );
       }
-
-      public ConnectionStringHandler( IContainer container )
+      public DataStoreConfigurationHandler( IContainer container )
       {
          container.Add( this );
-
-         InitializeComponent( );
+         this.InitializeComponent( );
+         InitializeLoadBackgroundWorkerComponent( );
       }
 
-      public void Load( XElement e ) { this.backgroundWorker.RunWorkerAsync( e ); }
-      public bool IsBusy { get { return this.backgroundWorker.IsBusy; } }
-      public void Cancel()
+      public void Load( XElement e ) { this.LoadBackgroundWorker.RunWorkerAsync( e ); }
+      public bool IsBusyLoad { get { return this.LoadBackgroundWorker.IsBusy; } }
+      public void CancelLoad()
       {
-         if( this.IsBusy )
+         if( this.IsBusyLoad )
          {
-            this.backgroundWorker.CancelAsync( );
+            this.LoadBackgroundWorker.CancelAsync( );
          }
+      }
+
+      #region --- Load BackgroundWorker Init, Events, Handlers & Exceptions... ---
+
+      private System.ComponentModel.BackgroundWorker LoadBackgroundWorker;
+
+      private void InitializeLoadBackgroundWorkerComponent()
+      {
+         this.LoadBackgroundWorker = new System.ComponentModel.BackgroundWorker( );
+         this.LoadBackgroundWorker.WorkerReportsProgress = true;
+         this.LoadBackgroundWorker.WorkerSupportsCancellation = true;
+         this.LoadBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler( this.LoadBackgroundWorker_DoWork );
+         this.LoadBackgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler( this.LoadBackgroundWorker_ProgressChanged );
+         this.LoadBackgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler( this.LoadBackgroundWorker_RunWorkerCompleted );
+      }
+
+      private void LoadBackgroundWorker_DoWork( object sender, DoWorkEventArgs e )
+      {
+         e.Cancel = true;
+         this.LoadBackgroundWorker.ReportProgress( 0 );
+         if( !(e.Argument is XElement) )
+            return;
+         XElement argument = e.Argument as XElement; // get argument...
+         if( !this.LoadBackgroundWorker.CancellationPending )
+         {
+            List<DataStore> list = new List<DataStore>( );
+            IEnumerable<XElement> dsColl = argument.Elements( "ds" );
+            int total = dsColl.Count<XElement>( );
+            for( int i = 0; i < total; i++ )
+            {
+               if( !this.LoadBackgroundWorker.CancellationPending )
+               {
+                  XElement elementAt = dsColl.ElementAt<XElement>( i );
+                  DataStore o = DataStore.GetPoco( elementAt );
+                  list.Add( o );
+                  int value = (i + 1) * (100 / total);
+                  this.LoadBackgroundWorker.ReportProgress( value, total );
+               }
+               else
+               {
+                  this.LoadBackgroundWorker.ReportProgress( 0 );
+                  return;
+               }
+            }
+            e.Result = list; // return result...
+            e.Cancel = false;
+         }
+      }
+
+      private void LoadBackgroundWorker_ProgressChanged( object sender, ProgressChangedEventArgs e )
+      {
+         if( this.LoadProgressEvent == null )
+            return;
+         LoadProgressEventArgs args = new LoadProgressEventArgs( e );
+         this.LoadProgressEvent?.Invoke( this, args );
+      }
+
+      private void LoadBackgroundWorker_RunWorkerCompleted( object sender, RunWorkerCompletedEventArgs e )
+      {
+         if( e.Cancelled )
+         {
+            // "Process was cancelled";
+         }
+         else if( e.Error != null )
+         {
+            // "There was an error running the process. The thread aborted";
+         }
+         else
+         {
+            // "Process was completed";
+         }
+         if( this.LoadCompletedEvent == null )
+            return;
+         LoadCompletedEventArgs args = new LoadCompletedEventArgs( e );
+         this.LoadCompletedEvent?.Invoke( this, args );
       }
 
       #region --- LoadProgress EVENTS + HANDLERS + EXCEPTIONS ---
@@ -148,66 +225,7 @@ namespace LinqXml
       }
       #endregion
 
-      #region --- BackgroundWorker Event Handlers... ---
-      private void backgroundWorker_DoWork( object sender, DoWorkEventArgs e )
-      {
-         e.Cancel = true;
-         this.backgroundWorker.ReportProgress( 0 );
-         if( !(e.Argument is XElement) )
-            return;
-         XElement csColl = e.Argument as XElement;
-         if( !this.backgroundWorker.CancellationPending )
-         {
-            List<ConnectionString> list = new List<ConnectionString>( );
-            IEnumerable<XElement> css = csColl.Elements( "cs" );
-            for( int i = 0; i < css.Count<XElement>( ); i++ )
-            {
-               if( !this.backgroundWorker.CancellationPending )
-               {
-                  XElement elementAt = css.ElementAt<XElement>( i );
-                  ConnectionString o = ConnectionString.GetPoco( elementAt );
-                  list.Add( o );
-                  int value = (i + 1) * (100 / css.Count<XElement>( ));
-                  this.backgroundWorker.ReportProgress( value, css.Count<XElement>( ) );
-               }
-               else
-               {
-                  this.backgroundWorker.ReportProgress( 0 );
-                  return;
-               }
-            }
-            e.Result = list;
-            e.Cancel = false;
-         }
-      }
-
-      private void backgroundWorker_ProgressChanged( object sender, ProgressChangedEventArgs e )
-      {
-         if( this.LoadProgressEvent == null )
-            return;
-         LoadProgressEventArgs args = new LoadProgressEventArgs( e );
-         this.LoadProgressEvent?.Invoke( this, args );
-      }
-
-      private void backgroundWorker_RunWorkerCompleted( object sender, RunWorkerCompletedEventArgs e )
-      {
-         if( e.Cancelled )
-         {
-            // "Process was cancelled";
-         }
-         else if( e.Error != null )
-         {
-            // "There was an error running the process. The thread aborted";
-         }
-         else
-         {
-            // "Process was completed";
-         }
-         if( this.LoadCompletedEvent == null )
-            return;
-         LoadCompletedEventArgs args = new LoadCompletedEventArgs( e );
-         this.LoadCompletedEvent?.Invoke( this, args );
-      }
       #endregion
+
    }
 }
