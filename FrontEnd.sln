@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqXml", "LinqXml\LinqXml.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChartControlTest", "ChartControlTest\ChartControlTest.csproj", "{068CD37A-C0CC-4D96-B67E-43B96340F71B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimerTest", "TimerTest\TimerTest.csproj", "{B1779593-CA8D-43FB-89CC-1F6C68876D0E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{068CD37A-C0CC-4D96-B67E-43B96340F71B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{068CD37A-C0CC-4D96-B67E-43B96340F71B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{068CD37A-C0CC-4D96-B67E-43B96340F71B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1779593-CA8D-43FB-89CC-1F6C68876D0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1779593-CA8D-43FB-89CC-1F6C68876D0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1779593-CA8D-43FB-89CC-1F6C68876D0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1779593-CA8D-43FB-89CC-1F6C68876D0E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

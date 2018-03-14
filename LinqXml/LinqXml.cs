@@ -4,10 +4,18 @@
    using System.Collections.Generic;
    using System.Linq;
    using System.Xml.Linq;
+   using LinqXml.poco;
+
    internal partial class LinqXmlTest
    {
       public static void EntryPoint()
       {
+         XDocument doc = GetDsCfgDoc( );
+         Configuration poco = Configuration.GetPoco( doc.Root );
+         XElement xElement1 = poco.GetXElement( );
+         //
+         Configuration cfg = new Configuration( );
+         cfg.StageDirPath = @"C:\temp";
          {
             DataStore ds = new DataStore( );
             {
@@ -17,11 +25,31 @@
                ds.LoadDefaultDatabaseOnly = true;
                ds.StagePathDir = "./../../..";
             }
-            XElement e = ds.GetXElement( );
-            DataStore poco = DataStore.GetPoco( e );
-            XElement element = GetDsCfgDoc().Root.Element( "dsCfg" );
-            List<DataStore> pocoList = DataStore.GetPocoList( element );
+            cfg.AddDataStore( ds );
+            //
+            ConnectionString cs = new ConnectionString( )
+            {
+               Name = "   Alex Mello          ",
+               ProviderName = "   System.Data.SqlClient          ",
+               String = " 1234567890   "
+            };
+            cfg.AddConnectionString( cs );
          }
+         XElement xElement = cfg.GetXElement( );
+         //{
+         //   DataStore ds = new DataStore( );
+         //   {
+         //      ds.Name = "ds001";
+         //      ds.ConnectionStringName = "xpto";
+         //      ds.WithFields = true;
+         //      ds.LoadDefaultDatabaseOnly = true;
+         //      ds.StagePathDir = "./../../..";
+         //   }
+         //   XElement e = ds.GetXElement( );
+         //   DataStore poco = DataStore.GetPoco( e );
+         //   XElement element = GetDsCfgDoc( ).Root.Element( "dsCfg" );
+         //   List<DataStore> pocoList = DataStore.GetPocoList( element );
+         //}
          //{
          //   XDocument doc = GetDsCfgDoc( );
          //   IEnumerable<XElement> csList = doc.Root.Element( "csColl" ).Descendants( "cs" );

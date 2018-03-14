@@ -15,28 +15,33 @@ namespace LinqXml
 
       private void Form1_Load( object sender, EventArgs e )
       {
-         this.sysConnectionStringHandler.Load( );
          {
             XDocument doc = LinqXmlTest.GetDsCfgDoc( );
-            {
-               IEnumerable<XElement> csList = doc.Root.Element( "csColl" ).Descendants( "cs" );
-               XElement csColl = doc.Root.Element( "csColl" );
-               //using( ConnectionStringHandler x = new ConnectionStringHandler( ) )
-               //{
-               //   x.Load( csColl );
-               //}
-               this.connectionStringHandler.Load( csColl );
-            }
-            {
-               IEnumerable<XElement> dsList = doc.Root.Element( "dsCfg" ).Element( "dsColl" ).Descendants( "ds" );
-               XElement dsColl = doc.Root.Element( "dsCfg" ).Element( "dsColl" );
-               //using( DataStoreConfigurationHandler x = new DataStoreConfigurationHandler( ) )
-               //{
-               //   x.Load( dsColl );
-               //}
-               this.dataStoreConfigurationHandler.Load( dsColl );
-            }
+            XElement root = doc.Root;
+            this.dataStoreConfigurationManager.Load( root );
          }
+         //this.sysConnectionStringHandler.Load( );
+         //{
+         //   XDocument doc = LinqXmlTest.GetDsCfgDoc( );
+         //   {
+         //      IEnumerable<XElement> csList = doc.Root.Element( "csColl" ).Descendants( "cs" );
+         //      XElement csColl = doc.Root.Element( "csColl" );
+         //      //using( ConnectionStringHandler x = new ConnectionStringHandler( ) )
+         //      //{
+         //      //   x.Load( csColl );
+         //      //}
+         //      this.connectionStringHandler.Load( csColl );
+         //   }
+         //   {
+         //      IEnumerable<XElement> dsList = doc.Root.Element( "dsCfg" ).Element( "dsColl" ).Descendants( "ds" );
+         //      XElement dsColl = doc.Root.Element( "dsCfg" ).Element( "dsColl" );
+         //      //using( DataStoreConfigurationHandler x = new DataStoreConfigurationHandler( ) )
+         //      //{
+         //      //   x.Load( dsColl );
+         //      //}
+         //      this.dataStoreConfigurationHandler.Load( dsColl );
+         //   }
+         //}
       }
 
       private List<ConnectionString> csList;
@@ -87,6 +92,27 @@ namespace LinqXml
 
       }
       private void dataStoreConfigurationHandler_LoadCompletedEvent( object sender, DataStoreConfigurationHandler.LoadCompletedEventArgs ea )
+      {
+         if( ea.Cancelled )
+         {
+            // "Process was cancelled";
+         }
+         else if( ea.Exception != null )
+         {
+            // "There was an error running the process. The thread aborted";
+         }
+         else
+         {
+            // "Process was completed";
+            this.dsList = ea.Result as List<DataStore>;
+         }
+      }
+
+      private void dataStoreConfigurationManager_LoadProgressEvent( object sender, DataStoreConfigurationManager.LoadProgressEventArgs ea )
+      {
+
+      }
+      private void dataStoreConfigurationManager_LoadCompletedEvent( object sender, DataStoreConfigurationManager.LoadCompletedEventArgs ea )
       {
          if( ea.Cancelled )
          {

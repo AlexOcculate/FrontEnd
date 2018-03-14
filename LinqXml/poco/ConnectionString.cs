@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -155,15 +156,35 @@ namespace LinqXml
          return list;
       }
       //
+      public static List<ConnectionString> GetPocoList()
+      {
+         ConnectionStringSettingsCollection css = ConfigurationManager.ConnectionStrings;
+         List<ConnectionString> list = new List<ConnectionString>( );
+         if( css != null )
+         {
+            for( int i = 0; i < css.Count; i++ )
+            {
+               ConnectionString o = new ConnectionString( )
+               {
+                  Name = css[ i ].Name,
+                  ProviderName = css[ i ].ProviderName,
+                  String = css[ i ].ConnectionString
+               };
+               list.Add( o );
+            }
+         }
+         return list;
+      }
+      //
       public static System.Collections.Generic.List<ConnectionString> LoadConnectionStringCollection()
       {
          System.Collections.Generic.List<ConnectionString> list = new System.Collections.Generic.List<ConnectionString>( );
-         System.Configuration.ConnectionStringSettingsCollection css = System.Configuration.ConfigurationManager.ConnectionStrings;
+         ConnectionStringSettingsCollection css = ConfigurationManager.ConnectionStrings;
          if( css == null )
          {
             return list;
          }
-         foreach( System.Configuration.ConnectionStringSettings cs in css )
+         foreach( ConnectionStringSettings cs in css )
          {
             ConnectionString o = new ConnectionString( )
             {

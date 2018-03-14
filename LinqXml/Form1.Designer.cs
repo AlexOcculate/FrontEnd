@@ -29,25 +29,13 @@
       private void InitializeComponent()
       {
          this.components = new System.ComponentModel.Container();
-         this.sysConnectionStringHandler = new LinqXml.SystemConnectionStringHandler(this.components);
-         this.connectionStringHandler = new LinqXml.ConnectionStringHandler(this.components);
-         this.dataStoreConfigurationHandler = new LinqXml.DataStoreConfigurationHandler(this.components);
+         this.dataStoreConfigurationManager = new LinqXml.DataStoreConfigurationManager(this.components);
          this.SuspendLayout();
          // 
-         // sysConnectionStringHandler
+         // dataStoreConfigurationManager
          // 
-         this.sysConnectionStringHandler.LoadProgressEvent += new LinqXml.SystemConnectionStringHandler.LoadProgressEventHandler(this.systemConnectionStringHandler_ProgressUpdateEvent);
-         this.sysConnectionStringHandler.LoadCompletedEvent += new LinqXml.SystemConnectionStringHandler.LoadCompletedEventHandler(this.systemConnectionStringHandler_LoadCompletedEvent);
-         // 
-         // connectionStringHandler
-         // 
-         this.connectionStringHandler.LoadProgressEvent += new LinqXml.ConnectionStringHandler.LoadProgressEventHandler(this.connectionStringHandler_LoadProgressEvent);
-         this.connectionStringHandler.LoadCompletedEvent += new LinqXml.ConnectionStringHandler.LoadCompletedEventHandler(this.connectionStringHandler_LoadCompletedEvent);
-         // 
-         // dataStoreConfigurationHandler
-         // 
-         this.dataStoreConfigurationHandler.LoadProgressEvent += new LinqXml.DataStoreConfigurationHandler.LoadProgressEventHandler(this.dataStoreConfigurationHandler_LoadProgressEvent);
-         this.dataStoreConfigurationHandler.LoadCompletedEvent += new LinqXml.DataStoreConfigurationHandler.LoadCompletedEventHandler(this.dataStoreConfigurationHandler_LoadCompletedEvent);
+         this.dataStoreConfigurationManager.LoadProgressEvent += new LinqXml.DataStoreConfigurationManager.LoadProgressEventHandler(this.dataStoreConfigurationManager_LoadProgressEvent);
+         this.dataStoreConfigurationManager.LoadCompletedEvent += new LinqXml.DataStoreConfigurationManager.LoadCompletedEventHandler(this.dataStoreConfigurationManager_LoadCompletedEvent);
          // 
          // Form1
          // 
@@ -63,9 +51,7 @@
 
       #endregion
 
-      private SystemConnectionStringHandler sysConnectionStringHandler;
-      private ConnectionStringHandler connectionStringHandler;
-      private DataStoreConfigurationHandler dataStoreConfigurationHandler;
+      private DataStoreConfigurationManager dataStoreConfigurationManager;
    }
 }
 
