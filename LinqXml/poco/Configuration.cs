@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace LinqXml.poco
+namespace LinqXml
 {
    public class Configuration
    {
@@ -169,7 +169,6 @@ namespace LinqXml.poco
          XElement cfg = new XElement( "cfg", dsCfg );
          return cfg;
       }
-
       public static Configuration GetPoco( XElement e )
       {
          XElement dsCfgElement = e.Element( "dsCfg" );
@@ -194,6 +193,7 @@ namespace LinqXml.poco
 
          return configuration;
       }
+
       public void AddDataStore( DataStore ds )
       {
          if( ds == null )

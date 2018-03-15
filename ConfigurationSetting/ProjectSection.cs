@@ -60,7 +60,7 @@ namespace FrontEnd.ProjectSetting
                if( dse.Name == ds.Name )
                {
                   dse.Found = true;
-                  dse.DataStore = ds;
+                //  dse.DataStore = ds;
                   break;
                }
             }
@@ -84,7 +84,7 @@ namespace FrontEnd.ProjectSetting
                   if( dse.Found )
                   {
                      // PATH = DS_STAGE_PATH + DS_NAME + SNAPSHOT_NAME
-                     ssp = System.IO.Path.Combine( (string) dse.DataStore.StagePathDir, dse.Name, dse.SnapshotFile );
+                     ssp = System.IO.Path.Combine( (string) dse.DataStore.PathDir, dse.Name, dse.SnapshotFile );
                      exists = System.IO.File.Exists( ssp );
                      if( exists )
                      {
@@ -110,7 +110,7 @@ namespace FrontEnd.ProjectSetting
                if( dse.Found )
                {
                   // PATH = DS_STAGE_PATH + DS_NAME + *.config"
-                  ssp = dse.DataStore.StagePathDir;
+                  ssp = dse.DataStore.PathDir;
                   exists = System.IO.Directory.Exists( ssp );
                   if( exists )
                   {

@@ -20,9 +20,10 @@ namespace LinqXml
          Application.EnableVisualStyles( );
          Application.SetCompatibleTextRenderingDefault( false );
          {
-            LinqXmlTest.EntryPoint( );
+//            LinqXmlTest.EntryPoint( );
          }
 //         Application.Run( new Form1( ) );
+         Application.Run( new ConfigurationTestForm( ) );
       }
    }
 }
