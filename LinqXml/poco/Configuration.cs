@@ -178,7 +178,7 @@ namespace LinqXml
          //
          List<DataStore> dsList = DataStore.GetPocoList( dsCfgElement );
          //
-         XElement csCollElement = e.Element( "csColl" );
+         XElement csCollElement = dsCfgElement.Element( "csCol" );
          List<ConnectionString> csList = ConnectionString.GetPocoList( csCollElement );
          //
          List<ConnectionString> syscsList = ConnectionString.GetPocoList( );

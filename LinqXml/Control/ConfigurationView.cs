@@ -20,35 +20,27 @@ namespace LinqXml.Control
       {
          this.InitializeComponent( );
          this.InitializeTreeView( this.treeView );
+         this.AfterOpenFileEvent += this.ConfigurationView_AfterOpenFileEvent;
          this.AfterSaveAsFileEvent += this.ConfigurationView_AfterSaveAsFileEvent;
+         this.AfterSaveFileEvent += this.ConfigurationView_AfterSaveFileEvent;
          //this.AddAllNodes( true );
-         this.LoadNodes( );
+         //this.LoadNodes( );
       }
 
       private string initialPath = string.Empty;
       private string defaultFileName = "cfg.xml";
 
-      private void ConfigurationView_AfterSaveAsFileEvent( object sender, AfterSaveAsFileEventArgs ea )
+      private void ConfigurationView_AfterOpenFileEvent( object sender, AfterOpenFileEventArgs ea )
+      {
+         this.defaultFileName = ea.args.OpenedFilename;
+      }
+      private void ConfigurationView_AfterSaveFileEvent( object sender, AfterSaveFileEventArgs ea )
       {
          this.defaultFileName = ea.args.SavedFilename;
       }
-
-      private bool IsInDesignMode()
+      private void ConfigurationView_AfterSaveAsFileEvent( object sender, AfterSaveAsFileEventArgs ea )
       {
-         if( base.DesignMode )
-         {
-            return true;
-         }
-
-         if( System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime ||
-            System.Diagnostics.Debugger.IsAttached )
-         {
-            using( System.Diagnostics.Process process = System.Diagnostics.Process.GetCurrentProcess( ) )
-            {
-               return process.ProcessName.ToLowerInvariant( ).Contains( "devenv" );
-            }
-         }
-         return false;
+         this.defaultFileName = ea.args.SavedFilename;
       }
 
       public void InitializeTreeView( TreeList treeView )
@@ -96,9 +88,15 @@ namespace LinqXml.Control
          string cellText = node[ 0 ] as string;
          if( node.Tag is DataStore )
          {
+            FocusedDataStoreChangedEventArgs args = new FocusedDataStoreChangedEventArgs( );
+            args.DataStore = node.Tag as DataStore;
+            this.FocusedDataStoreChangedEvent?.Invoke( this, args );
          }
          else if( node.Tag is ConnectionString )
          {
+            FocusedConnectionStringChangedEventArgs args = new FocusedConnectionStringChangedEventArgs( );
+            args.ConnectionString = node.Tag as ConnectionString;
+            this.FocusedConnectionStringChangedEvent?.Invoke( this, args );
          }
       }
 
@@ -131,70 +129,14 @@ namespace LinqXml.Control
          }
       }
 
-      //
-      //
-      //
-      private string GetDefaultFilePath()
+      private void LoadNodes( bool showAll = false )
       {
-         string x = "Data\\" + this.defaultFileName;
-         return Path.GetDirectoryName( FilesHelper.FindingFileName( Application.StartupPath, x ) );
-      }
-
-      private void OpenItemClick()
-      {
-         using( XtraOpenFileDialog dialog = new XtraOpenFileDialog( ) )
-         {
-            dialog.InitialDirectory = this.initialPath;
-            dialog.ShowDragDropConfirmation = true;
-            dialog.AutoUpdateFilterDescription = false;
-            dialog.Filter = "Text files (*.txt)|*.txt";
-            DialogResult dialogResult = dialog.ShowDialog( );
-            if( dialogResult == DialogResult.OK )
-            {
-               //this.SetMemoEditText( dialog.FileName );
-            }
-         }
-      }
-
-      private void SaveItemClick()
-      {
-         using( XtraSaveFileDialog dialog = new XtraSaveFileDialog( ) )
-         {
-            dialog.InitialDirectory = this.initialPath;
-            dialog.ShowDragDropConfirmation = true;
-            dialog.Filter = "Text files|*.txt";
-            dialog.CreatePrompt = true;
-            dialog.OverwritePrompt = true;
-            DialogResult dialogResult = dialog.ShowDialog( );
-            if( dialogResult == DialogResult.OK )
-            {
-               //System.IO.File.WriteAllText( dialog.FileName, this.mainModule.Text );
-            }
-         }
-      }
-
-      private void SetWorkingFolderItemClick()
-      {
-         using( XtraFolderBrowserDialog dialog = new XtraFolderBrowserDialog( ) )
-         {
-            dialog.SelectedPath = this.initialPath;
-            if( dialog.ShowDialog( ) == DialogResult.OK )
-            {
-               this.initialPath = dialog.SelectedPath;
-            }
-         }
-      }
-
-      //
-      //
-      //
-      public void LoadNodes( bool showAll = false )
-      {
+         if( this.cfg == null ) return;
          this.treeView.BeginUpdate( );
          try
          {
             this.treeView.Nodes.Clear( );
-            this.NewMethod( this.treeView );
+            this.LoadTreeListNodes( this.treeView );
             this.treeView.ExpandAll( );
          }
          finally
@@ -203,10 +145,10 @@ namespace LinqXml.Control
          }
       }
 
-      private void NewMethod( TreeList treeView )
+      private void LoadTreeListNodes( TreeList treeView )
       {
-         XDocument doc = LinqXmlTest.GetDsCfgDoc( );
-         this.cfg = Configuration.GetPoco( doc.Root );
+         //XDocument doc = LinqXmlTest.GetDsCfgDoc( );
+         //this.cfg = Configuration.GetPoco( doc.Root );
          // nodedata, parentId, imgIdx, selectImgIdx, stateImgIdx, chkState, tag
          TreeListNode dsNode = this.treeView.AppendNode( new object[ ] { "DataStores" }, -1 );
          TreeListNode csNode = this.treeView.AppendNode( new object[ ] { nameof( ConnectionString ) }, -1 );
@@ -280,9 +222,178 @@ namespace LinqXml.Control
          }
       }
 
-      // OpenFile
-      // SaveFile
+      #region --- Before and After OpenFile EVENTS + HANDLERS + EXCEPTIONS ---
+      public delegate void BeforeOpenFileEventHandler( object sender, BeforeOpenFileEventArgs ea );
+      public event BeforeOpenFileEventHandler BeforeOpenFileEvent;
+      public class BeforeOpenFileEventArgs : System.EventArgs
+      {
+         public bool Cancel { get; set; }
+         public string SuggestedFilename { get; set; }
+         public string OpenedFilename { get; set; }
+         public OpenFileException Exception { get; set; }
+      }
       //
+      public delegate void AfterOpenFileEventHandler( object sender, AfterOpenFileEventArgs ea );
+      public event AfterOpenFileEventHandler AfterOpenFileEvent;
+      public class AfterOpenFileEventArgs : System.EventArgs
+      {
+         public BeforeOpenFileEventArgs args;
+         public bool wasCanceled { get { return this.args == null ? false : this.args.Cancel; } }
+         public bool hasException { get { return this.args.Exception != null; } }
+         public bool isOk { get { return !this.wasCanceled && !this.hasException; } }
+         public AfterOpenFileEventArgs( BeforeOpenFileEventArgs args1 )
+         {
+            this.args = args1;
+         }
+      }
+      //
+      [System.Serializable]
+      public class OpenFileException : System.Exception
+      {
+         public OpenFileException() : base( ) { }
+
+         public OpenFileException( string message ) : base( message ) { }
+
+         public OpenFileException( string format, params object[ ] args )
+             : base( string.Format( format, args ) ) { }
+
+         public OpenFileException( string message, System.Exception innerException )
+             : base( message, innerException ) { }
+
+         public OpenFileException( string format, System.Exception innerException, params object[ ] args )
+             : base( string.Format( format, args ), innerException ) { }
+
+         protected OpenFileException( System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context )
+             : base( info, context ) { }
+      }
+      //
+      public void OpenFile( string filename = null )
+      {
+         BeforeOpenFileEventArgs args1 = new BeforeOpenFileEventArgs( );
+         AfterOpenFileEventArgs args2 = new AfterOpenFileEventArgs( args1 );
+         args1.SuggestedFilename = filename;
+         this.BeforeOpenFileEvent?.Invoke( this, args1 );
+         if( !args1.Cancel )
+         {
+            this.OpenFileEvent( args1 );
+         }
+         this.AfterOpenFileEvent?.Invoke( this, args2 );
+      }
+      //
+      private void OpenFileEvent( BeforeOpenFileEventArgs args )
+      {
+         try
+         {
+            using( XtraOpenFileDialog dialog = new DevExpress.XtraEditors.XtraOpenFileDialog( ) )
+            {
+               dialog.InitialDirectory = this.initialPath;
+               dialog.ShowDragDropConfirmation = true;
+               dialog.AutoUpdateFilterDescription = false;
+               dialog.Filter = "cfg files|*.xml";
+               dialog.FileName = args.SuggestedFilename;
+               DialogResult dialogResult = dialog.ShowDialog( );
+               if( dialogResult == DialogResult.OK )
+               {
+                  args.OpenedFilename = dialog.FileName;
+                  XDocument doc = XDocument.Load( args.OpenedFilename, LoadOptions.None );
+                  this.cfg = Configuration.GetPoco( doc.Root );
+                  this.LoadNodes( );
+               }
+            }
+         }
+         catch( System.Exception ex )
+         {
+            args.Exception = new OpenFileException( null, ex );
+         }
+         finally
+         {
+
+         }
+      }
+      #endregion
+
+      #region --- Before and After SaveFile EVENTS + HANDLERS + EXCEPTIONS ---
+      public delegate void BeforeSaveFileEventHandler( object sender, BeforeSaveFileEventArgs ea );
+      public event BeforeSaveFileEventHandler BeforeSaveFileEvent;
+      public class BeforeSaveFileEventArgs : System.EventArgs
+      {
+         public bool Cancel { get; set; }
+         public string SavedFilename { get; set; }
+         public SaveFileException Exception { get; set; }
+      }
+      //
+      public delegate void AfterSaveFileEventHandler( object sender, AfterSaveFileEventArgs ea );
+      public event AfterSaveFileEventHandler AfterSaveFileEvent;
+      public class AfterSaveFileEventArgs : System.EventArgs
+      {
+         public BeforeSaveFileEventArgs args;
+         public bool wasCanceled { get { return this.args == null ? false : this.args.Cancel; } }
+         public bool hasException { get { return this.args.Exception != null; } }
+         public bool isOk { get { return !this.wasCanceled && !this.hasException; } }
+         public AfterSaveFileEventArgs( BeforeSaveFileEventArgs args1 )
+         {
+            this.args = args1;
+         }
+      }
+      //
+      [System.Serializable]
+      public class SaveFileException : System.Exception
+      {
+         public SaveFileException() : base( ) { }
+
+         public SaveFileException( string message ) : base( message ) { }
+
+         public SaveFileException( string format, params object[ ] args )
+             : base( string.Format( format, args ) ) { }
+
+         public SaveFileException( string message, System.Exception innerException )
+             : base( message, innerException ) { }
+
+         public SaveFileException( string format, System.Exception innerException, params object[ ] args )
+             : base( string.Format( format, args ), innerException ) { }
+
+         protected SaveFileException( System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context )
+             : base( info, context ) { }
+      }
+      //
+      public void SaveFile( string filename = null )
+      {
+         BeforeSaveFileEventArgs args1 = new BeforeSaveFileEventArgs( );
+         AfterSaveFileEventArgs args2 = new AfterSaveFileEventArgs( args1 );
+         if( filename != null && string.IsNullOrWhiteSpace( filename ) )
+         {
+            args1.SavedFilename = filename.Trim( );
+         }
+         else
+         {
+            args1.SavedFilename = this.defaultFileName;
+         }
+         this.BeforeSaveFileEvent?.Invoke( this, args1 );
+         if( !args1.Cancel )
+         {
+            this.SaveFileEvent( args1 );
+         }
+         this.AfterSaveFileEvent?.Invoke( this, args2 );
+      }
+      //
+      private void SaveFileEvent( BeforeSaveFileEventArgs args )
+      {
+         if( this.cfg == null ) return;
+         try
+         {
+            this.x( ).Save( args.SavedFilename, SaveOptions.None );
+         }
+         catch( System.Exception ex )
+         {
+            args.Exception = new SaveFileException( null, ex );
+         }
+         finally
+         {
+
+         }
+      }
+      #endregion
+
       #region --- Before and After SaveAsFile EVENTS + HANDLERS + EXCEPTIONS ---
       public delegate void BeforeSaveAsFileEventHandler( object sender, BeforeSaveAsFileEventArgs ea );
 
@@ -425,7 +536,7 @@ namespace LinqXml.Control
                if( dialogResult == DialogResult.OK )
                {
                   args.SavedFilename = dialog.FileName;
-                  this.x().Save( args.SavedFilename, SaveOptions.None );
+                  this.x( ).Save( args.SavedFilename, SaveOptions.None );
                   //System.IO.File.WriteAllText( dialog.FileName, this.mainModule.Text );
                }
             }
@@ -451,8 +562,218 @@ namespace LinqXml.Control
          return doc;
       }
       #endregion
+
+      #region --- Before and After CloseFile EVENTS + HANDLERS + EXCEPTIONS ---
+      public delegate void BeforeCloseFileEventHandler( object sender, BeforeCloseFileEventArgs ea );
+      public event BeforeCloseFileEventHandler BeforeCloseFileEvent;
+      public class BeforeCloseFileEventArgs : System.EventArgs
+      {
+         public bool Cancel { get; set; }
+         public string Filename { get; set; }
+         public CloseFileException Exception { get; set; }
+      }
       //
-      // CloseFile
+      public delegate void AfterCloseFileEventHandler( object sender, AfterCloseFileEventArgs ea );
+      public event AfterCloseFileEventHandler AfterCloseFileEvent;
+      public class AfterCloseFileEventArgs : System.EventArgs
+      {
+         public BeforeCloseFileEventArgs args;
+         public bool wasCanceled { get { return this.args == null ? false : this.args.Cancel; } }
+         public bool hasException { get { return this.args.Exception != null; } }
+         public bool isOk { get { return !this.wasCanceled && !this.hasException; } }
+         public AfterCloseFileEventArgs( BeforeCloseFileEventArgs args1 )
+         {
+            this.args = args1;
+         }
+      }
+      //
+      [System.Serializable]
+      public class CloseFileException : System.Exception
+      {
+         public CloseFileException() : base( ) { }
+
+         public CloseFileException( string message ) : base( message ) { }
+
+         public CloseFileException( string format, params object[ ] args )
+             : base( string.Format( format, args ) ) { }
+
+         public CloseFileException( string message, System.Exception innerException )
+             : base( message, innerException ) { }
+
+         public CloseFileException( string format, System.Exception innerException, params object[ ] args )
+             : base( string.Format( format, args ), innerException ) { }
+
+         protected CloseFileException( System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context )
+             : base( info, context ) { }
+      }
+      //
+      public void CloseFile()
+      {
+         if( this.cfg == null ) return;
+         BeforeCloseFileEventArgs args1 = new BeforeCloseFileEventArgs( );
+         AfterCloseFileEventArgs args2 = new AfterCloseFileEventArgs( args1 );
+         args1.Filename = this.defaultFileName;
+         this.BeforeCloseFileEvent?.Invoke( this, args1 );
+         if( !args1.Cancel )
+         {
+            this.CloseFileEvent( args1 );
+         }
+         this.AfterCloseFileEvent?.Invoke( this, args2 );
+      }
+      //
+      private void CloseFileEvent( BeforeCloseFileEventArgs args )
+      {
+         try
+         {
+            //this.SaveFile( );
+            this.treeView.BeginUpdate( );
+            try
+            {
+               this.treeView.Nodes.Clear( );
+            }
+            finally
+            {
+               this.treeView.EndUpdate( );
+            }
+            this.cfg = null;
+         }
+         catch( System.Exception ex )
+         {
+            args.Exception = new CloseFileException( null, ex );
+         }
+         finally
+         {
+
+         }
+      }
+      #endregion
+
       // SetWorkingDirectorty
+
+      #region --- FocusedDataStoreChanged EVENT + HANDLER + EXCEPTION ---
+      public delegate void FocusedDataStoreChangedEventHandler( object sender, FocusedDataStoreChangedEventArgs ea );
+      public event FocusedDataStoreChangedEventHandler FocusedDataStoreChangedEvent;
+      public class FocusedDataStoreChangedEventArgs : System.EventArgs
+      {
+         public bool Cancel { get; set; }
+         public DataStore DataStore { get; set; }
+         public FocusedDataStoreChangedException Exception { get; set; }
+      }
+      //
+      [System.Serializable]
+      public class FocusedDataStoreChangedException : System.Exception
+      {
+         public FocusedDataStoreChangedException() : base( ) { }
+
+         public FocusedDataStoreChangedException( string message ) : base( message ) { }
+
+         public FocusedDataStoreChangedException( string format, params object[ ] args )
+             : base( string.Format( format, args ) ) { }
+
+         public FocusedDataStoreChangedException( string message, System.Exception innerException )
+             : base( message, innerException ) { }
+
+         public FocusedDataStoreChangedException( string format, System.Exception innerException, params object[ ] args )
+             : base( string.Format( format, args ), innerException ) { }
+
+         protected FocusedDataStoreChangedException( System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context )
+             : base( info, context ) { }
+      }
+      //
+      //         FocusedDataStoreChangedEventArgs args1 = new FocusedDataStoreChangedEventArgs( );
+      //         args1.Filename = filename;
+      //         this.FocusedDataStoreChangedEvent?.Invoke( this, args2 );
+      //
+      #endregion
+
+      #region --- FocusedConnectionStringChanged EVENT + HANDLER + EXCEPTION ---
+      public delegate void FocusedConnectionStringChangedEventHandler( object sender, FocusedConnectionStringChangedEventArgs ea );
+      public event FocusedConnectionStringChangedEventHandler FocusedConnectionStringChangedEvent;
+      public class FocusedConnectionStringChangedEventArgs : System.EventArgs
+      {
+         public bool Cancel { get; set; }
+         public ConnectionString ConnectionString { get; set; }
+         public FocusedConnectionStringChangedException Exception { get; set; }
+      }
+      //
+      [System.Serializable]
+      public class FocusedConnectionStringChangedException : System.Exception
+      {
+         public FocusedConnectionStringChangedException() : base( ) { }
+
+         public FocusedConnectionStringChangedException( string message ) : base( message ) { }
+
+         public FocusedConnectionStringChangedException( string format, params object[ ] args )
+             : base( string.Format( format, args ) ) { }
+
+         public FocusedConnectionStringChangedException( string message, System.Exception innerException )
+             : base( message, innerException ) { }
+
+         public FocusedConnectionStringChangedException( string format, System.Exception innerException, params object[ ] args )
+             : base( string.Format( format, args ), innerException ) { }
+
+         protected FocusedConnectionStringChangedException( System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context )
+             : base( info, context ) { }
+      }
+      //
+      //         FocusedConnectionStringChangedEventArgs args1 = new FocusedConnectionStringChangedEventArgs( );
+      //         args1.Filename = filename;
+      //         this.FocusedConnectionStringChangedEvent?.Invoke( this, args2 );
+      //
+      #endregion
+
    }
 }
+
+/*
+      private string GetDefaultFilePath()
+      {
+         string x = "Data\\" + this.defaultFileName;
+         return Path.GetDirectoryName( FilesHelper.FindingFileName( Application.StartupPath, x ) );
+      }
+
+      private void OpenItemClick()
+      {
+         using( XtraOpenFileDialog dialog = new XtraOpenFileDialog( ) )
+         {
+            dialog.InitialDirectory = this.initialPath;
+            dialog.ShowDragDropConfirmation = true;
+            dialog.AutoUpdateFilterDescription = false;
+            dialog.Filter = "Text files (*.txt)|*.txt";
+            DialogResult dialogResult = dialog.ShowDialog( );
+            if( dialogResult == DialogResult.OK )
+            {
+               //this.SetMemoEditText( dialog.FileName );
+            }
+         }
+      }
+
+      private void SaveItemClick()
+      {
+         using( XtraSaveFileDialog dialog = new XtraSaveFileDialog( ) )
+         {
+            dialog.InitialDirectory = this.initialPath;
+            dialog.ShowDragDropConfirmation = true;
+            dialog.Filter = "Text files|*.txt";
+            dialog.CreatePrompt = true;
+            dialog.OverwritePrompt = true;
+            DialogResult dialogResult = dialog.ShowDialog( );
+            if( dialogResult == DialogResult.OK )
+            {
+               //System.IO.File.WriteAllText( dialog.FileName, this.mainModule.Text );
+            }
+         }
+      }
+
+      private void SetWorkingFolderItemClick()
+      {
+         using( XtraFolderBrowserDialog dialog = new XtraFolderBrowserDialog( ) )
+         {
+            dialog.SelectedPath = this.initialPath;
+            if( dialog.ShowDialog( ) == DialogResult.OK )
+            {
+               this.initialPath = dialog.SelectedPath;
+            }
+         }
+      }
+*/
