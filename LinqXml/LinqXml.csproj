@@ -54,10 +54,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigurationTestForm.cs">
+    <Compile Include="Control\LoginXtraUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\ConfigurationTestForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ConfigurationTestForm.Designer.cs">
+    <Compile Include="GUI\ConfigurationTestForm.Designer.cs">
       <DependentUpon>ConfigurationTestForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Control\ConfigurationView.cs">
@@ -87,10 +90,10 @@
     <Compile Include="Component\DataStoreConfigurationManager.Designer.cs">
       <DependentUpon>DataStoreConfigurationManager.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="GUI\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
+    <Compile Include="GUI\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="LinqXml.cs" />
@@ -105,13 +108,16 @@
     <EmbeddedResource Include="Component\ConnectionStringHandler.resx">
       <DependentUpon>ConnectionStringHandler.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ConfigurationTestForm.resx">
+    <EmbeddedResource Include="Control\LoginXtraUserControl.resx">
+      <DependentUpon>LoginXtraUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\ConfigurationTestForm.resx">
       <DependentUpon>ConfigurationTestForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Control\ConfigurationView.resx">
       <DependentUpon>ConfigurationView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
+    <EmbeddedResource Include="GUI\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
@@ -127,8 +133,8 @@
     <EmbeddedResource Include="Component\SystemConnectionStringHandler.resx">
       <DependentUpon>SystemConnectionStringHandler.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
+    <None Include="Diagrams\ClassDiagram1.cd" />
+    <None Include="Diagrams\OverView.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

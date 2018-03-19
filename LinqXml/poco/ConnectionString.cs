@@ -98,7 +98,17 @@ namespace LinqXml
          }
       }
       #endregion
-      //
+
+      #region --- Ctors... ---
+      public ConnectionString()
+      {
+      }
+      public ConnectionString( string name )
+      {
+         this.Name = name;
+      }
+      #endregion
+
       public System.Xml.Linq.XElement GetXElement()
       {
          if( this.Name == null )

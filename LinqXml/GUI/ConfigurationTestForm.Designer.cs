@@ -37,14 +37,16 @@
          this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
          this.barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
          this.barButtonItem5 = new DevExpress.XtraBars.BarButtonItem();
+         this.addDataStoreBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.addConnectionStringBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
          this.bar3 = new DevExpress.XtraBars.Bar();
          this.labelStatusBarStaticItem = new DevExpress.XtraBars.BarStaticItem();
+         this.objnmStatusBarStaticItem = new DevExpress.XtraBars.BarStaticItem();
          this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
          this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
          this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
          this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
          this.configurationView1 = new LinqXml.Control.ConfigurationView();
-         this.objnmStatusBarStaticItem = new DevExpress.XtraBars.BarStaticItem();
          ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
          this.SuspendLayout();
          // 
@@ -66,9 +68,11 @@
             this.barButtonItem4,
             this.barButtonItem5,
             this.labelStatusBarStaticItem,
-            this.objnmStatusBarStaticItem});
+            this.objnmStatusBarStaticItem,
+            this.addDataStoreBarButtonItem,
+            this.addConnectionStringBarButtonItem});
          this.barManager1.MainMenu = this.bar2;
-         this.barManager1.MaxItemId = 7;
+         this.barManager1.MaxItemId = 9;
          this.barManager1.StatusBar = this.bar3;
          // 
          // bar1
@@ -90,7 +94,9 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem2),
             new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem3),
             new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem4),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem5)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem5),
+            new DevExpress.XtraBars.LinkPersistInfo(this.addDataStoreBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.addConnectionStringBarButtonItem)});
          this.bar2.OptionsBar.MultiLine = true;
          this.bar2.OptionsBar.UseWholeRow = true;
          this.bar2.Text = "Main menu";
@@ -129,6 +135,20 @@
          this.barButtonItem5.Id = 4;
          this.barButtonItem5.Name = "barButtonItem5";
          // 
+         // addDataStoreBarButtonItem
+         // 
+         this.addDataStoreBarButtonItem.Caption = "Add DS";
+         this.addDataStoreBarButtonItem.Id = 7;
+         this.addDataStoreBarButtonItem.Name = "addDataStoreBarButtonItem";
+         this.addDataStoreBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.addDataStoreBarButtonItem_ItemClick);
+         // 
+         // addConnectionStringBarButtonItem
+         // 
+         this.addConnectionStringBarButtonItem.Caption = "Add CS";
+         this.addConnectionStringBarButtonItem.Id = 8;
+         this.addConnectionStringBarButtonItem.Name = "addConnectionStringBarButtonItem";
+         this.addConnectionStringBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.newConnectionStringBarButtonItem_ItemClick);
+         // 
          // bar3
          // 
          this.bar3.BarName = "Status bar";
@@ -148,6 +168,12 @@
          // 
          this.labelStatusBarStaticItem.Id = 5;
          this.labelStatusBarStaticItem.Name = "labelStatusBarStaticItem";
+         // 
+         // objnmStatusBarStaticItem
+         // 
+         this.objnmStatusBarStaticItem.Caption = "barStaticItem1";
+         this.objnmStatusBarStaticItem.Id = 6;
+         this.objnmStatusBarStaticItem.Name = "objnmStatusBarStaticItem";
          // 
          // barDockControlTop
          // 
@@ -189,12 +215,6 @@
          this.configurationView1.Size = new System.Drawing.Size(759, 632);
          this.configurationView1.TabIndex = 4;
          // 
-         // barStaticItem1
-         // 
-         this.objnmStatusBarStaticItem.Caption = "barStaticItem1";
-         this.objnmStatusBarStaticItem.Id = 6;
-         this.objnmStatusBarStaticItem.Name = "barStaticItem1";
-         // 
          // ConfigurationTestForm
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -231,5 +251,7 @@
       private DevExpress.XtraBars.BarStaticItem labelStatusBarStaticItem;
       private Control.ConfigurationView configurationView1;
       private DevExpress.XtraBars.BarStaticItem objnmStatusBarStaticItem;
+      private DevExpress.XtraBars.BarButtonItem addDataStoreBarButtonItem;
+      private DevExpress.XtraBars.BarButtonItem addConnectionStringBarButtonItem;
    }
 }

@@ -72,24 +72,24 @@ namespace LinqXml
          }
       }
 
-      private List<ConnectionString> _csList;
+      private List<ConnectionString> _appCsList;
 
-      public List<ConnectionString> CsList
+      public List<ConnectionString> AppCsList
       {
          get
          {
-            if( this._csList == null )
+            if( this._appCsList == null )
             {
-               this._csList = new List<ConnectionString>( );
+               this._appCsList = new List<ConnectionString>( );
             }
-            return this._csList;
+            return this._appCsList;
          }
          set
          {
-            if( this._csList != value )
+            if( this._appCsList != value )
             {
-               this._csList = value;
-               this.OnPropertyChanged( nameof( this.CsList ) );
+               this._appCsList = value;
+               this.OnPropertyChanged( nameof( this.AppCsList ) );
             }
          }
       }
@@ -158,9 +158,9 @@ namespace LinqXml
          dsCfg.Add( dsColl );
          //
          XElement csColl = new XElement( "csCol" );
-         for( int i = 0; i < this.CsList.Count; i++ )
+         for( int i = 0; i < this.AppCsList.Count; i++ )
          {
-            ConnectionString connectionString = this.CsList[ i ];
+            ConnectionString connectionString = this.AppCsList[ i ];
             XElement cs = connectionString.GetXElement( );
             csColl.Add( cs );
          }
@@ -187,7 +187,7 @@ namespace LinqXml
          {
             StageDirPath = stgDir,
             DsList = dsList,
-            CsList = csList,
+            AppCsList = csList,
             SysCsList = syscsList
          };
 
@@ -213,12 +213,96 @@ namespace LinqXml
          {
             return;
          }
-         if( this.CsList.Contains( cs ) )
+         if( this.AppCsList.Contains( cs ) )
          {
             return;
          }
-         this.CsList.Add( cs );
-         this.OnPropertyChanged( nameof( this.CsList ) );
+         this.AppCsList.Add( cs );
+         this.OnPropertyChanged( nameof( this.AppCsList ) );
       }
+      public bool ContainsAppCS( string name )
+      {
+         foreach( ConnectionString item in this.AppCsList )
+         {
+            if( string.Compare( item.Name, name, StringComparison.Ordinal ) == 0 )
+            {
+               return true;
+            }
+         }
+         return false;
+      }
+      public bool ContainsSysCS( string name )
+      {
+         foreach( ConnectionString item in this.SysCsList )
+         {
+            if( string.Compare( item.Name, name, StringComparison.Ordinal ) == 0 )
+            {
+               return true;
+            }
+         }
+         return false;
+      }
+      public void VerifyWhatIsAllowed()
+      {
+         if( this.DsList.Count <= 0 )
+         {
+            this.NotAllowedDelDataStoreEvent?.Invoke( this );
+         }
+         else
+         {
+            this.AllowedDelDataStoreEvent?.Invoke( this );
+         }
+         this.AllowedAddDataStoreEvent?.Invoke( this );
+         //
+         if( this.AppCsList.Count <= 0 )
+         {
+            this.NotAllowedDelAppCSEvent?.Invoke( this );
+         }
+         else
+         {
+            this.AllowedDelAppCSEvent?.Invoke( this );
+         }
+         this.AllowedAddAppCSEvent?.Invoke( this );
+      }
+      //
+      #region --- AllowedAddAppCS EVENT + HANDLER + EXCEPTION ---
+      public delegate void AllowedAddAppCSEventHandler( object sender );
+      public event AllowedAddAppCSEventHandler AllowedAddAppCSEvent;
+      #endregion
+      //
+      #region --- NotAllowedAddAppCS EVENT + HANDLER + EXCEPTION ---
+      public delegate void NotAllowedAddAppCSEventHandler( object sender );
+      public event NotAllowedAddAppCSEventHandler NotAllowedAddAppCSEvent;
+      #endregion
+      //
+      #region --- AllowedDelAppCS EVENT + HANDLER + EXCEPTION ---
+      public delegate void AllowedDelAppCSEventHandler( object sender );
+      public event AllowedDelAppCSEventHandler AllowedDelAppCSEvent;
+      #endregion
+      //
+      #region --- NotAllowedDelAppCS EVENT + HANDLER + EXCEPTION ---
+      public delegate void NotAllowedDelAppCSEventHandler( object sender );
+      public event NotAllowedDelAppCSEventHandler NotAllowedDelAppCSEvent;
+      #endregion
+      //
+      #region --- AllowedAddDataStore EVENT + HANDLER + EXCEPTION ---
+      public delegate void AllowedAddDataStoreEventHandler( object sender );
+      public event AllowedAddDataStoreEventHandler AllowedAddDataStoreEvent;
+      #endregion
+      //
+      #region --- NotAllowedAddDataStore EVENT + HANDLER + EXCEPTION ---
+      public delegate void NotAllowedAddDataStoreEventHandler( object sender );
+      public event NotAllowedAddDataStoreEventHandler NotAllowedAddDataStoreEvent;
+      #endregion
+      //
+      #region --- AllowedDelDataStore EVENT + HANDLER + EXCEPTION ---
+      public delegate void AllowedDelDataStoreEventHandler( object sender );
+      public event AllowedDelDataStoreEventHandler AllowedDelDataStoreEvent;
+      #endregion
+      //
+      #region --- NotAllowedDelDataStore EVENT + HANDLER + EXCEPTION ---
+      public delegate void NotAllowedDelDataStoreEventHandler( object sender );
+      public event NotAllowedDelDataStoreEventHandler NotAllowedDelDataStoreEvent;
+      #endregion
    }
 }

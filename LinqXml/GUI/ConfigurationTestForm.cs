@@ -91,5 +91,16 @@ namespace LinqXml
       {
          this.configurationView1.CloseFile( );
       }
+
+      private void addDataStoreBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
+      {
+         this.configurationView1.NewDataStore( );
+
+      }
+
+      private void newConnectionStringBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
+      {
+         this.configurationView1.NewConnectionString( );
+      }
    }
 }

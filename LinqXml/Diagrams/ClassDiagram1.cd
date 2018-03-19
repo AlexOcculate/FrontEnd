@@ -1,14 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="LinqXml.ConfigurationTestForm">
-    <Position X="8.25" Y="3" Width="4" />
-    <TypeIdentifier>
-      <HashCode>iBAQASABBCABAABAAACFBAgCIAAgiAACUAABAgAHCAE=</HashCode>
-      <FileName>ConfigurationTestForm.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="LinqXml.Control.ConfigurationView">
-    <Position X="2.75" Y="2.75" Width="3" />
+    <Position X="0.5" Y="0.5" Width="3" />
     <NestedTypes>
       <Delegate Name="LinqXml.Control.ConfigurationView.AfterSaveAsFileEventHandler" Collapsed="true">
         <TypeIdentifier>

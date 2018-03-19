@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XmlTemplateCategoryInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="MyTemplates" OptExpanded="true">
   <TemplateCategory Name="ActiveQueryBuilder" OptExpanded="true">
-    <TemplateCategory Name="ZYZ" OptExpanded="true">
+    <TemplateCategory Name="ZYZ">
       <Template Name="qwerty">
         <Expansion Priority="0">
           <Body>«?Set(EventName,EventName)»
@@ -117,9 +117,10 @@
       </Expansion>
     </Template>
     <Template Name="neah">
+      <Comment>Single Event Handler</Comment>
       <Expansion Priority="0">
         <Body>//
-      #region --- «Paste» EVENTS + HANDLERS + EXCEPTIONS ---
+      #region --- «Paste» EVENT + HANDLER + EXCEPTION ---
       public delegate void «Paste»EventHandler( object sender, «Paste»EventArgs ea );
       public event «Paste»EventHandler «Paste»Event;
       public class «Paste»EventArgs : System.EventArgs
@@ -175,6 +176,7 @@ protected void OnPropertyChanged( string propertyName )
 «Caret»</Body>
         <Context />
         <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InString])</ContextString>
+        <UsingClause>System.ComponentModel</UsingClause>
       </Expansion>
     </Template>
     <Template Name="#Exception#">
@@ -207,6 +209,7 @@ protected void OnPropertyChanged( string propertyName )
       </Expansion>
     </Template>
     <Template Name="ebgw">
+      <Comment>BackgroundWorker</Comment>
       <Expansion Priority="0">
         <Body>public void «Caret»«FieldStart»«Link(EventName)»«FieldEnd»( object e ) { this.«Link(EventName)»BackgroundWorker.RunWorkerAsync( e ); }
 public bool IsBusy«Link(EventName)» { get { return this.«Link(EventName)»BackgroundWorker.IsBusy; } }
@@ -410,6 +413,7 @@ public class «Link(EventName)»CompletedException : System.Exception
       </Expansion>
     </Template>
     <Template Name="AQBTC">
+      <Comment>Active Query Builder DrillDown</Comment>
       <Expansion Priority="0">
         <Body>
       #region --- Active Query Builder ---
@@ -1064,6 +1068,66 @@ public class «Link(EventName)»CompletedException : System.Exception
       </Expansion>
     </Template>
   </TemplateCategory>
+  <Template Name="ossd">
+    <Comment>Open / Save / FolderBrowsing Dialogs</Comment>
+    <Expansion Priority="0">
+      <Body>      private string GetDefaultFilePath()
+      {
+         string x = "Data\\" + this.defaultFileName;
+         return Path.GetDirectoryName( FilesHelper.FindingFileName( Application.StartupPath, x ) );
+      }
+
+      private void OpenItemClick()
+      {
+         using( XtraOpenFileDialog dialog = new XtraOpenFileDialog( ) )
+         {
+            dialog.InitialDirectory = this.initialPath;
+            dialog.ShowDragDropConfirmation = true;
+            dialog.AutoUpdateFilterDescription = false;
+            dialog.Filter = "Text files (*.txt)|*.txt";
+            DialogResult dialogResult = dialog.ShowDialog( );
+            if( dialogResult == DialogResult.OK )
+            {
+               //this.SetMemoEditText( dialog.FileName );
+            }
+         }
+      }
+
+      private void SaveItemClick()
+      {
+         using( XtraSaveFileDialog dialog = new XtraSaveFileDialog( ) )
+         {
+            dialog.InitialDirectory = this.initialPath;
+            dialog.ShowDragDropConfirmation = true;
+            dialog.Filter = "Text files|*.txt";
+            dialog.CreatePrompt = true;
+            dialog.OverwritePrompt = true;
+            DialogResult dialogResult = dialog.ShowDialog( );
+            if( dialogResult == DialogResult.OK )
+            {
+               //System.IO.File.WriteAllText( dialog.FileName, this.mainModule.Text );
+            }
+         }
+      }
+
+      private void SetWorkingFolderItemClick()
+      {
+         using( XtraFolderBrowserDialog dialog = new XtraFolderBrowserDialog( ) )
+         {
+            dialog.SelectedPath = this.initialPath;
+            if( dialog.ShowDialog( ) == DialogResult.OK )
+            {
+               this.initialPath = dialog.SelectedPath;
+            }
+         }
+      }</Body>
+      <Context />
+      <ContextString>[InCSharp][InClass]</ContextString>
+      <UsingClause>DevExpress.XtraEditors</UsingClause>
+      <UsingClause>System.Windows.Forms</UsingClause>
+      <UsingClause>System.IO</UsingClause>
+    </Expansion>
+  </Template>
   <Template Name="NewEventAndHandlers">
     <Comment>New Event and Handlers via paste a Event Name</Comment>
     <Expansion Priority="0">
