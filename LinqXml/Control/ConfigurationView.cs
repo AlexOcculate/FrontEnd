@@ -21,6 +21,7 @@ namespace LinqXml.Control
          this.AfterOpenFileEvent += this.ConfigurationView_AfterOpenFileEvent;
          this.AfterSaveAsFileEvent += this.ConfigurationView_AfterSaveAsFileEvent;
          this.AfterSaveFileEvent += this.ConfigurationView_AfterSaveFileEvent;
+         this.AfterCloseFileEvent += this.ConfigurationView_AfterCloseFileEvent;
          //this.AddAllNodes( true );
          //this.LoadNodes( );
       }
@@ -80,28 +81,6 @@ namespace LinqXml.Control
          this.LoadNodes( );
       }
 
-      private void ConfigurationView_AfterOpenFileEvent( object sender, AfterOpenFileEventArgs ea )
-      {
-         this.defaultFileName = ea.args.OpenedFilename;
-         if( ea.wasCanceled )
-         {
-            return;
-         }
-         this.cfg.PropertyChanged += this.Cfg_PropertyChanged;
-         //
-         this.cfg.AllowedAddDataStoreEvent += this.Cfg_AllowedAddDataStoreEvent;
-         this.cfg.NotAllowedAddDataStoreEvent += this.Cfg_NotAllowedAddDataStoreEvent;
-         //
-         this.cfg.AllowedDelDataStoreEvent += this.Cfg_AllowedDelDataStoreEvent;
-         this.cfg.NotAllowedDelDataStoreEvent += this.Cfg_NotAllowedDelDataStoreEvent;
-         //
-         this.cfg.AllowedAddAppCSEvent += this.Cfg_AllowedAddAppCSEvent;
-         this.cfg.NotAllowedAddAppCSEvent += this.Cfg_NotAllowedAddAppCSEvent;
-         //
-         this.cfg.AllowedDelAppCSEvent += this.Cfg_AllowedDelAppCSEvent;
-         this.cfg.NotAllowedDelAppCSEvent += this.Cfg_NotAllowedDelAppCSEvent;
-      }
-
       private void Cfg_NotAllowedDelAppCSEvent( object sender )
       {
          this.NotAllowedDelAppCSEvent?.Invoke( this );
@@ -142,14 +121,56 @@ namespace LinqXml.Control
          this.AllowedDelDataStoreEvent?.Invoke( this );
       }
 
+      //@#$%
+      private void ConfigurationView_AfterOpenFileEvent( object sender, AfterOpenFileEventArgs ea )
+      {
+         this.defaultFileName = ea.args.OpenedFilename;
+         if( !ea.isOk )
+         {
+            return;
+         }
+         this.cfg.PropertyChanged += this.Cfg_PropertyChanged;
+         //
+         this.cfg.AllowedAddDataStoreEvent += this.Cfg_AllowedAddDataStoreEvent;
+         this.cfg.NotAllowedAddDataStoreEvent += this.Cfg_NotAllowedAddDataStoreEvent;
+         //
+         this.cfg.AllowedDelDataStoreEvent += this.Cfg_AllowedDelDataStoreEvent;
+         this.cfg.NotAllowedDelDataStoreEvent += this.Cfg_NotAllowedDelDataStoreEvent;
+         //
+         this.cfg.AllowedAddAppCSEvent += this.Cfg_AllowedAddAppCSEvent;
+         this.cfg.NotAllowedAddAppCSEvent += this.Cfg_NotAllowedAddAppCSEvent;
+         //
+         this.cfg.AllowedDelAppCSEvent += this.Cfg_AllowedDelAppCSEvent;
+         this.cfg.NotAllowedDelAppCSEvent += this.Cfg_NotAllowedDelAppCSEvent;
+         //
+         this.cfg.VerifyWhatIsAllowed( );
+         //
+         this.AllowedToOpenFileEvent?.Invoke( this );
+         this.AllowedToCloseFileEvent?.Invoke( this );
+         //@#$% Mandrake!!!
+         this.NotAllowedDelAppCSEvent?.Invoke( this );
+         this.NotAllowedDelDataStoreEvent?.Invoke( this );
+      }
       private void ConfigurationView_AfterSaveFileEvent( object sender, AfterSaveFileEventArgs ea )
       {
          this.defaultFileName = ea.args.SavedFilename;
       }
-
       private void ConfigurationView_AfterSaveAsFileEvent( object sender, AfterSaveAsFileEventArgs ea )
       {
          this.defaultFileName = ea.args.SavedFilename;
+      }
+      private void ConfigurationView_AfterCloseFileEvent( object sender, AfterCloseFileEventArgs ea )
+      {
+         this.cfg.VerifyWhatIsAllowed( );
+         this.cfg = null;
+         this.AllowedToOpenFileEvent?.Invoke( this );
+         this.NotAllowedToSaveFileEvent?.Invoke( this );
+         this.NotAllowedToCloseFileEvent?.Invoke( this );
+         //
+         this.NotAllowedAddDataStoreEvent?.Invoke( this );
+         this.NotAllowedDelDataStoreEvent?.Invoke( this );
+         this.NotAllowedAddAppCSEvent?.Invoke( this );
+         this.NotAllowedDelAppCSEvent?.Invoke( this );
       }
 
       public void InitializeTreeView( TreeList treeView )
@@ -186,10 +207,13 @@ namespace LinqXml.Control
          // treeView.AfterExpand += this.treeView_AfterExpand;
       }
 
+      //@#$%
       private void treeView_FocusedNodeChanged( object sender, FocusedNodeChangedEventArgs e )
       {
          if( e.Node?.Tag == null )
-         {
+         {  //@#$% Is not working...
+            this.NotAllowedDelAppCSEvent?.Invoke( this );
+            this.NotAllowedDelDataStoreEvent?.Invoke( this );
             return;
          }
          TreeListNode oldNode = e.OldNode;
@@ -200,12 +224,30 @@ namespace LinqXml.Control
             FocusedDataStoreChangedEventArgs args = new FocusedDataStoreChangedEventArgs( );
             args.DataStore = node.Tag as DataStore;
             this.FocusedDataStoreChangedEvent?.Invoke( this, args );
+            //
+            this.NotAllowedDelAppCSEvent?.Invoke( this );
+            this.AllowedDelDataStoreEvent?.Invoke( this );
          }
          else if( node.Tag is ConnectionString )
          {
             FocusedConnectionStringChangedEventArgs args = new FocusedConnectionStringChangedEventArgs( );
             args.ConnectionString = node.Tag as ConnectionString;
             this.FocusedConnectionStringChangedEvent?.Invoke( this, args );
+            //
+            if( args.ConnectionString.IsSys )
+            {
+               this.NotAllowedDelAppCSEvent?.Invoke( this );
+            }
+            else
+            {
+               this.AllowedDelAppCSEvent?.Invoke( this );
+            }
+            this.NotAllowedDelDataStoreEvent?.Invoke( this );
+         }
+         else
+         {
+            this.NotAllowedDelAppCSEvent?.Invoke( this );
+            this.NotAllowedDelDataStoreEvent?.Invoke( this );
          }
       }
 
@@ -291,7 +333,7 @@ namespace LinqXml.Control
             node.ImageIndex = node.SelectImageIndex = 0; node.StateImageIndex = 0;
             node.Tag = cs;
          }
-         this.cfg.VerifyWhatIsAllowed( );
+         //         this.cfg.VerifyWhatIsAllowed( );
       }
 
       #region --- Before and After OpenFile EVENTS + HANDLERS + EXCEPTIONS ---
@@ -751,9 +793,7 @@ namespace LinqXml.Control
 
       #region --- Before and After CloseFile EVENTS + HANDLERS + EXCEPTIONS ---
       public delegate void BeforeCloseFileEventHandler( object sender, BeforeCloseFileEventArgs ea );
-
       public event BeforeCloseFileEventHandler BeforeCloseFileEvent;
-
       public class BeforeCloseFileEventArgs : System.EventArgs
       {
          public bool Cancel
@@ -771,12 +811,9 @@ namespace LinqXml.Control
             get; set;
          }
       }
-
       //
       public delegate void AfterCloseFileEventHandler( object sender, AfterCloseFileEventArgs ea );
-
       public event AfterCloseFileEventHandler AfterCloseFileEvent;
-
       public class AfterCloseFileEventArgs : System.EventArgs
       {
          public BeforeCloseFileEventArgs args;
@@ -810,7 +847,6 @@ namespace LinqXml.Control
             this.args = args1;
          }
       }
-
       //
       [System.Serializable]
       public class CloseFileException : System.Exception
@@ -842,7 +878,6 @@ namespace LinqXml.Control
          {
          }
       }
-
       //
       public void CloseFile()
       {
@@ -877,7 +912,6 @@ namespace LinqXml.Control
             {
                this.treeView.EndUpdate( );
             }
-            this.cfg = null;
          }
          catch( System.Exception ex )
          {
@@ -1023,6 +1057,38 @@ namespace LinqXml.Control
 
       //
 
+      #region --- AllowedToOpenFile EVENT + HANDLER + EXCEPTION ---
+      public delegate void AllowedToOpenFileEventHandler( object sender );
+      public event AllowedToOpenFileEventHandler AllowedToOpenFileEvent;
+      #endregion
+
+      #region --- NotAllowedToOpenFile EVENT + HANDLER + EXCEPTION ---
+      public delegate void NotAllowedToOpenFileEventHandler( object sender );
+      public event NotAllowedToOpenFileEventHandler NotAllowedToOpenFileEvent;
+      #endregion
+
+      #region --- AllowedToSaveFile EVENT + HANDLER + EXCEPTION ---
+      public delegate void AllowedToSaveFileEventHandler( object sender );
+      public event AllowedToSaveFileEventHandler AllowedToSaveFileEvent;
+      #endregion
+
+      #region --- NotAllowedToSaveFile EVENT + HANDLER + EXCEPTION ---
+      public delegate void NotAllowedToSaveFileEventHandler( object sender );
+      public event NotAllowedToSaveFileEventHandler NotAllowedToSaveFileEvent;
+      #endregion
+
+      #region --- AllowedToCloseFile EVENT + HANDLER + EXCEPTION ---
+      public delegate void AllowedToCloseFileEventHandler( object sender );
+      public event AllowedToCloseFileEventHandler AllowedToCloseFileEvent;
+      #endregion
+
+      #region --- NotAllowedToCloseFile EVENT + HANDLER + EXCEPTION ---
+      public delegate void NotAllowedToCloseFileEventHandler( object sender );
+      public event NotAllowedToCloseFileEventHandler NotAllowedToCloseFileEvent;
+      #endregion
+
+      //
+
       #region --- AllowedAddAppCS EVENT + HANDLER + EXCEPTION ---
       public delegate void AllowedAddAppCSEventHandler( object sender );
       public event AllowedAddAppCSEventHandler AllowedAddAppCSEvent;
@@ -1062,7 +1128,6 @@ namespace LinqXml.Control
       public delegate void NotAllowedDelDataStoreEventHandler( object sender );
       public event NotAllowedDelDataStoreEventHandler NotAllowedDelDataStoreEvent;
       #endregion
-
    }
 }
 

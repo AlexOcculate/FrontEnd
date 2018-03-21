@@ -32,13 +32,15 @@
          this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
          this.bar1 = new DevExpress.XtraBars.Bar();
          this.bar2 = new DevExpress.XtraBars.Bar();
-         this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
-         this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
-         this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
-         this.barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
-         this.barButtonItem5 = new DevExpress.XtraBars.BarButtonItem();
+         this.openBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.saveBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.saveAsBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.closeBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.setWorkingDirectoryBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
          this.addDataStoreBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
-         this.addConnectionStringBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.addAppCSBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.delDataStoreBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.delAppCSBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
          this.bar3 = new DevExpress.XtraBars.Bar();
          this.labelStatusBarStaticItem = new DevExpress.XtraBars.BarStaticItem();
          this.objnmStatusBarStaticItem = new DevExpress.XtraBars.BarStaticItem();
@@ -62,17 +64,19 @@
          this.barManager1.DockControls.Add(this.barDockControlRight);
          this.barManager1.Form = this;
          this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
-            this.barButtonItem1,
-            this.barButtonItem2,
-            this.barButtonItem3,
-            this.barButtonItem4,
-            this.barButtonItem5,
+            this.openBarButtonItem,
+            this.saveBarButtonItem,
+            this.saveAsBarButtonItem,
+            this.closeBarButtonItem,
+            this.setWorkingDirectoryBarButtonItem,
             this.labelStatusBarStaticItem,
             this.objnmStatusBarStaticItem,
             this.addDataStoreBarButtonItem,
-            this.addConnectionStringBarButtonItem});
+            this.addAppCSBarButtonItem,
+            this.delDataStoreBarButtonItem,
+            this.delAppCSBarButtonItem});
          this.barManager1.MainMenu = this.bar2;
-         this.barManager1.MaxItemId = 9;
+         this.barManager1.MaxItemId = 11;
          this.barManager1.StatusBar = this.bar3;
          // 
          // bar1
@@ -90,64 +94,88 @@
          this.bar2.DockRow = 0;
          this.bar2.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
          this.bar2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem1),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem2),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem3),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem4),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem5),
+            new DevExpress.XtraBars.LinkPersistInfo(this.openBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.saveBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.saveAsBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.closeBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.setWorkingDirectoryBarButtonItem),
             new DevExpress.XtraBars.LinkPersistInfo(this.addDataStoreBarButtonItem),
-            new DevExpress.XtraBars.LinkPersistInfo(this.addConnectionStringBarButtonItem)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.addAppCSBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.delDataStoreBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.delAppCSBarButtonItem)});
          this.bar2.OptionsBar.MultiLine = true;
          this.bar2.OptionsBar.UseWholeRow = true;
          this.bar2.Text = "Main menu";
          // 
-         // barButtonItem1
+         // openBarButtonItem
          // 
-         this.barButtonItem1.Caption = "Open";
-         this.barButtonItem1.Id = 0;
-         this.barButtonItem1.Name = "barButtonItem1";
-         this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
+         this.openBarButtonItem.Caption = "Open";
+         this.openBarButtonItem.Id = 0;
+         this.openBarButtonItem.Name = "openBarButtonItem";
+         this.openBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.openBarButtonItem_ItemClick);
          // 
-         // barButtonItem2
+         // saveBarButtonItem
          // 
-         this.barButtonItem2.Caption = "Save";
-         this.barButtonItem2.Id = 1;
-         this.barButtonItem2.Name = "barButtonItem2";
-         this.barButtonItem2.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem2_ItemClick);
+         this.saveBarButtonItem.Caption = "Save";
+         this.saveBarButtonItem.Enabled = false;
+         this.saveBarButtonItem.Id = 1;
+         this.saveBarButtonItem.Name = "saveBarButtonItem";
+         this.saveBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.saveBarButtonItem_ItemClick);
          // 
-         // barButtonItem3
+         // saveAsBarButtonItem
          // 
-         this.barButtonItem3.Caption = "Save As";
-         this.barButtonItem3.Id = 2;
-         this.barButtonItem3.Name = "barButtonItem3";
-         this.barButtonItem3.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem3_ItemClick);
+         this.saveAsBarButtonItem.Caption = "Save As";
+         this.saveAsBarButtonItem.Enabled = false;
+         this.saveAsBarButtonItem.Id = 2;
+         this.saveAsBarButtonItem.Name = "saveAsBarButtonItem";
+         this.saveAsBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.saveAsBarButtonItem_ItemClick);
          // 
-         // barButtonItem4
+         // closeBarButtonItem
          // 
-         this.barButtonItem4.Caption = "Close";
-         this.barButtonItem4.Id = 3;
-         this.barButtonItem4.Name = "barButtonItem4";
-         this.barButtonItem4.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem4_ItemClick);
+         this.closeBarButtonItem.Caption = "Close";
+         this.closeBarButtonItem.Enabled = false;
+         this.closeBarButtonItem.Id = 3;
+         this.closeBarButtonItem.Name = "closeBarButtonItem";
+         this.closeBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.closeBarButtonItem_ItemClick);
          // 
-         // barButtonItem5
+         // setWorkingDirectoryBarButtonItem
          // 
-         this.barButtonItem5.Caption = "Set Working Directory";
-         this.barButtonItem5.Id = 4;
-         this.barButtonItem5.Name = "barButtonItem5";
+         this.setWorkingDirectoryBarButtonItem.Caption = "Set Working Directory";
+         this.setWorkingDirectoryBarButtonItem.Id = 4;
+         this.setWorkingDirectoryBarButtonItem.Name = "setWorkingDirectoryBarButtonItem";
+         this.setWorkingDirectoryBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.setWorkingDirectoryBarButtonItem_ItemClick);
          // 
          // addDataStoreBarButtonItem
          // 
          this.addDataStoreBarButtonItem.Caption = "Add DS";
+         this.addDataStoreBarButtonItem.Enabled = false;
          this.addDataStoreBarButtonItem.Id = 7;
          this.addDataStoreBarButtonItem.Name = "addDataStoreBarButtonItem";
          this.addDataStoreBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.addDataStoreBarButtonItem_ItemClick);
          // 
-         // addConnectionStringBarButtonItem
+         // addAppCSBarButtonItem
          // 
-         this.addConnectionStringBarButtonItem.Caption = "Add CS";
-         this.addConnectionStringBarButtonItem.Id = 8;
-         this.addConnectionStringBarButtonItem.Name = "addConnectionStringBarButtonItem";
-         this.addConnectionStringBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.newConnectionStringBarButtonItem_ItemClick);
+         this.addAppCSBarButtonItem.Caption = "Add CS";
+         this.addAppCSBarButtonItem.Enabled = false;
+         this.addAppCSBarButtonItem.Id = 8;
+         this.addAppCSBarButtonItem.Name = "addAppCSBarButtonItem";
+         this.addAppCSBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.addAppCSBarButtonItem_ItemClick);
+         // 
+         // delDataStoreBarButtonItem
+         // 
+         this.delDataStoreBarButtonItem.Caption = "Del DS";
+         this.delDataStoreBarButtonItem.Enabled = false;
+         this.delDataStoreBarButtonItem.Id = 9;
+         this.delDataStoreBarButtonItem.Name = "delDataStoreBarButtonItem";
+         this.delDataStoreBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.delDataStoreBarButtonItem_ItemClick);
+         // 
+         // delAppCSBarButtonItem
+         // 
+         this.delAppCSBarButtonItem.Caption = "Del CS";
+         this.delAppCSBarButtonItem.Enabled = false;
+         this.delAppCSBarButtonItem.Id = 10;
+         this.delAppCSBarButtonItem.Name = "delAppCSBarButtonItem";
+         this.delAppCSBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.delAppCsBarButtonItem_ItemClick);
          // 
          // bar3
          // 
@@ -171,7 +199,6 @@
          // 
          // objnmStatusBarStaticItem
          // 
-         this.objnmStatusBarStaticItem.Caption = "barStaticItem1";
          this.objnmStatusBarStaticItem.Id = 6;
          this.objnmStatusBarStaticItem.Name = "objnmStatusBarStaticItem";
          // 
@@ -214,6 +241,8 @@
          this.configurationView1.Name = "configurationView1";
          this.configurationView1.Size = new System.Drawing.Size(759, 632);
          this.configurationView1.TabIndex = 4;
+         this.configurationView1.AllowedAddAppCSEvent += new LinqXml.Control.ConfigurationView.AllowedAddAppCSEventHandler(this.configurationView1_AllowedAddAppCSEvent);
+         this.configurationView1.NotAllowedAddAppCSEvent += new LinqXml.Control.ConfigurationView.NotAllowedAddAppCSEventHandler(this.configurationView1_NotAllowedAddAppCSEvent);
          // 
          // ConfigurationTestForm
          // 
@@ -238,11 +267,11 @@
       private DevExpress.XtraBars.BarManager barManager1;
       private DevExpress.XtraBars.Bar bar1;
       private DevExpress.XtraBars.Bar bar2;
-      private DevExpress.XtraBars.BarButtonItem barButtonItem1;
-      private DevExpress.XtraBars.BarButtonItem barButtonItem2;
-      private DevExpress.XtraBars.BarButtonItem barButtonItem3;
-      private DevExpress.XtraBars.BarButtonItem barButtonItem4;
-      private DevExpress.XtraBars.BarButtonItem barButtonItem5;
+      private DevExpress.XtraBars.BarButtonItem openBarButtonItem;
+      private DevExpress.XtraBars.BarButtonItem saveBarButtonItem;
+      private DevExpress.XtraBars.BarButtonItem saveAsBarButtonItem;
+      private DevExpress.XtraBars.BarButtonItem closeBarButtonItem;
+      private DevExpress.XtraBars.BarButtonItem setWorkingDirectoryBarButtonItem;
       private DevExpress.XtraBars.Bar bar3;
       private DevExpress.XtraBars.BarDockControl barDockControlTop;
       private DevExpress.XtraBars.BarDockControl barDockControlBottom;
@@ -252,6 +281,8 @@
       private Control.ConfigurationView configurationView1;
       private DevExpress.XtraBars.BarStaticItem objnmStatusBarStaticItem;
       private DevExpress.XtraBars.BarButtonItem addDataStoreBarButtonItem;
-      private DevExpress.XtraBars.BarButtonItem addConnectionStringBarButtonItem;
+      private DevExpress.XtraBars.BarButtonItem addAppCSBarButtonItem;
+      private DevExpress.XtraBars.BarButtonItem delDataStoreBarButtonItem;
+      private DevExpress.XtraBars.BarButtonItem delAppCSBarButtonItem;
    }
 }

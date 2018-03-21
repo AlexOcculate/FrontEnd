@@ -1,17 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+<ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="LinqXml.ConfigurationTestForm">
-    <Position X="0.5" Y="0.5" Width="2" />
+    <Position X="0.75" Y="0.5" Width="4" />
     <Compartments>
       <Compartment Name="Private" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>ETQQcWABlCIBAKRCRiDBBAgKBCAgmgACQAAIggAHAEU=</HashCode>
+      <HashCode>ETQQcWABlCIBAKRCRiDBBAgKBCAgmgAGQAAYggUHAEU=</HashCode>
       <FileName>GUI\ConfigurationTestForm.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LinqXml.Control.ConfigurationView">
-    <Position X="2.75" Y="0.5" Width="3" />
+    <Position X="7.75" Y="0.5" Width="3" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <NestedTypes>
       <Delegate Name="LinqXml.Control.ConfigurationView.BeforeCloseFileEventHandler" Collapsed="true">
         <TypeIdentifier>
@@ -220,9 +223,10 @@
     </TypeIdentifier>
   </Class>
   <Class Name="LinqXml.Configuration">
-    <Position X="6.75" Y="0.5" Width="2.75" />
+    <Position X="13.25" Y="0.5" Width="2.75" />
     <Compartments>
       <Compartment Name="Private" Collapsed="true" />
+      <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <NestedTypes>
       <Delegate Name="LinqXml.Configuration.AllowedAddAppCSEventHandler" Collapsed="true">
@@ -269,201 +273,6 @@
     <TypeIdentifier>
       <HashCode>AABAAAACAISIIAgAIAAAAAggggAAAACAQkAgAAABAEE=</HashCode>
       <FileName>POCO\Configuration.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="LinqXml.ConnectionString">
-    <Position X="13.5" Y="0.75" Width="3.25" />
-    <Compartments>
-      <Compartment Name="Private" Collapsed="true" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>CAAAAAQAAAAABAAAYgAAAAwAgAAAAAAAAAAAAACRAAA=</HashCode>
-      <FileName>POCO\ConnectionString.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="LinqXml.DataStore">
-    <Position X="10" Y="0.5" Width="2.75" />
-    <Compartments>
-      <Compartment Name="Private" Collapsed="true" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>AAACAAAAABAAAEBAIgAAAAxAgAAIAAIIAAAQAACBAAA=</HashCode>
-      <FileName>POCO\DataStore.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="LinqXml.ConnectionStringHandler">
-    <Position X="6.25" Y="14.75" Width="3" />
-    <NestedTypes>
-      <Delegate Name="LinqXml.ConnectionStringHandler.LoadProgressEventHandler" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\ConnectionStringHandler.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Delegate>
-      <Class Name="LinqXml.ConnectionStringHandler.LoadProgressEventArgs" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\ConnectionStringHandler.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Class Name="LinqXml.ConnectionStringHandler.LoadProgressException" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\ConnectionStringHandler.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Delegate Name="LinqXml.ConnectionStringHandler.LoadCompletedEventHandler" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\ConnectionStringHandler.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Delegate>
-      <Class Name="LinqXml.ConnectionStringHandler.LoadCompletedEventArgs" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\ConnectionStringHandler.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Class Name="LinqXml.ConnectionStringHandler.LoadCompletedException" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\ConnectionStringHandler.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-    </NestedTypes>
-    <TypeIdentifier>
-      <HashCode>AAAAgAAAACAAAApAAACAAIACAAAAAAAACAAAQQAAAAI=</HashCode>
-      <FileName>Component\ConnectionStringHandler.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="LinqXml.DataStoreConfigurationHandler">
-    <Position X="9.5" Y="14.75" Width="3.25" />
-    <NestedTypes>
-      <Delegate Name="LinqXml.DataStoreConfigurationHandler.LoadProgressEventHandler" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\DataStoreConfigurationHandler.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Delegate>
-      <Class Name="LinqXml.DataStoreConfigurationHandler.LoadProgressEventArgs" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\DataStoreConfigurationHandler.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Class Name="LinqXml.DataStoreConfigurationHandler.LoadProgressException" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\DataStoreConfigurationHandler.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Delegate Name="LinqXml.DataStoreConfigurationHandler.LoadCompletedEventHandler" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\DataStoreConfigurationHandler.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Delegate>
-      <Class Name="LinqXml.DataStoreConfigurationHandler.LoadCompletedEventArgs" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\DataStoreConfigurationHandler.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Class Name="LinqXml.DataStoreConfigurationHandler.LoadCompletedException" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\DataStoreConfigurationHandler.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-    </NestedTypes>
-    <TypeIdentifier>
-      <HashCode>AAAAgAAAACAAAAhAEACAAEICBAAAAAAACQAAAQAAAAA=</HashCode>
-      <FileName>Component\DataStoreConfigurationHandler.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="LinqXml.SystemConnectionStringHandler">
-    <Position X="2.75" Y="14.75" Width="3.25" />
-    <NestedTypes>
-      <Delegate Name="LinqXml.SystemConnectionStringHandler.LoadProgressEventHandler" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\SystemConnectionStringHandler.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Delegate>
-      <Class Name="LinqXml.SystemConnectionStringHandler.LoadProgressEventArgs" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\SystemConnectionStringHandler.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Class Name="LinqXml.SystemConnectionStringHandler.LoadProgressException" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\SystemConnectionStringHandler.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Delegate Name="LinqXml.SystemConnectionStringHandler.LoadCompletedEventHandler" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\SystemConnectionStringHandler.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Delegate>
-      <Class Name="LinqXml.SystemConnectionStringHandler.LoadCompletedEventArgs" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\SystemConnectionStringHandler.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Class Name="LinqXml.SystemConnectionStringHandler.LoadCompletedException" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\SystemConnectionStringHandler.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-    </NestedTypes>
-    <TypeIdentifier>
-      <HashCode>AAAAgAAAACAAAApAAACAAIACAAAAAAAACAAAQQAAAAI=</HashCode>
-      <FileName>Component\SystemConnectionStringHandler.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="LinqXml.DataStoreConfigurationManager">
-    <Position X="13" Y="14.75" Width="3.75" />
-    <Compartments>
-      <Compartment Name="Private" Collapsed="true" />
-    </Compartments>
-    <NestedTypes>
-      <Delegate Name="LinqXml.DataStoreConfigurationManager.LoadCompletedEventHandler" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\DataStoreConfigurationManager.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Delegate>
-      <Class Name="LinqXml.DataStoreConfigurationManager.ConfigLoadedException" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\DataStoreConfigurationManager.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Class Name="LinqXml.DataStoreConfigurationManager.LoadCompletedEventArgs" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\DataStoreConfigurationManager.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Class Name="LinqXml.DataStoreConfigurationManager.LoadProgressException" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\DataStoreConfigurationManager.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Delegate Name="LinqXml.DataStoreConfigurationManager.ConfigLoadedEventHandler" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\DataStoreConfigurationManager.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Delegate>
-      <Class Name="LinqXml.DataStoreConfigurationManager.LoadProgressEventArgs" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\DataStoreConfigurationManager.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Class Name="LinqXml.DataStoreConfigurationManager.LoadCompletedException" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\DataStoreConfigurationManager.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Delegate Name="LinqXml.DataStoreConfigurationManager.LoadProgressEventHandler" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\DataStoreConfigurationManager.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Delegate>
-      <Class Name="LinqXml.DataStoreConfigurationManager.ConfigLoadedEventArgs" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Component\DataStoreConfigurationManager.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-    </NestedTypes>
-    <TypeIdentifier>
-      <HashCode>AAVAgAAAADAADAhAMACEAEKCBAEAQBAFCQEBBQAABAA=</HashCode>
-      <FileName>Component\DataStoreConfigurationManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

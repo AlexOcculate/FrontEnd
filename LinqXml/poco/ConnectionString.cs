@@ -22,6 +22,11 @@ namespace LinqXml
       #endregion
 
       #region --- PROPERTIES + BACKFIELDS ---
+      private bool _isSys;
+      public bool IsSys
+      {
+         get { return this._isSys; }
+      }
       private string _nm;
       public string Name
       {
@@ -102,8 +107,9 @@ namespace LinqXml
       #region --- Ctors... ---
       public ConnectionString()
       {
+         this._isSys = false;
       }
-      public ConnectionString( string name )
+      public ConnectionString( string name ) : this()
       {
          this.Name = name;
       }
@@ -180,6 +186,7 @@ namespace LinqXml
                   ProviderName = css[ i ].ProviderName,
                   String = css[ i ].ConnectionString
                };
+               o._isSys = true;
                list.Add( o );
             }
          }
