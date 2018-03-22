@@ -8,6 +8,8 @@ namespace LinqXml
 {
    public class Configuration
    {
+      public bool IsDirty { get; set; }
+
       #region --- OnPropertyChanged EVENTS + HANDLERS + EXCEPTIONS --- 
       public event PropertyChangedEventHandler PropertyChanged;
 
@@ -18,6 +20,7 @@ namespace LinqXml
 
       protected void OnPropertyChanged( string propertyName )
       {
+         this.IsDirty = true;
          this.OnPropertyChanged( new PropertyChangedEventArgs( propertyName ) );
       }
       #endregion
@@ -169,6 +172,18 @@ namespace LinqXml
          XElement cfg = new XElement( "cfg", dsCfg );
          return cfg;
       }
+
+      public static Configuration GetPoco()
+      {
+         List<ConnectionString> syscsList = ConnectionString.GetPocoList( );
+
+         Configuration configuration = new Configuration( )
+         {
+            SysCsList = syscsList
+         };
+
+         return configuration;
+      }
       public static Configuration GetPoco( XElement e )
       {
          XElement dsCfgElement = e.Element( "dsCfg" );
@@ -187,15 +202,38 @@ namespace LinqXml
          //
          List<ConnectionString> syscsList = ConnectionString.GetPocoList( );
 
-         Configuration configuration = new Configuration( )
+         Configuration o = GetPoco( );
          {
-            StageDirPath = stgDir,
-            DsList = dsList,
-            AppCsList = csList,
-            SysCsList = syscsList
-         };
+            o.StageDirPath = normalizestring( stgDir );
+            o.DsList = dsList;
+            o.AppCsList = csList;
+         }
 
-         return configuration;
+         return o;
+      }
+
+      private static string normalizestring( string str )
+      {
+         if( str == null || string.IsNullOrWhiteSpace( str ) )
+         {
+            return null;
+         }
+         string str2 = str.Trim( );
+         return str2;
+      }
+
+      public void AddConnectionString( ConnectionString cs )
+      {
+         if( cs == null )
+         {
+            return;
+         }
+         if( this.AppCsList.Contains( cs ) )
+         {
+            return;
+         }
+         this.AppCsList.Add( cs );
+         this.OnPropertyChanged( nameof( this.AppCsList ) );
       }
 
       public void AddDataStore( DataStore ds )
@@ -210,42 +248,105 @@ namespace LinqXml
          }
          this.DsList.Add( ds );
          this.OnPropertyChanged( nameof( this.DsList ) );
+         this.IsDirty = true;
       }
-      public void AddConnectionString( ConnectionString cs )
-      {
-         if( cs == null )
-         {
-            return;
-         }
-         if( this.AppCsList.Contains( cs ) )
-         {
-            return;
-         }
-         this.AppCsList.Add( cs );
-         this.OnPropertyChanged( nameof( this.AppCsList ) );
-      }
+
       public bool ContainsAppCS( string name )
       {
+         string nm = normalizestring( name );
+         if( nm == null )
+         {
+            return false;
+         }
+
          foreach( ConnectionString item in this.AppCsList )
          {
-            if( string.Compare( item.Name, name, StringComparison.Ordinal ) == 0 )
+            if( string.Compare( item.Name, nm, StringComparison.Ordinal ) == 0 )
             {
                return true;
             }
          }
          return false;
       }
+
       public bool ContainsSysCS( string name )
       {
+         string nm = normalizestring( name );
+         if( nm == null )
+         {
+            return false;
+         }
+
          foreach( ConnectionString item in this.SysCsList )
          {
-            if( string.Compare( item.Name, name, StringComparison.Ordinal ) == 0 )
+            if( string.Compare( item.Name, nm, StringComparison.Ordinal ) == 0 )
             {
                return true;
             }
          }
          return false;
       }
+
+      public bool ContainsDataStore( string name )
+      {
+         string nm = normalizestring( name );
+         if( nm == null )
+         {
+            return false;
+         }
+
+         foreach( ConnectionString item in this.SysCsList )
+         {
+            if( string.Compare( item.Name, nm, StringComparison.Ordinal ) == 0 )
+            {
+               return true;
+            }
+         }
+         return false;
+      }
+
+      public ConnectionString DelConnectionString( string cs )
+      {
+         string name = normalizestring( cs );
+         if( name != null )
+         {
+            if( this.ContainsAppCS( name ) )
+            {
+               foreach( ConnectionString item in this.AppCsList )
+               {
+                  if( string.Compare( item.Name, cs, StringComparison.Ordinal ) == 0 )
+                  {
+                     bool removed = this.AppCsList.Remove( item );
+                     this.OnPropertyChanged( nameof( this.AppCsList ) );
+                     return item;
+                  }
+               }
+            }
+         }
+         return null;
+      }
+
+      public DataStore DelDataStore( string ds )
+      {
+         string nm = normalizestring( ds );
+         if( nm != null )
+         {
+            if( this.ContainsDataStore( nm ) )
+            {
+               foreach( DataStore item in this.DsList )
+               {
+                  if( string.Compare( item.Name, nm, StringComparison.Ordinal ) == 0 )
+                  {
+                     bool removed = this.DsList.Remove( item );
+                     this.OnPropertyChanged( nameof( this.DsList ) );
+                     return item;
+                  }
+               }
+            }
+         }
+         return null;
+      }
+
       public void VerifyWhatIsAllowed()
       {
          if( this.DsList.Count <= 0 )
@@ -268,67 +369,92 @@ namespace LinqXml
          }
          this.AllowedAddAppCSEvent?.Invoke( this );
       }
+
       //
       #region --- AllowedAddAppCS EVENT + HANDLER + EXCEPTION ---
       public delegate void AllowedAddAppCSEventHandler( object sender );
+
       public event AllowedAddAppCSEventHandler AllowedAddAppCSEvent;
       #endregion
       //
       #region --- NotAllowedAddAppCS EVENT + HANDLER + EXCEPTION ---
       public delegate void NotAllowedAddAppCSEventHandler( object sender );
+
       public event NotAllowedAddAppCSEventHandler NotAllowedAddAppCSEvent;
       #endregion
       //
       #region --- AllowedDelAppCS EVENT + HANDLER + EXCEPTION ---
       public delegate void AllowedDelAppCSEventHandler( object sender );
+
       public event AllowedDelAppCSEventHandler AllowedDelAppCSEvent;
       #endregion
       //
       #region --- NotAllowedDelAppCS EVENT + HANDLER + EXCEPTION ---
       public delegate void NotAllowedDelAppCSEventHandler( object sender );
+
       public event NotAllowedDelAppCSEventHandler NotAllowedDelAppCSEvent;
       #endregion
       //
       #region --- AllowedAddDataStore EVENT + HANDLER + EXCEPTION ---
       public delegate void AllowedAddDataStoreEventHandler( object sender );
+
       public event AllowedAddDataStoreEventHandler AllowedAddDataStoreEvent;
       #endregion
       //
       #region --- NotAllowedAddDataStore EVENT + HANDLER + EXCEPTION ---
       public delegate void NotAllowedAddDataStoreEventHandler( object sender );
+
       public event NotAllowedAddDataStoreEventHandler NotAllowedAddDataStoreEvent;
       #endregion
       //
       #region --- AllowedDelDataStore EVENT + HANDLER + EXCEPTION ---
       public delegate void AllowedDelDataStoreEventHandler( object sender );
+
       public event AllowedDelDataStoreEventHandler AllowedDelDataStoreEvent;
       #endregion
       //
       #region --- NotAllowedDelDataStore EVENT + HANDLER + EXCEPTION ---
       public delegate void NotAllowedDelDataStoreEventHandler( object sender );
+
       public event NotAllowedDelDataStoreEventHandler NotAllowedDelDataStoreEvent;
       #endregion
    }
+
    //
    #region --- InvalidDataStoreConfiguration EVENT + HANDLER + EXCEPTION ---
    [System.Serializable]
    public class InvalidDataStoreConfigurationException : System.Exception
    {
-      public InvalidDataStoreConfigurationException() : base( ) { }
+      public InvalidDataStoreConfigurationException() : base( )
+      {
+      }
 
-      public InvalidDataStoreConfigurationException( string message ) : base( message ) { }
+      public InvalidDataStoreConfigurationException( string message ) : base( message )
+      {
+      }
 
-      public InvalidDataStoreConfigurationException( string format, params object[ ] args )
-          : base( string.Format( format, args ) ) { }
+      public InvalidDataStoreConfigurationException( string format, params object[ ] args ) : base( string.Format( format,
+                                                                                                               args ) )
+      {
+      }
 
-      public InvalidDataStoreConfigurationException( string message, System.Exception innerException )
-          : base( message, innerException ) { }
+      public InvalidDataStoreConfigurationException( string message, System.Exception innerException ) : base( message,
+                                                                                                            innerException )
+      {
+      }
 
-      public InvalidDataStoreConfigurationException( string format, System.Exception innerException, params object[ ] args )
-          : base( string.Format( format, args ), innerException ) { }
+      public InvalidDataStoreConfigurationException( string format,
+                                                    System.Exception innerException,
+                                                    params object[ ] args ) : base( string.Format( format, args ),
+                                                                                  innerException )
+      {
+      }
 
-      protected InvalidDataStoreConfigurationException( System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context )
-          : base( info, context ) { }
+      protected InvalidDataStoreConfigurationException( System.Runtime.Serialization.SerializationInfo info,
+                                                       System.Runtime.Serialization.StreamingContext context ) : base( info,
+                                                                                                                     context )
+      {
+      }
    }
    //
    //         InvalidDataStoreConfigurationEventArgs args1 = new InvalidDataStoreConfigurationEventArgs( );
@@ -336,5 +462,4 @@ namespace LinqXml
    //         this.InvalidDataStoreConfigurationEvent?.Invoke( this, args2 );
    //
    #endregion
-
 }

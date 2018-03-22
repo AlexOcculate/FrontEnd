@@ -18,6 +18,7 @@ namespace LinqXml.Control
       {
          this.InitializeComponent( );
          this.InitializeTreeView( this.treeView );
+         this.AfterNewFileEvent += this.ConfigurationView_AfterNewFileEvent;
          this.AfterOpenFileEvent += this.ConfigurationView_AfterOpenFileEvent;
          this.AfterSaveAsFileEvent += this.ConfigurationView_AfterSaveAsFileEvent;
          this.AfterSaveFileEvent += this.ConfigurationView_AfterSaveFileEvent;
@@ -27,9 +28,25 @@ namespace LinqXml.Control
       }
 
       private string initialPath = string.Empty;
-      private string defaultFileName = "cfg.xml";
+      private string _defaultFileName = "cfg.xml";
+      public string DefaultFileName
+      {
+         get => this._defaultFileName;
+         set
+         {
+            if( string.Compare( this._defaultFileName, value, StringComparison.Ordinal ) != 0 )
+            {
+               SavedFileNameChangedEventArgs args = new SavedFileNameChangedEventArgs( );
+               args.OldFilename = this._defaultFileName;
+               args.NewFilename = value;
+               this._defaultFileName = value;
+               this.SavedFileNameChangedEvent?.Invoke( this, args );
+               this.NotAllowedToSaveFileEvent?.Invoke( this );
+            }
+         }
+      }
 
-      public void NewConnectionString()
+      public void AddConnectionString()
       {
          if( this.cfg == null )
          {
@@ -48,12 +65,16 @@ namespace LinqXml.Control
          bool foundAtAppCS = this.cfg.ContainsAppCS( newName );
          if( foundAtAppCS )
          {
-            XtraMessageBox.Show( "Duplicate Application ConnectionString name, try again!", "Error", MessageBoxButtons.OK );
+            XtraMessageBox.Show( "Duplicate Application ConnectionString name, try again!",
+                                "Error",
+                                MessageBoxButtons.OK );
             return;
          }
          if( foundAtSysCS )
          {
-            DialogResult dialogResult = XtraMessageBox.Show( "This name hides another System ConnectionString name!", "Warning", MessageBoxButtons.OKCancel );
+            DialogResult dialogResult = XtraMessageBox.Show( "This name hides another System ConnectionString name!",
+                                                            "Warning",
+                                                            MessageBoxButtons.OKCancel );
             switch( dialogResult )
             {
                case DialogResult.OK:
@@ -65,19 +86,50 @@ namespace LinqXml.Control
             return;
          }
          this.cfg.AddConnectionString( new ConnectionString( newName ) );
+         this.AllowedToSaveFileEvent?.Invoke( this );
       }
 
-      public void NewDataStore()
+      public void AddDataStore()
       {
          LoginUserControl myControl = new LoginUserControl( );
          if( DevExpress.XtraEditors.XtraDialog.Show( myControl, "Sign in", MessageBoxButtons.OKCancel ) == DialogResult.OK )
          {
             // do something 
          }
+         this.AllowedToSaveFileEvent?.Invoke( this );
+      }
+
+      public void DelConnectionString()
+      {
+         TreeListMultiSelection selection = this.treeView.Selection;
+         if( selection.Count > 0 )
+         {
+            TreeListNode node = selection[ 0 ];
+            if( node.NextNode != null )
+            {
+               node.NextNode.TreeList.SetFocusedNode( node.NextNode );
+            }
+            else if( node.PrevNode != null )
+            {
+               node.PrevNode.TreeList.SetFocusedNode( node.PrevNode );
+            }
+            ConnectionString appCS = node.Tag as ConnectionString;
+            this.DelConnectionString( appCS );
+            this.AllowedToSaveFileEvent?.Invoke( this );
+            return;
+         }
+         XtraMessageBox.Show( "Some ConnectionString need to be selected first!", "Error", MessageBoxButtons.OK );
+      }
+
+      public void DelDataStore()
+      {
+         string name = null;
+         DataStore delDS = this.cfg.DelDataStore( name );
+         this.AllowedToSaveFileEvent?.Invoke( this );
       }
 
       private void Cfg_PropertyChanged( object sender, System.ComponentModel.PropertyChangedEventArgs e )
-      {
+      { //@#$%
          this.LoadNodes( );
       }
 
@@ -121,10 +173,23 @@ namespace LinqXml.Control
          this.AllowedDelDataStoreEvent?.Invoke( this );
       }
 
+      private void ConfigurationView_AfterNewFileEvent( object sender, AfterNewFileEventArgs ea )
+      {
+         this.AllowedToSaveAsFileEvent?.Invoke( this );
+         this.AllowedToCloseFileEvent?.Invoke( this );
+         //
+         this.AllowedAddAppCSEvent?.Invoke( this );
+         this.AllowedAddDataStoreEvent?.Invoke( this );
+         //
+         this.NotAllowedDelAppCSEvent?.Invoke( this );
+         this.NotAllowedDelDataStoreEvent?.Invoke( this );
+         this.DefaultFileName = ea.args.Filename;
+      }
+
       //@#$%
       private void ConfigurationView_AfterOpenFileEvent( object sender, AfterOpenFileEventArgs ea )
       {
-         this.defaultFileName = ea.args.OpenedFilename;
+         this.DefaultFileName = ea.args.OpenedFilename;
          if( !ea.isOk )
          {
             return;
@@ -146,25 +211,32 @@ namespace LinqXml.Control
          this.cfg.VerifyWhatIsAllowed( );
          //
          this.AllowedToOpenFileEvent?.Invoke( this );
+         this.AllowedToSaveAsFileEvent?.Invoke( this );
          this.AllowedToCloseFileEvent?.Invoke( this );
          //@#$% Mandrake!!!
          this.NotAllowedDelAppCSEvent?.Invoke( this );
          this.NotAllowedDelDataStoreEvent?.Invoke( this );
       }
+
       private void ConfigurationView_AfterSaveFileEvent( object sender, AfterSaveFileEventArgs ea )
       {
-         this.defaultFileName = ea.args.SavedFilename;
+         this.DefaultFileName = ea.args.SavedFilename;
+         this.NotAllowedToSaveFileEvent.Invoke( this );
       }
+
       private void ConfigurationView_AfterSaveAsFileEvent( object sender, AfterSaveAsFileEventArgs ea )
       {
-         this.defaultFileName = ea.args.SavedFilename;
+         this.DefaultFileName = ea.args.SavedFilename;
+         this.NotAllowedToSaveFileEvent.Invoke( this );
       }
+
       private void ConfigurationView_AfterCloseFileEvent( object sender, AfterCloseFileEventArgs ea )
       {
          this.cfg.VerifyWhatIsAllowed( );
          this.cfg = null;
          this.AllowedToOpenFileEvent?.Invoke( this );
          this.NotAllowedToSaveFileEvent?.Invoke( this );
+         this.NotAllowedToSaveAsFileEvent?.Invoke( this );
          this.NotAllowedToCloseFileEvent?.Invoke( this );
          //
          this.NotAllowedAddDataStoreEvent?.Invoke( this );
@@ -335,6 +407,81 @@ namespace LinqXml.Control
          }
          //         this.cfg.VerifyWhatIsAllowed( );
       }
+
+      #region --- Before and After NewFile EVENTS + HANDLERS + EXCEPTIONS ---
+      public delegate void BeforeNewFileEventHandler( object sender, BeforeNewFileEventArgs ea );
+      public event BeforeNewFileEventHandler BeforeNewFileEvent;
+      public class BeforeNewFileEventArgs : System.EventArgs
+      {
+         public bool Cancel { get; set; }
+         public string Filename { get; set; }
+         public NewFileException Exception { get; set; }
+      }
+      //
+      public delegate void AfterNewFileEventHandler( object sender, AfterNewFileEventArgs ea );
+      public event AfterNewFileEventHandler AfterNewFileEvent;
+      public class AfterNewFileEventArgs : System.EventArgs
+      {
+         public BeforeNewFileEventArgs args;
+         public bool wasCanceled { get { return this.args == null ? false : this.args.Cancel; } }
+         public bool hasException { get { return this.args.Exception != null; } }
+         public bool isOk { get { return !this.wasCanceled && !this.hasException; } }
+         public AfterNewFileEventArgs( BeforeNewFileEventArgs args1 )
+         {
+            this.args = args1;
+         }
+      }
+      //
+      [System.Serializable]
+      public class NewFileException : System.Exception
+      {
+         public NewFileException() : base( ) { }
+
+         public NewFileException( string message ) : base( message ) { }
+
+         public NewFileException( string format, params object[ ] args )
+             : base( string.Format( format, args ) ) { }
+
+         public NewFileException( string message, System.Exception innerException )
+             : base( message, innerException ) { }
+
+         public NewFileException( string format, System.Exception innerException, params object[ ] args )
+             : base( string.Format( format, args ), innerException ) { }
+
+         protected NewFileException( System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context )
+             : base( info, context ) { }
+      }
+      //
+      public void NewFile( string filename )
+      {
+         BeforeNewFileEventArgs args1 = new BeforeNewFileEventArgs( );
+         AfterNewFileEventArgs args2 = new AfterNewFileEventArgs( args1 );
+         args1.Filename = filename;
+         this.BeforeNewFileEvent?.Invoke( this, args1 );
+         if( !args1.Cancel )
+         {
+            this.NewFileEvent( args1 );
+         }
+         this.AfterNewFileEvent?.Invoke( this, args2 );
+      }
+      //
+      private void NewFileEvent( BeforeNewFileEventArgs args )
+      {
+         try
+         {
+            this.cfg = Configuration.GetPoco();
+            this.LoadNodes();
+         }
+         catch( System.Exception ex )
+         {
+            args.Exception = new NewFileException( null, ex );
+         }
+         finally
+         {
+
+         }
+      }
+      #endregion
 
       #region --- Before and After OpenFile EVENTS + HANDLERS + EXCEPTIONS ---
       public delegate void BeforeOpenFileEventHandler( object sender, BeforeOpenFileEventArgs ea );
@@ -508,7 +655,6 @@ namespace LinqXml.Control
          }
       }
 
-      //
       public delegate void AfterSaveFileEventHandler( object sender, AfterSaveFileEventArgs ea );
 
       public event AfterSaveFileEventHandler AfterSaveFileEvent;
@@ -547,7 +693,6 @@ namespace LinqXml.Control
          }
       }
 
-      //
       [System.Serializable]
       public class SaveFileException : System.Exception
       {
@@ -579,7 +724,6 @@ namespace LinqXml.Control
          }
       }
 
-      //
       public void SaveFile( string filename = null )
       {
          BeforeSaveFileEventArgs args1 = new BeforeSaveFileEventArgs( );
@@ -590,7 +734,7 @@ namespace LinqXml.Control
          }
          else
          {
-            args1.SavedFilename = this.defaultFileName;
+            args1.SavedFilename = this.DefaultFileName;
          }
          this.BeforeSaveFileEvent?.Invoke( this, args1 );
          if( !args1.Cancel )
@@ -600,7 +744,6 @@ namespace LinqXml.Control
          this.AfterSaveFileEvent?.Invoke( this, args2 );
       }
 
-      //
       private void SaveFileEvent( BeforeSaveFileEventArgs args )
       {
          if( this.cfg == null )
@@ -611,6 +754,7 @@ namespace LinqXml.Control
          try
          {
             this.x( ).Save( args.SavedFilename, SaveOptions.None );
+            this.cfg.IsDirty = false;
          }
          catch( System.Exception ex )
          {
@@ -650,7 +794,6 @@ namespace LinqXml.Control
          }
       }
 
-      //
       public delegate void AfterSaveAsFileEventHandler( object sender, AfterSaveAsFileEventArgs ea );
 
       public event AfterSaveAsFileEventHandler AfterSaveAsFileEvent;
@@ -697,7 +840,6 @@ namespace LinqXml.Control
          }
       }
 
-      //
       [System.Serializable]
       public class SaveAsFileException : System.Exception
       {
@@ -791,9 +933,30 @@ namespace LinqXml.Control
       }
       #endregion
 
+      #region --- SavedFileChanged EVENT + HANDLER + EXCEPTION ---
+      public delegate void SavedFileNameChangedEventHandler( object sender, SavedFileNameChangedEventArgs args );
+
+      public event SavedFileNameChangedEventHandler SavedFileNameChangedEvent;
+
+      public class SavedFileNameChangedEventArgs : System.EventArgs
+      {
+         public string OldFilename
+         {
+            get; set;
+         }
+
+         public string NewFilename
+         {
+            get; set;
+         }
+      }
+      #endregion
+
       #region --- Before and After CloseFile EVENTS + HANDLERS + EXCEPTIONS ---
       public delegate void BeforeCloseFileEventHandler( object sender, BeforeCloseFileEventArgs ea );
+
       public event BeforeCloseFileEventHandler BeforeCloseFileEvent;
+
       public class BeforeCloseFileEventArgs : System.EventArgs
       {
          public bool Cancel
@@ -811,9 +974,12 @@ namespace LinqXml.Control
             get; set;
          }
       }
+
       //
       public delegate void AfterCloseFileEventHandler( object sender, AfterCloseFileEventArgs ea );
+
       public event AfterCloseFileEventHandler AfterCloseFileEvent;
+
       public class AfterCloseFileEventArgs : System.EventArgs
       {
          public BeforeCloseFileEventArgs args;
@@ -847,6 +1013,7 @@ namespace LinqXml.Control
             this.args = args1;
          }
       }
+
       //
       [System.Serializable]
       public class CloseFileException : System.Exception
@@ -878,6 +1045,7 @@ namespace LinqXml.Control
          {
          }
       }
+
       //
       public void CloseFile()
       {
@@ -888,7 +1056,7 @@ namespace LinqXml.Control
 
          BeforeCloseFileEventArgs args1 = new BeforeCloseFileEventArgs( );
          AfterCloseFileEventArgs args2 = new AfterCloseFileEventArgs( args1 );
-         args1.Filename = this.defaultFileName;
+         args1.Filename = this.DefaultFileName;
          this.BeforeCloseFileEvent?.Invoke( this, args1 );
          if( !args1.Cancel )
          {
@@ -1054,78 +1222,238 @@ namespace LinqXml.Control
       //         this.FocusedConnectionStringChangedEvent?.Invoke( this, args2 );
       //
       #endregion
+      //
+      #region --- Before and After DelConnectionString EVENTS + HANDLERS + EXCEPTIONS ---
+      public delegate void BeforeDelConnectionStringEventHandler( object sender, BeforeDelConnectionStringEventArgs ea );
+
+      public event BeforeDelConnectionStringEventHandler BeforeDelConnectionStringEvent;
+
+      public class BeforeDelConnectionStringEventArgs : System.EventArgs
+      {
+         public bool Cancel
+         {
+            get; set;
+         }
+
+         public ConnectionString AppCS
+         {
+            get; set;
+         }
+
+         public DelConnectionStringException Exception
+         {
+            get; set;
+         }
+      }
 
       //
+      public delegate void AfterDelConnectionStringEventHandler( object sender, AfterDelConnectionStringEventArgs ea );
 
+      public event AfterDelConnectionStringEventHandler AfterDelConnectionStringEvent;
+
+      public class AfterDelConnectionStringEventArgs : System.EventArgs
+      {
+         private BeforeDelConnectionStringEventArgs args;
+
+         public bool wasCanceled
+         {
+            get
+            {
+               return this.args == null ? false : this.args.Cancel;
+            }
+         }
+
+         public bool hasException
+         {
+            get
+            {
+               return this.args.Exception != null;
+            }
+         }
+
+         public bool isOk
+         {
+            get
+            {
+               return !this.wasCanceled && !this.hasException;
+            }
+         }
+
+         public AfterDelConnectionStringEventArgs( BeforeDelConnectionStringEventArgs args1 )
+         {
+            this.args = args1;
+         }
+      }
+
+      //
+      [System.Serializable]
+      public class DelConnectionStringException : System.Exception
+      {
+         public DelConnectionStringException() : base( )
+         {
+         }
+
+         public DelConnectionStringException( string message ) : base( message )
+         {
+         }
+
+         public DelConnectionStringException( string format, params object[ ] args ) : base( string.Format( format, args ) )
+         {
+         }
+
+         public DelConnectionStringException( string message, System.Exception innerException ) : base( message,
+                                                                                                     innerException )
+         {
+         }
+
+         public DelConnectionStringException( string format, System.Exception innerException, params object[ ] args ) : base( string.Format( format,
+                                                                                                                                         args ),
+                                                                                                                           innerException )
+         {
+         }
+
+         protected DelConnectionStringException( System.Runtime.Serialization.SerializationInfo info,
+                                                System.Runtime.Serialization.StreamingContext context ) : base( info,
+                                                                                                              context )
+         {
+         }
+      }
+
+      //
+      public void DelConnectionString( ConnectionString appCS )
+      {
+         BeforeDelConnectionStringEventArgs args1 = new BeforeDelConnectionStringEventArgs( );
+         AfterDelConnectionStringEventArgs args2 = new AfterDelConnectionStringEventArgs( args1 );
+         args1.AppCS = appCS;
+         this.BeforeDelConnectionStringEvent?.Invoke( this, args1 );
+         if( !args1.Cancel )
+         {
+            this.DelConnectionStringEvent( args1 );
+         }
+         this.AfterDelConnectionStringEvent?.Invoke( this, args2 );
+      }
+
+      //
+      private void DelConnectionStringEvent( BeforeDelConnectionStringEventArgs args )
+      {
+         try
+         {
+            // DIALOG COFIRMATION
+            DialogResult dialogResult = XtraMessageBox.Show( "Are you sure?", "Warning", MessageBoxButtons.YesNoCancel );
+            switch( dialogResult )
+            {
+               case DialogResult.Yes:
+                  break;
+               default:
+                  args.Cancel = true;
+                  return;
+            }
+            // BEFORE DEL
+            ConnectionString delAppCS = this.cfg.DelConnectionString( args.AppCS.Name );
+         }
+         catch( System.Exception ex )
+         {
+            args.Exception = new DelConnectionStringException( null, ex );
+         }
+         finally
+         {
+         }
+      }
+      #endregion
+      //
       #region --- AllowedToOpenFile EVENT + HANDLER + EXCEPTION ---
       public delegate void AllowedToOpenFileEventHandler( object sender );
+
       public event AllowedToOpenFileEventHandler AllowedToOpenFileEvent;
       #endregion
 
       #region --- NotAllowedToOpenFile EVENT + HANDLER + EXCEPTION ---
       public delegate void NotAllowedToOpenFileEventHandler( object sender );
+
       public event NotAllowedToOpenFileEventHandler NotAllowedToOpenFileEvent;
       #endregion
 
       #region --- AllowedToSaveFile EVENT + HANDLER + EXCEPTION ---
       public delegate void AllowedToSaveFileEventHandler( object sender );
+
       public event AllowedToSaveFileEventHandler AllowedToSaveFileEvent;
       #endregion
 
       #region --- NotAllowedToSaveFile EVENT + HANDLER + EXCEPTION ---
       public delegate void NotAllowedToSaveFileEventHandler( object sender );
+
       public event NotAllowedToSaveFileEventHandler NotAllowedToSaveFileEvent;
+      #endregion
+
+      #region --- AllowedToSaveAsFile EVENT + HANDLER + EXCEPTION ---
+      public delegate void AllowedToSaveAsFileEventHandler( object sender );
+
+      public event AllowedToSaveAsFileEventHandler AllowedToSaveAsFileEvent;
+      #endregion
+
+      #region --- NotAllowedToSaveAsFile EVENT + HANDLER + EXCEPTION ---
+      public delegate void NotAllowedToSaveAsFileEventHandler( object sender );
+
+      public event NotAllowedToSaveAsFileEventHandler NotAllowedToSaveAsFileEvent;
       #endregion
 
       #region --- AllowedToCloseFile EVENT + HANDLER + EXCEPTION ---
       public delegate void AllowedToCloseFileEventHandler( object sender );
+
       public event AllowedToCloseFileEventHandler AllowedToCloseFileEvent;
       #endregion
 
       #region --- NotAllowedToCloseFile EVENT + HANDLER + EXCEPTION ---
       public delegate void NotAllowedToCloseFileEventHandler( object sender );
+
       public event NotAllowedToCloseFileEventHandler NotAllowedToCloseFileEvent;
       #endregion
-
       //
-
       #region --- AllowedAddAppCS EVENT + HANDLER + EXCEPTION ---
       public delegate void AllowedAddAppCSEventHandler( object sender );
+
       public event AllowedAddAppCSEventHandler AllowedAddAppCSEvent;
       #endregion
       //
       #region --- NotAllowedAddAppCS EVENT + HANDLER + EXCEPTION ---
       public delegate void NotAllowedAddAppCSEventHandler( object sender );
+
       public event NotAllowedAddAppCSEventHandler NotAllowedAddAppCSEvent;
       #endregion
       //
       #region --- AllowedDelAppCS EVENT + HANDLER + EXCEPTION ---
       public delegate void AllowedDelAppCSEventHandler( object sender );
+
       public event AllowedDelAppCSEventHandler AllowedDelAppCSEvent;
       #endregion
       //
       #region --- NotAllowedDelAppCS EVENT + HANDLER + EXCEPTION ---
       public delegate void NotAllowedDelAppCSEventHandler( object sender );
+
       public event NotAllowedDelAppCSEventHandler NotAllowedDelAppCSEvent;
       #endregion
       //
       #region --- AllowedAddDataStore EVENT + HANDLER + EXCEPTION ---
       public delegate void AllowedAddDataStoreEventHandler( object sender );
+
       public event AllowedAddDataStoreEventHandler AllowedAddDataStoreEvent;
       #endregion
       //
       #region --- NotAllowedAddDataStore EVENT + HANDLER + EXCEPTION ---
       public delegate void NotAllowedAddDataStoreEventHandler( object sender );
+
       public event NotAllowedAddDataStoreEventHandler NotAllowedAddDataStoreEvent;
       #endregion
       //
       #region --- AllowedDelDataStore EVENT + HANDLER + EXCEPTION ---
       public delegate void AllowedDelDataStoreEventHandler( object sender );
+
       public event AllowedDelDataStoreEventHandler AllowedDelDataStoreEvent;
       #endregion
       //
       #region --- NotAllowedDelDataStore EVENT + HANDLER + EXCEPTION ---
       public delegate void NotAllowedDelDataStoreEventHandler( object sender );
+
       public event NotAllowedDelDataStoreEventHandler NotAllowedDelDataStoreEvent;
       #endregion
    }

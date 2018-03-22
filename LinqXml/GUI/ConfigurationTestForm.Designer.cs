@@ -49,6 +49,7 @@
          this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
          this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
          this.configurationView1 = new LinqXml.Control.ConfigurationView();
+         this.newBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
          this.SuspendLayout();
          // 
@@ -74,9 +75,10 @@
             this.addDataStoreBarButtonItem,
             this.addAppCSBarButtonItem,
             this.delDataStoreBarButtonItem,
-            this.delAppCSBarButtonItem});
+            this.delAppCSBarButtonItem,
+            this.newBarButtonItem});
          this.barManager1.MainMenu = this.bar2;
-         this.barManager1.MaxItemId = 11;
+         this.barManager1.MaxItemId = 12;
          this.barManager1.StatusBar = this.bar3;
          // 
          // bar1
@@ -94,6 +96,7 @@
          this.bar2.DockRow = 0;
          this.bar2.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
          this.bar2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.newBarButtonItem),
             new DevExpress.XtraBars.LinkPersistInfo(this.openBarButtonItem),
             new DevExpress.XtraBars.LinkPersistInfo(this.saveBarButtonItem),
             new DevExpress.XtraBars.LinkPersistInfo(this.saveAsBarButtonItem),
@@ -236,6 +239,7 @@
          // 
          // configurationView1
          // 
+         this.configurationView1.DefaultFileName = "cfg.xml";
          this.configurationView1.Dock = System.Windows.Forms.DockStyle.Fill;
          this.configurationView1.Location = new System.Drawing.Point(0, 51);
          this.configurationView1.Name = "configurationView1";
@@ -243,6 +247,13 @@
          this.configurationView1.TabIndex = 4;
          this.configurationView1.AllowedAddAppCSEvent += new LinqXml.Control.ConfigurationView.AllowedAddAppCSEventHandler(this.configurationView1_AllowedAddAppCSEvent);
          this.configurationView1.NotAllowedAddAppCSEvent += new LinqXml.Control.ConfigurationView.NotAllowedAddAppCSEventHandler(this.configurationView1_NotAllowedAddAppCSEvent);
+         // 
+         // newBarButtonItem
+         // 
+         this.newBarButtonItem.Caption = "New";
+         this.newBarButtonItem.Id = 11;
+         this.newBarButtonItem.Name = "newBarButtonItem";
+         this.newBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.newBarButtonItem_ItemClick);
          // 
          // ConfigurationTestForm
          // 
@@ -284,5 +295,6 @@
       private DevExpress.XtraBars.BarButtonItem addAppCSBarButtonItem;
       private DevExpress.XtraBars.BarButtonItem delDataStoreBarButtonItem;
       private DevExpress.XtraBars.BarButtonItem delAppCSBarButtonItem;
+      private DevExpress.XtraBars.BarButtonItem newBarButtonItem;
    }
 }
