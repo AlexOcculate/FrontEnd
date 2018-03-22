@@ -109,6 +109,11 @@
 
          }
       }
+//
+      private void After«Paste»EventStatus( object sender, After«Paste»EventArgs ea )
+      {
+      }
+// this.After«Paste»Event += this.After«Paste»EventStatus;
       #endregion
 #endif
 </Body>

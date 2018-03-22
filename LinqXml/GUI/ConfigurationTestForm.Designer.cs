@@ -245,8 +245,7 @@
          this.configurationView1.Name = "configurationView1";
          this.configurationView1.Size = new System.Drawing.Size(759, 632);
          this.configurationView1.TabIndex = 4;
-         this.configurationView1.AllowedAddAppCSEvent += new LinqXml.Control.ConfigurationView.AllowedAddAppCSEventHandler(this.configurationView1_AllowedAddAppCSEvent);
-         this.configurationView1.NotAllowedAddAppCSEvent += new LinqXml.Control.ConfigurationView.NotAllowedAddAppCSEventHandler(this.configurationView1_NotAllowedAddAppCSEvent);
+
          // 
          // newBarButtonItem
          // 
@@ -298,3 +297,8 @@
       private DevExpress.XtraBars.BarButtonItem newBarButtonItem;
    }
 }
+
+/*
+         this.configurationView1.AllowedAddAppCSEvent += new LinqXml.Control.ConfigurationView.AllowedAddAppCSEventHandler(this.configurationView1_AllowedAddAppCSEvent);
+         this.configurationView1.NotAllowedAddAppCSEvent += new LinqXml.Control.ConfigurationView.NotAllowedAddAppCSEventHandler(this.configurationView1_NotAllowedAddAppCSEvent);
+*/

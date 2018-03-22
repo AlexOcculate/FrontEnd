@@ -16,6 +16,8 @@ namespace LinqXml
          this.configurationView1.AfterSaveFileEvent += this.ConfigurationView1_AfterSaveFileEvent;
          this.configurationView1.BeforeCloseFileEvent += this.ConfigurationView1_BeforeCloseFileEvent;
          this.configurationView1.AfterCloseFileEvent += this.ConfigurationView1_AfterCloseFileEvent;
+         this.configurationView1.BeforeAddConnectionStringEvent += this.ConfigurationView1_BeforeAddConnectionStringEvent;
+         this.configurationView1.AfterAddConnectionStringEvent += this.ConfigurationView1_AfterAddConnectionStringEvent;
          this.configurationView1.BeforeDelConnectionStringEvent += this.ConfigurationView1_BeforeDelConnectionStringEvent;
          this.configurationView1.AfterDelConnectionStringEvent += this.ConfigurationView1_AfterDelConnectionStringEvent;
          this.configurationView1.FocusedDataStoreChangedEvent += this.ConfigurationView1_FocusedDataStoreChangedEvent;
@@ -47,6 +49,14 @@ namespace LinqXml
          this.configurationView1.AllowedToCloseFileEvent += this.ConfigurationView1_AllowedToCloseFileEvent;
          this.configurationView1.NotAllowedToCloseFileEvent += this.ConfigurationView1_NotAllowedToCloseFileEvent;
          //
+      }
+
+      private void ConfigurationView1_AfterAddConnectionStringEvent( object sender, Control.ConfigurationView.AfterAddConnectionStringEventArgs ea )
+      {
+      }
+
+      private void ConfigurationView1_BeforeAddConnectionStringEvent( object sender, Control.ConfigurationView.BeforeAddConnectionStringEventArgs ea )
+      {
       }
 
       private void ConfigurationView1_SavedFileNameChangedEvent( object sender, Control.ConfigurationView.SavedFileNameChangedEventArgs args )
@@ -125,24 +135,32 @@ namespace LinqXml
          this.delAppCSBarButtonItem.Enabled = true;
       }
 
-      private void ConfigurationView1_NotAllowedAddAppCSEvent( object sender )
-      {
-         this.addAppCSBarButtonItem.Enabled = false;
-      }
-
       private void ConfigurationView1_AllowedAddAppCSEvent( object sender )
       {
          this.addAppCSBarButtonItem.Enabled = true;
       }
 
-      private void ConfigurationView1_FocusedDataStoreChangedEvent( object sender,
-                                                                   Control.ConfigurationView.FocusedDataStoreChangedEventArgs ea )
+      private void ConfigurationView1_NotAllowedAddAppCSEvent( object sender )
+      {
+         this.addAppCSBarButtonItem.Enabled = false;
+      }
+
+      //private void configurationView1_AllowedAddAppCSEvent( object sender )
+      //{
+      //   this.addAppCSBarButtonItem.Enabled = true;
+      //}
+
+      //private void configurationView1_NotAllowedAddAppCSEvent( object sender )
+      //{
+      //   this.addAppCSBarButtonItem.Enabled = false;
+      //}
+
+      private void ConfigurationView1_FocusedDataStoreChangedEvent( object sender, Control.ConfigurationView.FocusedDataStoreChangedEventArgs ea )
       {
          this.objnmStatusBarStaticItem.Caption = ea.DataStore.Name + " DataStore";
       }
 
-      private void ConfigurationView1_FocusedConnectionStringChangedEvent( object sender,
-                                                                          Control.ConfigurationView.FocusedConnectionStringChangedEventArgs ea )
+      private void ConfigurationView1_FocusedConnectionStringChangedEvent( object sender, Control.ConfigurationView.FocusedConnectionStringChangedEventArgs ea )
       {
          this.objnmStatusBarStaticItem.Caption = ea.ConnectionString.Name + " ConnectionString";
       }
@@ -179,38 +197,34 @@ namespace LinqXml
       {
       }
 
-      private void ConfigurationView1_AfterSaveFileEvent( object sender,
-                                                         Control.ConfigurationView.AfterSaveFileEventArgs ea )
+      private void ConfigurationView1_AfterSaveFileEvent( object sender, Control.ConfigurationView.AfterSaveFileEventArgs ea )
       {
          this.labelStatusBarStaticItem.Caption = ea.args.SavedFilename + " SAVED";
       }
 
-      private void ConfigurationView1_BeforeSaveAsFileEvent( object sender,
-                                                            Control.ConfigurationView.BeforeSaveAsFileEventArgs ea )
+      private void ConfigurationView1_BeforeSaveAsFileEvent( object sender, Control.ConfigurationView.BeforeSaveAsFileEventArgs ea )
       {
          this.labelStatusBarStaticItem.Caption = ea.SavedFilename + " Saving As...";
       }
 
-      private void ConfigurationView1_AfterSaveAsFileEvent( object sender,
-                                                           Control.ConfigurationView.AfterSaveAsFileEventArgs ea )
+      private void ConfigurationView1_AfterSaveAsFileEvent( object sender, Control.ConfigurationView.AfterSaveAsFileEventArgs ea )
       {
          this.labelStatusBarStaticItem.Caption = ea.args.SavedFilename + " SAVED AS";
       }
 
-      private void ConfigurationView1_BeforeDelConnectionStringEvent( object sender,
-                                                                     Control.ConfigurationView.BeforeDelConnectionStringEventArgs ea )
+      private void ConfigurationView1_BeforeDelConnectionStringEvent( object sender, Control.ConfigurationView.BeforeDelConnectionStringEventArgs ea )
       {
       }
 
-      private void ConfigurationView1_AfterDelConnectionStringEvent( object sender,
-                                                                    Control.ConfigurationView.AfterDelConnectionStringEventArgs ea )
+      private void ConfigurationView1_AfterDelConnectionStringEvent( object sender, Control.ConfigurationView.AfterDelConnectionStringEventArgs ea )
       {
       }
 
       private void newBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
-         this.configurationView1.NewFile( "[UnSavedFile]");
+         this.configurationView1.NewFile( "[UnSavedFile]" );
       }
+
       private void openBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
          this.configurationView1.OpenFile( );
@@ -239,16 +253,6 @@ namespace LinqXml
       private void addAppCSBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
          this.configurationView1.AddConnectionString( );
-      }
-
-      private void configurationView1_AllowedAddAppCSEvent( object sender )
-      {
-         this.addAppCSBarButtonItem.Enabled = true;
-      }
-
-      private void configurationView1_NotAllowedAddAppCSEvent( object sender )
-      {
-         this.addAppCSBarButtonItem.Enabled = false;
       }
 
       private void setWorkingDirectoryBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )

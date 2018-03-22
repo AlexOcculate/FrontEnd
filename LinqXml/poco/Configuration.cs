@@ -8,7 +8,10 @@ namespace LinqXml
 {
    public class Configuration
    {
-      public bool IsDirty { get; set; }
+      public bool IsDirty
+      {
+         get; set;
+      }
 
       #region --- OnPropertyChanged EVENTS + HANDLERS + EXCEPTIONS --- 
       public event PropertyChangedEventHandler PropertyChanged;
@@ -179,11 +182,13 @@ namespace LinqXml
 
          Configuration configuration = new Configuration( )
          {
-            SysCsList = syscsList
+            SysCsList = syscsList,
+            IsDirty = true
          };
 
          return configuration;
       }
+
       public static Configuration GetPoco( XElement e )
       {
          XElement dsCfgElement = e.Element( "dsCfg" );
@@ -200,13 +205,14 @@ namespace LinqXml
          XElement csCollElement = dsCfgElement.Element( "csCol" );
          List<ConnectionString> csList = ConnectionString.GetPocoList( csCollElement );
          //
-         List<ConnectionString> syscsList = ConnectionString.GetPocoList( );
+         //List<ConnectionString> syscsList = ConnectionString.GetPocoList( );
 
          Configuration o = GetPoco( );
          {
             o.StageDirPath = normalizestring( stgDir );
             o.DsList = dsList;
             o.AppCsList = csList;
+            o.IsDirty = false;
          }
 
          return o;
