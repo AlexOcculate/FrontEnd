@@ -5,6 +5,7 @@ namespace LinqXml
 {
    public partial class ConfigurationTestForm : DevExpress.XtraEditors.XtraForm
    {
+      #region --- Ctors ---
       public ConfigurationTestForm()
       {
          this.InitializeComponent( );
@@ -50,7 +51,9 @@ namespace LinqXml
          this.configurationView1.NotAllowedToCloseFileEvent += this.ConfigurationView1_NotAllowedToCloseFileEvent;
          //
       }
+      #endregion
 
+      #region --- [External Events] Observed ---
       private void ConfigurationView1_AfterAddConnectionStringEvent( object sender, Control.ConfigurationView.AfterAddConnectionStringEventArgs ea )
       {
       }
@@ -177,7 +180,7 @@ namespace LinqXml
          {
             this.objnmStatusBarStaticItem.Caption = " OPENED";
          }
-         else
+         else if( ea.hasException )
          {
             this.objnmStatusBarStaticItem.Caption = ea.args.Exception.InnerException.Message;
          }
@@ -219,7 +222,9 @@ namespace LinqXml
       private void ConfigurationView1_AfterDelConnectionStringEvent( object sender, Control.ConfigurationView.AfterDelConnectionStringEventArgs ea )
       {
       }
+      #endregion
 
+      #region --- [Local Events] Handlers ---
       private void newBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
          this.configurationView1.NewFile( "[UnSavedFile]" );
@@ -247,7 +252,7 @@ namespace LinqXml
 
       private void addDataStoreBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
-         this.configurationView1.AddDataStore( );
+         this.configurationView1.AddDataStoreXXX( );
       }
 
       private void addAppCSBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
@@ -265,7 +270,8 @@ namespace LinqXml
 
       private void delAppCsBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
-         this.configurationView1.DelConnectionString( );
+         this.configurationView1.DelConnectionStringXXX( );
       }
+      #endregion
    }
 }
