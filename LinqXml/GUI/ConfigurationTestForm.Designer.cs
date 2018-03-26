@@ -32,6 +32,7 @@
          this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
          this.bar1 = new DevExpress.XtraBars.Bar();
          this.bar2 = new DevExpress.XtraBars.Bar();
+         this.newBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
          this.openBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
          this.saveBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
          this.saveAsBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
@@ -49,7 +50,6 @@
          this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
          this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
          this.configurationView1 = new LinqXml.Control.ConfigurationView();
-         this.newBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
          this.SuspendLayout();
          // 
@@ -110,9 +110,18 @@
          this.bar2.OptionsBar.UseWholeRow = true;
          this.bar2.Text = "Main menu";
          // 
+         // newBarButtonItem
+         // 
+         this.newBarButtonItem.Caption = "New";
+         this.newBarButtonItem.Enabled = false;
+         this.newBarButtonItem.Id = 11;
+         this.newBarButtonItem.Name = "newBarButtonItem";
+         this.newBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.newBarButtonItem_ItemClick);
+         // 
          // openBarButtonItem
          // 
          this.openBarButtonItem.Caption = "Open";
+         this.openBarButtonItem.Enabled = false;
          this.openBarButtonItem.Id = 0;
          this.openBarButtonItem.Name = "openBarButtonItem";
          this.openBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.openBarButtonItem_ItemClick);
@@ -144,6 +153,7 @@
          // setWorkingDirectoryBarButtonItem
          // 
          this.setWorkingDirectoryBarButtonItem.Caption = "Set Working Directory";
+         this.setWorkingDirectoryBarButtonItem.Enabled = false;
          this.setWorkingDirectoryBarButtonItem.Id = 4;
          this.setWorkingDirectoryBarButtonItem.Name = "setWorkingDirectoryBarButtonItem";
          this.setWorkingDirectoryBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.setWorkingDirectoryBarButtonItem_ItemClick);
@@ -245,14 +255,6 @@
          this.configurationView1.Name = "configurationView1";
          this.configurationView1.Size = new System.Drawing.Size(759, 632);
          this.configurationView1.TabIndex = 4;
-
-         // 
-         // newBarButtonItem
-         // 
-         this.newBarButtonItem.Caption = "New";
-         this.newBarButtonItem.Id = 11;
-         this.newBarButtonItem.Name = "newBarButtonItem";
-         this.newBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.newBarButtonItem_ItemClick);
          // 
          // ConfigurationTestForm
          // 
@@ -266,6 +268,7 @@
          this.Controls.Add(this.barDockControlTop);
          this.Name = "ConfigurationTestForm";
          this.Text = "ConfigurationTestForm";
+         this.Load += new System.EventHandler(this.ConfigurationTestForm_Load);
          ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
          this.ResumeLayout(false);
          this.PerformLayout();

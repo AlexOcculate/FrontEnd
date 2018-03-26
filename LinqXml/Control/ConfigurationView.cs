@@ -2,6 +2,15 @@
 using DevExpress.XtraTreeList;
 using DevExpress.XtraTreeList.Columns;
 using DevExpress.XtraTreeList.Nodes;
+using LinqXml.Control.Configuration.AddAppCS;
+using LinqXml.Control.Configuration.AddDataStore;
+using LinqXml.Control.Configuration.CloseFile;
+using LinqXml.Control.Configuration.DelAppCS;
+using LinqXml.Control.Configuration.DelDataStore;
+using LinqXml.Control.Configuration.NewFile;
+using LinqXml.Control.Configuration.OpenFile;
+using LinqXml.Control.SaveAs;
+using LinqXml.Control.SaveFile;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -12,7 +21,29 @@ namespace LinqXml.Control
 {
    public partial class ConfigurationView : DevExpress.XtraEditors.XtraUserControl
    {
-      private Configuration cfg;
+      #region --- Properties and Backing Fields... ---
+      private LinqXml.Configuration cfg;
+      private string initialPath = string.Empty;
+
+      private string _defaultFileName = "cfg.xml";
+
+      public string DefaultFileName
+      {
+         get => this._defaultFileName;
+         set
+         {
+            if( string.Compare( this._defaultFileName, value, StringComparison.Ordinal ) != 0 )
+            {
+               SavedFileNameChangedEventArgs args = new SavedFileNameChangedEventArgs( );
+               args.OldFilename = this._defaultFileName;
+               args.NewFilename = value;
+               this._defaultFileName = value;
+               this.SavedFileNameChangedEvent?.Invoke( this, args );
+               this.NotAllowedToSaveFileEvent?.Invoke( this );
+            }
+         }
+      }
+      #endregion
 
       #region --- Ctors() ---
       public ConfigurationView()
@@ -28,10 +59,25 @@ namespace LinqXml.Control
          // this.AddAllNodes( true );
          //this.LoadNodes( );
       }
+
+      public void Initialize()
+      {
+         this.AllowedNewFileEvent?.Invoke( this );
+         this.AllowedToOpenFileEvent?.Invoke( this );
+         this.NotAllowedToSaveFileEvent?.Invoke( this );
+         this.NotAllowedToSaveAsFileEvent?.Invoke( this );
+         this.NotAllowedToCloseFileEvent?.Invoke( this );
+         //
+         this.NotAllowedAddAppCSEvent?.Invoke( this );
+         this.NotAllowedDelAppCSEvent?.Invoke( this );
+         //
+         this.NotAllowedAddDataStoreEvent?.Invoke( this );
+         this.NotAllowedDelDataStoreEvent?.Invoke( this );
+      }
       #endregion
 
       #region --- TreeView (TreeList) ---
-      public void InitializeTreeView( TreeList treeView )
+      private void InitializeTreeView( TreeList treeView )
       {
          TreeListColumn column = treeView.Columns.Add( );
          column.Visible = true;
@@ -68,11 +114,15 @@ namespace LinqXml.Control
       private void treeView_CustomDrawEmptyArea( object sender, CustomDrawEmptyAreaEventArgs e )
       {
          if( this.treeView.Nodes.Count > 1 )
+         {
             return;
+         }
+
          string s = "No Records Available";
          e.Graphics.DrawString( s, new Font( "Tahoma", 10, FontStyle.Bold ), new SolidBrush( Color.Black ), e.Bounds );
          e.Handled = true;
       }
+
       private void treeView_CustomDrawNodeCell( object sender, CustomDrawNodeCellEventArgs e )
       {
          if( e.Node.Id == 1 )
@@ -129,6 +179,7 @@ namespace LinqXml.Control
          this.SetIndex( e.Node, 6, false );
          this.SetIndex( e.Node, 8, false );
       }
+
       private void treeView_AfterExpand( object sender, NodeEventArgs e )
       {
          this.SetIndex( e.Node, 7, true );
@@ -201,26 +252,6 @@ namespace LinqXml.Control
       }
       #endregion
 
-      private string initialPath = string.Empty;
-
-      private string _defaultFileName = "cfg.xml";
-      public string DefaultFileName
-      {
-         get => this._defaultFileName;
-         set
-         {
-            if( string.Compare( this._defaultFileName, value, StringComparison.Ordinal ) != 0 )
-            {
-               SavedFileNameChangedEventArgs args = new SavedFileNameChangedEventArgs( );
-               args.OldFilename = this._defaultFileName;
-               args.NewFilename = value;
-               this._defaultFileName = value;
-               this.SavedFileNameChangedEvent?.Invoke( this, args );
-               this.NotAllowedToSaveFileEvent?.Invoke( this );
-            }
-         }
-      }
-
       #region --- [External Events] Observed ---
       private void Cfg_PropertyChanged( object sender, System.ComponentModel.PropertyChangedEventArgs e )
       { //@#$%
@@ -269,100 +300,81 @@ namespace LinqXml.Control
       #endregion
 
       #region --- [Local Events] Handlers ---
-      #region --- Before and After NewFile EVENTS + HANDLERS + EXCEPTIONS ---
-      public delegate void BeforeNewFileEventHandler( object sender, BeforeNewFileEventArgs ea );
+      public event AllowedNewFileEventHandler AllowedNewFileEvent;
+
+      public event NotAllowedNewFileEventHandler NotAllowedNewFileEvent;
 
       public event BeforeNewFileEventHandler BeforeNewFileEvent;
 
-      public class BeforeNewFileEventArgs : System.EventArgs
-      {
-         public bool Cancel
-         {
-            get; set;
-         }
-
-         public string Filename
-         {
-            get; set;
-         }
-
-         public NewFileException Exception
-         {
-            get; set;
-         }
-      }
-
-      //
-      public delegate void AfterNewFileEventHandler( object sender, AfterNewFileEventArgs ea );
-
       public event AfterNewFileEventHandler AfterNewFileEvent;
 
-      public class AfterNewFileEventArgs : System.EventArgs
-      {
-         public BeforeNewFileEventArgs args;
+      public event AllowedToOpenFileEventHandler AllowedToOpenFileEvent;
 
-         public bool wasCanceled
-         {
-            get
-            {
-               return this.args == null ? false : this.args.Cancel;
-            }
-         }
+      public event NotAllowedToOpenFileEventHandler NotAllowedToOpenFileEvent;
 
-         public bool hasException
-         {
-            get
-            {
-               return this.args.Exception != null;
-            }
-         }
+      public event BeforeOpenFileEventHandler BeforeOpenFileEvent;
 
-         public bool isOk
-         {
-            get
-            {
-               return !this.wasCanceled && !this.hasException;
-            }
-         }
+      public event AfterOpenFileEventHandler AfterOpenFileEvent;
 
-         public AfterNewFileEventArgs( BeforeNewFileEventArgs args1 )
-         {
-            this.args = args1;
-         }
-      }
+      public event AllowedToSaveFileEventHandler AllowedToSaveFileEvent;
 
-      [System.Serializable]
-      public class NewFileException : System.Exception
-      {
-         public NewFileException() : base( )
-         {
-         }
+      public event NotAllowedToSaveFileEventHandler NotAllowedToSaveFileEvent;
 
-         public NewFileException( string message ) : base( message )
-         {
-         }
+      public event BeforeSaveFileEventHandler BeforeSaveFileEvent;
 
-         public NewFileException( string format, params object[ ] args )
-             : base( string.Format( format, args ) )
-         {
-         }
+      public event AfterSaveFileEventHandler AfterSaveFileEvent;
 
-         public NewFileException( string message, System.Exception innerException )
-             : base( message, innerException )
-         {
-         }
+      public event AllowedToSaveAsFileEventHandler AllowedToSaveAsFileEvent;
 
-         public NewFileException( string format, System.Exception innerException, params object[ ] args )
-             : base( string.Format( format, args ), innerException )
-         {
-         }
+      public event NotAllowedToSaveAsFileEventHandler NotAllowedToSaveAsFileEvent;
 
-         protected NewFileException( System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context )
-             : base( info, context )
-         {
-         }
-      }
+      public event BeforeSaveAsFileEventHandler BeforeSaveAsFileEvent;
 
+      public event AfterSaveAsFileEventHandler AfterSaveAsFileEvent;
+
+      public event SavedFileNameChangedEventHandler SavedFileNameChangedEvent;
+
+      public event AllowedToCloseFileEventHandler AllowedToCloseFileEvent;
+
+      public event NotAllowedToCloseFileEventHandler NotAllowedToCloseFileEvent;
+
+      public event BeforeCloseFileEventHandler BeforeCloseFileEvent;
+
+      public event AfterCloseFileEventHandler AfterCloseFileEvent;
+
+      public event AllowedAddAppCSEventHandler AllowedAddAppCSEvent;
+
+      public event NotAllowedAddAppCSEventHandler NotAllowedAddAppCSEvent;
+
+      public event BeforeAddAppCSEventHandler BeforeAddConnectionStringEvent;
+
+      public event AfterAddAppCSEventHandler AfterAddConnectionStringEvent;
+
+      public event AllowedDelAppCSEventHandler AllowedDelAppCSEvent;
+
+      public event NotAllowedDelAppCSEventHandler NotAllowedDelAppCSEvent;
+
+      public event BeforeDelAppCSEventHandler BeforeDelConnectionStringEvent;
+
+      public event AfterDelAppCSEventHandler AfterDelConnectionStringEvent;
+
+      public event AllowedAddDataStoreEventHandler AllowedAddDataStoreEvent;
+
+      public event NotAllowedAddDataStoreEventHandler NotAllowedAddDataStoreEvent;
+
+      public event BeforeAddDataStoreEventHandler BeforeAddDataStoreEvent;
+
+      public event AfterAddDataStoreEventHandler AfterAddDataStoreEvent;
+
+      public event AllowedDelDataStoreEventHandler AllowedDelDataStoreEvent;
+
+      public event NotAllowedDelDataStoreEventHandler NotAllowedDelDataStoreEvent;
+
+      public event FocusedDataStoreChangedEventHandler FocusedDataStoreChangedEvent;
+
+      public event FocusedAppCSChangedEventHandler FocusedConnectionStringChangedEvent;
+
+      #region --- Before and After NewFile EVENTS + HANDLERS + EXCEPTIONS ---
       public void NewFile( string filename )
       {
          BeforeNewFileEventArgs args1 = new BeforeNewFileEventArgs( );
@@ -382,7 +394,7 @@ namespace LinqXml.Control
          {
             if( this.VerifySavingStatus( ) )
             {
-               this.cfg = Configuration.GetPoco( );
+               this.cfg = LinqXml.Configuration.GetPoco( );
                this.LoadNodes( );
             }
          }
@@ -415,104 +427,6 @@ namespace LinqXml.Control
       #endregion
 
       #region --- Before and After OpenFile EVENTS + HANDLERS + EXCEPTIONS ---
-      public delegate void BeforeOpenFileEventHandler( object sender, BeforeOpenFileEventArgs ea );
-
-      public event BeforeOpenFileEventHandler BeforeOpenFileEvent;
-
-      public class BeforeOpenFileEventArgs : System.EventArgs
-      {
-         public bool Cancel
-         {
-            get; set;
-         }
-
-         public string SuggestedFilename
-         {
-            get; set;
-         }
-
-         public string OpenedFilename
-         {
-            get; set;
-         }
-
-         public OpenFileException Exception
-         {
-            get; set;
-         }
-      }
-
-      //
-      public delegate void AfterOpenFileEventHandler( object sender, AfterOpenFileEventArgs ea );
-
-      public event AfterOpenFileEventHandler AfterOpenFileEvent;
-
-      public class AfterOpenFileEventArgs : System.EventArgs
-      {
-         public BeforeOpenFileEventArgs args;
-
-         public bool wasCanceled
-         {
-            get
-            {
-               return this.args == null ? false : this.args.Cancel;
-            }
-         }
-
-         public bool hasException
-         {
-            get
-            {
-               return this.args.Exception != null;
-            }
-         }
-
-         public bool isOk
-         {
-            get
-            {
-               return !this.wasCanceled && !this.hasException;
-            }
-         }
-
-         public AfterOpenFileEventArgs( BeforeOpenFileEventArgs args1 )
-         {
-            this.args = args1;
-         }
-      }
-
-      //
-      [System.Serializable]
-      public class OpenFileException : System.Exception
-      {
-         public OpenFileException() : base( )
-         {
-         }
-
-         public OpenFileException( string message ) : base( message )
-         {
-         }
-
-         public OpenFileException( string format, params object[ ] args ) : base( string.Format( format, args ) )
-         {
-         }
-
-         public OpenFileException( string message, System.Exception innerException ) : base( message, innerException )
-         {
-         }
-
-         public OpenFileException( string format, System.Exception innerException, params object[ ] args ) : base( string.Format( format,
-                                                                                                                              args ),
-                                                                                                                innerException )
-         {
-         }
-
-         protected OpenFileException( System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context ) : base( info, context )
-         {
-         }
-      }
-
-      //
       public void OpenFile( string filename = null )
       {
          BeforeOpenFileEventArgs args1 = new BeforeOpenFileEventArgs( );
@@ -526,7 +440,6 @@ namespace LinqXml.Control
          this.AfterOpenFileEvent?.Invoke( this, args2 );
       }
 
-      //
       private void OpenFileEvent( BeforeOpenFileEventArgs args )
       {
          try
@@ -545,7 +458,7 @@ namespace LinqXml.Control
                   {
                      args.OpenedFilename = dialog.FileName;
                      XDocument doc = XDocument.Load( args.OpenedFilename, LoadOptions.None );
-                     this.cfg = Configuration.GetPoco( doc.Root );
+                     this.cfg = LinqXml.Configuration.GetPoco( doc.Root );
                      this.LoadNodes( );
                   }
                   else
@@ -598,96 +511,6 @@ namespace LinqXml.Control
       #endregion
 
       #region --- Before and After SaveFile EVENTS + HANDLERS + EXCEPTIONS ---
-      public delegate void BeforeSaveFileEventHandler( object sender, BeforeSaveFileEventArgs ea );
-
-      public event BeforeSaveFileEventHandler BeforeSaveFileEvent;
-
-      public class BeforeSaveFileEventArgs : System.EventArgs
-      {
-         public bool Cancel
-         {
-            get; set;
-         }
-
-         public string SavedFilename
-         {
-            get; set;
-         }
-
-         public SaveFileException Exception
-         {
-            get; set;
-         }
-      }
-
-      public delegate void AfterSaveFileEventHandler( object sender, AfterSaveFileEventArgs ea );
-
-      public event AfterSaveFileEventHandler AfterSaveFileEvent;
-
-      public class AfterSaveFileEventArgs : System.EventArgs
-      {
-         public BeforeSaveFileEventArgs args;
-
-         public bool wasCanceled
-         {
-            get
-            {
-               return this.args == null ? false : this.args.Cancel;
-            }
-         }
-
-         public bool hasException
-         {
-            get
-            {
-               return this.args.Exception != null;
-            }
-         }
-
-         public bool isOk
-         {
-            get
-            {
-               return !this.wasCanceled && !this.hasException;
-            }
-         }
-
-         public AfterSaveFileEventArgs( BeforeSaveFileEventArgs args1 )
-         {
-            this.args = args1;
-         }
-      }
-
-      [System.Serializable]
-      public class SaveFileException : System.Exception
-      {
-         public SaveFileException() : base( )
-         {
-         }
-
-         public SaveFileException( string message ) : base( message )
-         {
-         }
-
-         public SaveFileException( string format, params object[ ] args ) : base( string.Format( format, args ) )
-         {
-         }
-
-         public SaveFileException( string message, System.Exception innerException ) : base( message, innerException )
-         {
-         }
-
-         public SaveFileException( string format, System.Exception innerException, params object[ ] args ) : base( string.Format( format,
-                                                                                                                              args ),
-                                                                                                                innerException )
-         {
-         }
-
-         protected SaveFileException( System.Runtime.Serialization.SerializationInfo info,
-                                     System.Runtime.Serialization.StreamingContext context ) : base( info, context )
-         {
-         }
-      }
 
       public void SaveFile( string filename = null )
       {
@@ -741,114 +564,39 @@ namespace LinqXml.Control
          this.NotAllowedToSaveFileEvent.Invoke( this );
       }
 
+      private bool VerifySavingStatus()
+      {
+         try
+         {
+            if( this.cfg != null && this.cfg.IsDirty )
+            {
+               // DIALOG COFIRMATION
+               string msg = "Save File" + this.DefaultFileName + " before?";
+               DialogResult dialogResult = XtraMessageBox.Show( msg, "Warning", MessageBoxButtons.YesNoCancel );
+               switch( dialogResult )
+               {
+                  case DialogResult.Yes:
+                     this.SaveAsFile( this.DefaultFileName );
+                     return true; ;
+                  case DialogResult.No:
+                     return true;
+                  default:
+                     return false;
+               }
+            }
+            return true;
+         }
+         catch( System.Exception ex )
+         {
+         }
+         finally
+         {
+         }
+         return false;
+      }
       #endregion
 
       #region --- Before and After SaveAsFile EVENTS + HANDLERS + EXCEPTIONS ---
-      public delegate void BeforeSaveAsFileEventHandler( object sender, BeforeSaveAsFileEventArgs ea );
-
-      public event BeforeSaveAsFileEventHandler BeforeSaveAsFileEvent;
-
-      public class BeforeSaveAsFileEventArgs : System.EventArgs
-      {
-         public bool Cancel
-         {
-            get; set;
-         }
-
-         public string SuggestedFilename
-         {
-            get; set;
-         }
-
-         public string SavedFilename
-         {
-            get; set;
-         }
-
-         public SaveAsFileException Exception
-         {
-            get; set;
-         }
-      }
-
-      public delegate void AfterSaveAsFileEventHandler( object sender, AfterSaveAsFileEventArgs ea );
-
-      public event AfterSaveAsFileEventHandler AfterSaveAsFileEvent;
-
-      public class AfterSaveAsFileEventArgs : System.EventArgs
-      {
-         public BeforeSaveAsFileEventArgs args;
-
-         public bool wasCanceled
-         {
-            get
-            {
-               return this.args == null ? false : this.args.Cancel;
-            }
-         }
-
-         public bool hasException
-         {
-            get
-            {
-               return this.args.Exception != null;
-            }
-         }
-
-         public bool isOk
-         {
-            get
-            {
-               return !this.wasCanceled && !this.hasException;
-            }
-         }
-
-         public string SavedFilename
-         {
-            get
-            {
-               return this.args.SavedFilename;
-            }
-         }
-
-         public AfterSaveAsFileEventArgs( BeforeSaveAsFileEventArgs args1 )
-         {
-            this.args = args1;
-         }
-      }
-
-      [System.Serializable]
-      public class SaveAsFileException : System.Exception
-      {
-         public SaveAsFileException() : base( )
-         {
-         }
-
-         public SaveAsFileException( string message ) : base( message )
-         {
-         }
-
-         public SaveAsFileException( string format, params object[ ] args ) : base( string.Format( format, args ) )
-         {
-         }
-
-         public SaveAsFileException( string message, System.Exception innerException ) : base( message, innerException )
-         {
-         }
-
-         public SaveAsFileException( string format, System.Exception innerException, params object[ ] args ) : base( string.Format( format,
-                                                                                                                                args ),
-                                                                                                                  innerException )
-         {
-         }
-
-         protected SaveAsFileException( System.Runtime.Serialization.SerializationInfo info,
-                                       System.Runtime.Serialization.StreamingContext context ) : base( info, context )
-         {
-         }
-      }
-
-      //
       public void SaveAsFile( string filename = null )
       {
          BeforeSaveAsFileEventArgs args1 = new BeforeSaveAsFileEventArgs( );
@@ -862,7 +610,6 @@ namespace LinqXml.Control
          this.AfterSaveAsFileEvent?.Invoke( this, args2 );
       }
 
-      //
       private void SaveAsFileEvent( BeforeSaveAsFileEventArgs args )
       {
          if( this.cfg == null )
@@ -916,116 +663,7 @@ namespace LinqXml.Control
       }
       #endregion
 
-      #region --- SavedFileChanged EVENT + HANDLER + EXCEPTION ---
-      public delegate void SavedFileNameChangedEventHandler( object sender, SavedFileNameChangedEventArgs args );
-
-      public event SavedFileNameChangedEventHandler SavedFileNameChangedEvent;
-
-      public class SavedFileNameChangedEventArgs : System.EventArgs
-      {
-         public string OldFilename
-         {
-            get; set;
-         }
-
-         public string NewFilename
-         {
-            get; set;
-         }
-      }
-      #endregion
-
       #region --- Before and After CloseFile EVENTS + HANDLERS + EXCEPTIONS ---
-      public delegate void BeforeCloseFileEventHandler( object sender, BeforeCloseFileEventArgs ea );
-
-      public event BeforeCloseFileEventHandler BeforeCloseFileEvent;
-
-      public class BeforeCloseFileEventArgs : System.EventArgs
-      {
-         public bool Cancel
-         {
-            get; set;
-         }
-
-         public string Filename
-         {
-            get; set;
-         }
-
-         public CloseFileException Exception
-         {
-            get; set;
-         }
-      }
-
-      public delegate void AfterCloseFileEventHandler( object sender, AfterCloseFileEventArgs ea );
-
-      public event AfterCloseFileEventHandler AfterCloseFileEvent;
-
-      public class AfterCloseFileEventArgs : System.EventArgs
-      {
-         public BeforeCloseFileEventArgs args;
-
-         public bool wasCanceled
-         {
-            get
-            {
-               return this.args == null ? false : this.args.Cancel;
-            }
-         }
-
-         public bool hasException
-         {
-            get
-            {
-               return this.args.Exception != null;
-            }
-         }
-
-         public bool isOk
-         {
-            get
-            {
-               return !this.wasCanceled && !this.hasException;
-            }
-         }
-
-         public AfterCloseFileEventArgs( BeforeCloseFileEventArgs args1 )
-         {
-            this.args = args1;
-         }
-      }
-
-      [System.Serializable]
-      public class CloseFileException : System.Exception
-      {
-         public CloseFileException() : base( )
-         {
-         }
-
-         public CloseFileException( string message ) : base( message )
-         {
-         }
-
-         public CloseFileException( string format, params object[ ] args ) : base( string.Format( format, args ) )
-         {
-         }
-
-         public CloseFileException( string message, System.Exception innerException ) : base( message, innerException )
-         {
-         }
-
-         public CloseFileException( string format, System.Exception innerException, params object[ ] args ) : base( string.Format( format,
-                                                                                                                               args ),
-                                                                                                                 innerException )
-         {
-         }
-
-         protected CloseFileException( System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context ) : base( info, context )
-         {
-         }
-      }
-
       public void CloseFile()
       {
          if( this.cfg == null )
@@ -1089,111 +727,15 @@ namespace LinqXml.Control
          this.NotAllowedDelAppCSEvent?.Invoke( this );
       }
 
-
       #endregion
 
       // SetWorkingDirectorty
 
       #region --- Before and After AddConnectionString EVENTS + HANDLERS + EXCEPTIONS ---
-      public delegate void BeforeAddConnectionStringEventHandler( object sender, BeforeAddConnectionStringEventArgs ea );
-
-      public event BeforeAddConnectionStringEventHandler BeforeAddConnectionStringEvent;
-
-      public class BeforeAddConnectionStringEventArgs : System.EventArgs
-      {
-         public bool Cancel
-         {
-            get; set;
-         }
-
-         public string Filename
-         {
-            get; set;
-         }
-
-         public AddConnectionStringException Exception
-         {
-            get; set;
-         }
-      }
-
-      //
-      public delegate void AfterAddConnectionStringEventHandler( object sender, AfterAddConnectionStringEventArgs ea );
-
-      public event AfterAddConnectionStringEventHandler AfterAddConnectionStringEvent;
-
-      public class AfterAddConnectionStringEventArgs : System.EventArgs
-      {
-         private BeforeAddConnectionStringEventArgs args;
-
-         public bool wasCanceled
-         {
-            get
-            {
-               return this.args == null ? false : this.args.Cancel;
-            }
-         }
-
-         public bool hasException
-         {
-            get
-            {
-               return this.args.Exception != null;
-            }
-         }
-
-         public bool isOk
-         {
-            get
-            {
-               return !this.wasCanceled && !this.hasException;
-            }
-         }
-
-         public AfterAddConnectionStringEventArgs( BeforeAddConnectionStringEventArgs args1 )
-         {
-            this.args = args1;
-         }
-      }
-
-      //
-      [System.Serializable]
-      public class AddConnectionStringException : System.Exception
-      {
-         public AddConnectionStringException() : base( )
-         {
-         }
-
-         public AddConnectionStringException( string message ) : base( message )
-         {
-         }
-
-         public AddConnectionStringException( string format, params object[ ] args )
-             : base( string.Format( format, args ) )
-         {
-         }
-
-         public AddConnectionStringException( string message, System.Exception innerException )
-             : base( message, innerException )
-         {
-         }
-
-         public AddConnectionStringException( string format, System.Exception innerException, params object[ ] args )
-             : base( string.Format( format, args ), innerException )
-         {
-         }
-
-         protected AddConnectionStringException( System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context )
-             : base( info, context )
-         {
-         }
-      }
-
-      //
       public void AddConnectionString()
       {
-         BeforeAddConnectionStringEventArgs args1 = new BeforeAddConnectionStringEventArgs( );
-         AfterAddConnectionStringEventArgs args2 = new AfterAddConnectionStringEventArgs( args1 );
+         BeforeAddAppCSEventArgs args1 = new BeforeAddAppCSEventArgs( );
+         AfterAddAppCSEventArgs args2 = new AfterAddAppCSEventArgs( args1 );
          this.BeforeAddConnectionStringEvent?.Invoke( this, args1 );
          if( !args1.Cancel )
          {
@@ -1202,8 +744,7 @@ namespace LinqXml.Control
          this.AfterAddConnectionStringEvent?.Invoke( this, args2 );
       }
 
-      //
-      private void AddConnectionStringEvent( BeforeAddConnectionStringEventArgs args )
+      private void AddConnectionStringEvent( BeforeAddAppCSEventArgs args )
       {
          try
          {
@@ -1211,19 +752,19 @@ namespace LinqXml.Control
          }
          catch( System.Exception ex )
          {
-            args.Exception = new AddConnectionStringException( null, ex );
+            args.Exception = new AddAppCSException( null, ex );
          }
          finally
          {
          }
       }
 
-      private void AddConnectionStringCore( BeforeAddConnectionStringEventArgs args )
+      private void AddConnectionStringCore( BeforeAddAppCSEventArgs args )
       {
          if( this.cfg == null )
          {
             args.Cancel = true;
-            args.Exception = new AddConnectionStringException( "cfg is null!" );
+            args.Exception = new AddAppCSException( "cfg is null!" );
             return;
          }
 
@@ -1232,7 +773,7 @@ namespace LinqXml.Control
          if( string.IsNullOrWhiteSpace( rtn ) )
          {
             args.Cancel = true;
-            args.Exception = new AddConnectionStringException( "name cannot be null!" );
+            args.Exception = new AddAppCSException( "name cannot be null!" );
             return;
          }
          string newName = rtn.Trim( );
@@ -1243,7 +784,7 @@ namespace LinqXml.Control
          {
             XtraMessageBox.Show( "Duplicate Application ConnectionString name, try again!", "Error", MessageBoxButtons.OK );
             args.Cancel = true;
-            args.Exception = new AddConnectionStringException( "name must be unique!" );
+            args.Exception = new AddAppCSException( "name must be unique!" );
             return;
          }
          if( foundAtSysCS )
@@ -1264,8 +805,7 @@ namespace LinqXml.Control
          this.LoadNodes( );
       }
 
-      //
-      private void AfterAddConnectionStringEventPostStatuses( object sender, AfterAddConnectionStringEventArgs ea )
+      private void AfterAddConnectionStringEventPostStatuses( object sender, AfterAddAppCSEventArgs ea )
       {
          if( !ea.isOk )
          {
@@ -1277,106 +817,10 @@ namespace LinqXml.Control
       #endregion
 
       #region --- Before and After DelConnectionString EVENTS + HANDLERS + EXCEPTIONS ---
-      public delegate void BeforeDelConnectionStringEventHandler( object sender, BeforeDelConnectionStringEventArgs ea );
-
-      public event BeforeDelConnectionStringEventHandler BeforeDelConnectionStringEvent;
-
-      public class BeforeDelConnectionStringEventArgs : System.EventArgs
-      {
-         public bool Cancel
-         {
-            get; set;
-         }
-
-         public ConnectionString AppCS
-         {
-            get; set;
-         }
-
-         public DelConnectionStringException Exception
-         {
-            get; set;
-         }
-      }
-
-      //
-      public delegate void AfterDelConnectionStringEventHandler( object sender, AfterDelConnectionStringEventArgs ea );
-
-      public event AfterDelConnectionStringEventHandler AfterDelConnectionStringEvent;
-
-      public class AfterDelConnectionStringEventArgs : System.EventArgs
-      {
-         private BeforeDelConnectionStringEventArgs args;
-
-         public bool wasCanceled
-         {
-            get
-            {
-               return this.args == null ? false : this.args.Cancel;
-            }
-         }
-
-         public bool hasException
-         {
-            get
-            {
-               return this.args.Exception != null;
-            }
-         }
-
-         public bool isOk
-         {
-            get
-            {
-               return !this.wasCanceled && !this.hasException;
-            }
-         }
-
-         public AfterDelConnectionStringEventArgs( BeforeDelConnectionStringEventArgs args1 )
-         {
-            this.args = args1;
-         }
-      }
-
-      //
-      [System.Serializable]
-      public class DelConnectionStringException : System.Exception
-      {
-         public DelConnectionStringException() : base( )
-         {
-         }
-
-         public DelConnectionStringException( string message ) : base( message )
-         {
-         }
-
-         public DelConnectionStringException( string format, params object[ ] args ) : base( string.Format( format, args ) )
-         {
-         }
-
-         public DelConnectionStringException( string message, System.Exception innerException ) : base( message,
-                                                                                                     innerException )
-         {
-         }
-
-         public DelConnectionStringException( string format, System.Exception innerException, params object[ ] args ) : base( string.Format( format,
-                                                                                                                                         args ),
-                                                                                                                           innerException )
-         {
-         }
-
-         protected DelConnectionStringException( System.Runtime.Serialization.SerializationInfo info,
-                                                System.Runtime.Serialization.StreamingContext context ) : base( info,
-                                                                                                              context )
-         {
-         }
-      }
-
-      //
       public void DelConnectionString( ConnectionString appCS )
       {
-         BeforeDelConnectionStringEventArgs args1 = new BeforeDelConnectionStringEventArgs( );
-         AfterDelConnectionStringEventArgs args2 = new AfterDelConnectionStringEventArgs( args1 );
+         BeforeDelAppCSEventArgs args1 = new BeforeDelAppCSEventArgs( );
+         AfterDelAppCSEventArgs args2 = new AfterDelAppCSEventArgs( args1 );
          args1.AppCS = appCS;
          this.BeforeDelConnectionStringEvent?.Invoke( this, args1 );
          if( !args1.Cancel )
@@ -1388,6 +832,7 @@ namespace LinqXml.Control
 
       public void DelConnectionStringXXX()
       {
+         // VERIFY IF THE APPCS IS USED BY ANYONE OR IF EXISTS A SYSCS WITH THE SAME NAME!!!
          TreeListMultiSelection selection = this.treeView.Selection;
          if( selection.Count > 0 )
          {
@@ -1407,8 +852,8 @@ namespace LinqXml.Control
          }
          XtraMessageBox.Show( "Some ConnectionString need to be selected first!", "Error", MessageBoxButtons.OK );
       }
-      //
-      private void DelConnectionStringEvent( BeforeDelConnectionStringEventArgs args )
+
+      private void DelConnectionStringEvent( BeforeDelAppCSEventArgs args )
       {
          try
          {
@@ -1427,7 +872,7 @@ namespace LinqXml.Control
          }
          catch( System.Exception ex )
          {
-            args.Exception = new DelConnectionStringException( null, ex );
+            args.Exception = new DelAppCSException( null, ex );
          }
          finally
          {
@@ -1435,288 +880,7 @@ namespace LinqXml.Control
       }
       #endregion
 
-      //
-      #region --- FocusedDataStoreChanged EVENT + HANDLER + EXCEPTION ---
-      public delegate void FocusedDataStoreChangedEventHandler( object sender, FocusedDataStoreChangedEventArgs ea );
-
-      public event FocusedDataStoreChangedEventHandler FocusedDataStoreChangedEvent;
-
-      public class FocusedDataStoreChangedEventArgs : System.EventArgs
-      {
-         public bool Cancel
-         {
-            get; set;
-         }
-
-         public DataStore DataStore
-         {
-            get; set;
-         }
-
-         public FocusedDataStoreChangedException Exception
-         {
-            get; set;
-         }
-      }
-
-      //
-      [System.Serializable]
-      public class FocusedDataStoreChangedException : System.Exception
-      {
-         public FocusedDataStoreChangedException() : base( )
-         {
-         }
-
-         public FocusedDataStoreChangedException( string message ) : base( message )
-         {
-         }
-
-         public FocusedDataStoreChangedException( string format, params object[ ] args ) : base( string.Format( format,
-                                                                                                            args ) )
-         {
-         }
-
-         public FocusedDataStoreChangedException( string message, System.Exception innerException ) : base( message,
-                                                                                                         innerException )
-         {
-         }
-
-         public FocusedDataStoreChangedException( string format, System.Exception innerException, params object[ ] args ) : base( string.Format( format,
-                                                                                                                                             args ),
-                                                                                                                               innerException )
-         {
-         }
-
-         protected FocusedDataStoreChangedException( System.Runtime.Serialization.SerializationInfo info,
-                                                    System.Runtime.Serialization.StreamingContext context ) : base( info,
-                                                                                                                  context )
-         {
-         }
-      }
-      //
-      //         FocusedDataStoreChangedEventArgs args1 = new FocusedDataStoreChangedEventArgs( );
-      //         args1.Filename = filename;
-      //         this.FocusedDataStoreChangedEvent?.Invoke( this, args2 );
-      //
-      #endregion
-
-      #region --- FocusedConnectionStringChanged EVENT + HANDLER + EXCEPTION ---
-      public delegate void FocusedConnectionStringChangedEventHandler( object sender,
-                                                                      FocusedConnectionStringChangedEventArgs ea );
-
-      public event FocusedConnectionStringChangedEventHandler FocusedConnectionStringChangedEvent;
-
-      public class FocusedConnectionStringChangedEventArgs : System.EventArgs
-      {
-         public bool Cancel
-         {
-            get; set;
-         }
-
-         public ConnectionString ConnectionString
-         {
-            get; set;
-         }
-
-         public FocusedConnectionStringChangedException Exception
-         {
-            get; set;
-         }
-      }
-
-      //
-      [System.Serializable]
-      public class FocusedConnectionStringChangedException : System.Exception
-      {
-         public FocusedConnectionStringChangedException() : base( )
-         {
-         }
-
-         public FocusedConnectionStringChangedException( string message ) : base( message )
-         {
-         }
-
-         public FocusedConnectionStringChangedException( string format, params object[ ] args ) : base( string.Format( format,
-                                                                                                                   args ) )
-         {
-         }
-
-         public FocusedConnectionStringChangedException( string message, System.Exception innerException ) : base( message,
-                                                                                                                innerException )
-         {
-         }
-
-         public FocusedConnectionStringChangedException( string format,
-                                                        System.Exception innerException,
-                                                        params object[ ] args ) : base( string.Format( format, args ),
-                                                                                      innerException )
-         {
-         }
-
-         protected FocusedConnectionStringChangedException( System.Runtime.Serialization.SerializationInfo info,
-                                                           System.Runtime.Serialization.StreamingContext context ) : base( info,
-                                                                                                                         context )
-         {
-         }
-      }
-      //
-      //         FocusedConnectionStringChangedEventArgs args1 = new FocusedConnectionStringChangedEventArgs( );
-      //         args1.Filename = filename;
-      //         this.FocusedConnectionStringChangedEvent?.Invoke( this, args2 );
-      //
-      #endregion
-      //
-      #region --- AllowedToOpenFile EVENT + HANDLER + EXCEPTION ---
-      public delegate void AllowedToOpenFileEventHandler( object sender );
-
-      public event AllowedToOpenFileEventHandler AllowedToOpenFileEvent;
-      #endregion
-
-      #region --- NotAllowedToOpenFile EVENT + HANDLER + EXCEPTION ---
-      public delegate void NotAllowedToOpenFileEventHandler( object sender );
-
-      public event NotAllowedToOpenFileEventHandler NotAllowedToOpenFileEvent;
-      #endregion
-
-      #region --- AllowedToSaveFile EVENT + HANDLER + EXCEPTION ---
-      public delegate void AllowedToSaveFileEventHandler( object sender );
-
-      public event AllowedToSaveFileEventHandler AllowedToSaveFileEvent;
-      #endregion
-
-      #region --- NotAllowedToSaveFile EVENT + HANDLER + EXCEPTION ---
-      public delegate void NotAllowedToSaveFileEventHandler( object sender );
-
-      public event NotAllowedToSaveFileEventHandler NotAllowedToSaveFileEvent;
-      #endregion
-
-      #region --- AllowedToSaveAsFile EVENT + HANDLER + EXCEPTION ---
-      public delegate void AllowedToSaveAsFileEventHandler( object sender );
-
-      public event AllowedToSaveAsFileEventHandler AllowedToSaveAsFileEvent;
-      #endregion
-
-      #region --- NotAllowedToSaveAsFile EVENT + HANDLER + EXCEPTION ---
-      public delegate void NotAllowedToSaveAsFileEventHandler( object sender );
-
-      public event NotAllowedToSaveAsFileEventHandler NotAllowedToSaveAsFileEvent;
-      #endregion
-
-      #region --- AllowedToCloseFile EVENT + HANDLER + EXCEPTION ---
-      public delegate void AllowedToCloseFileEventHandler( object sender );
-
-      public event AllowedToCloseFileEventHandler AllowedToCloseFileEvent;
-      #endregion
-
-      #region --- NotAllowedToCloseFile EVENT + HANDLER + EXCEPTION ---
-      public delegate void NotAllowedToCloseFileEventHandler( object sender );
-
-      public event NotAllowedToCloseFileEventHandler NotAllowedToCloseFileEvent;
-      #endregion
-      //
-      #region --- AllowedAddAppCS EVENT + HANDLER + EXCEPTION ---
-      public delegate void AllowedAddAppCSEventHandler( object sender );
-
-      public event AllowedAddAppCSEventHandler AllowedAddAppCSEvent;
-      #endregion
-      //
-      #region --- NotAllowedAddAppCS EVENT + HANDLER + EXCEPTION ---
-      public delegate void NotAllowedAddAppCSEventHandler( object sender );
-
-      public event NotAllowedAddAppCSEventHandler NotAllowedAddAppCSEvent;
-      #endregion
-      //
-      #region --- AllowedDelAppCS EVENT + HANDLER + EXCEPTION ---
-      public delegate void AllowedDelAppCSEventHandler( object sender );
-
-      public event AllowedDelAppCSEventHandler AllowedDelAppCSEvent;
-      #endregion
-      //
-      #region --- NotAllowedDelAppCS EVENT + HANDLER + EXCEPTION ---
-      public delegate void NotAllowedDelAppCSEventHandler( object sender );
-
-      public event NotAllowedDelAppCSEventHandler NotAllowedDelAppCSEvent;
-      #endregion
-      //
-      #region --- AllowedAddDataStore EVENT + HANDLER + EXCEPTION ---
-      public delegate void AllowedAddDataStoreEventHandler( object sender );
-
-      public event AllowedAddDataStoreEventHandler AllowedAddDataStoreEvent;
-      #endregion
-      //
-      #region --- NotAllowedAddDataStore EVENT + HANDLER + EXCEPTION ---
-      public delegate void NotAllowedAddDataStoreEventHandler( object sender );
-
-      public event NotAllowedAddDataStoreEventHandler NotAllowedAddDataStoreEvent;
-      #endregion
-      //
-      #region --- AllowedDelDataStore EVENT + HANDLER + EXCEPTION ---
-      public delegate void AllowedDelDataStoreEventHandler( object sender );
-
-      public event AllowedDelDataStoreEventHandler AllowedDelDataStoreEvent;
-      #endregion
-      //
-      #region --- NotAllowedDelDataStore EVENT + HANDLER + EXCEPTION ---
-      public delegate void NotAllowedDelDataStoreEventHandler( object sender );
-
-      public event NotAllowedDelDataStoreEventHandler NotAllowedDelDataStoreEvent;
-      #endregion
-      #endregion
-
-      public void AddDataStoreXXX()
-      {
-         LoginUserControl myControl = new LoginUserControl( );
-         if( DevExpress.XtraEditors.XtraDialog.Show( myControl, "Sign in", MessageBoxButtons.OKCancel ) == DialogResult.OK )
-         {
-            // do something 
-         }
-         this.AllowedToSaveFileEvent?.Invoke( this );
-      }
-
       #region --- Before and After AddDataStore EVENTS + HANDLERS + EXCEPTIONS ---
-      public delegate void BeforeAddDataStoreEventHandler( object sender, BeforeAddDataStoreEventArgs ea );
-      public event BeforeAddDataStoreEventHandler BeforeAddDataStoreEvent;
-      public class BeforeAddDataStoreEventArgs : System.EventArgs
-      {
-         public bool Cancel { get; set; }
-         public string Filename { get; set; }
-         public AddDataStoreException Exception { get; set; }
-      }
-      //
-      public delegate void AfterAddDataStoreEventHandler( object sender, AfterAddDataStoreEventArgs ea );
-      public event AfterAddDataStoreEventHandler AfterAddDataStoreEvent;
-      public class AfterAddDataStoreEventArgs : System.EventArgs
-      {
-         private BeforeAddDataStoreEventArgs args;
-         public bool wasCanceled { get { return this.args == null ? false : this.args.Cancel; } }
-         public bool hasException { get { return this.args.Exception != null; } }
-         public bool isOk { get { return !this.wasCanceled && !this.hasException; } }
-         public AfterAddDataStoreEventArgs( BeforeAddDataStoreEventArgs args1 )
-         {
-            this.args = args1;
-         }
-      }
-      //
-      [System.Serializable]
-      public class AddDataStoreException : System.Exception
-      {
-         public AddDataStoreException() : base( ) { }
-
-         public AddDataStoreException( string message ) : base( message ) { }
-
-         public AddDataStoreException( string format, params object[ ] args )
-             : base( string.Format( format, args ) ) { }
-
-         public AddDataStoreException( string message, System.Exception innerException )
-             : base( message, innerException ) { }
-
-         public AddDataStoreException( string format, System.Exception innerException, params object[ ] args )
-             : base( string.Format( format, args ), innerException ) { }
-
-         protected AddDataStoreException( System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context )
-             : base( info, context ) { }
-      }
-      //
       public void AddDataStore( string filename )
       {
          BeforeAddDataStoreEventArgs args1 = new BeforeAddDataStoreEventArgs( );
@@ -1729,12 +893,22 @@ namespace LinqXml.Control
          }
          this.AfterAddDataStoreEvent?.Invoke( this, args2 );
       }
-      //
+
+      public void AddDataStoreXXX()
+      {
+         LoginUserControl myControl = new LoginUserControl( );
+         if( DevExpress.XtraEditors.XtraDialog.Show( myControl, "Sign in", MessageBoxButtons.OKCancel ) == DialogResult.OK )
+         {
+            // do something 
+         }
+         this.AllowedToSaveFileEvent?.Invoke( this );
+      }
+
+
       private void AddDataStoreEvent( BeforeAddDataStoreEventArgs args )
       {
          try
          {
-
          }
          catch( System.Exception ex )
          {
@@ -1742,10 +916,9 @@ namespace LinqXml.Control
          }
          finally
          {
-
          }
       }
-      //
+
       private void AfterAddDataStoreEventPostStatuses( object sender, AfterAddDataStoreEventArgs ea )
       {
          if( ea.isOk )
@@ -1753,6 +926,7 @@ namespace LinqXml.Control
             return;
          }
       }
+
       // this.AfterAddDataStoreEvent += this.AfterAddDataStoreEventPostStatuses;
       #endregion
 
@@ -1763,35 +937,6 @@ namespace LinqXml.Control
          this.AllowedToSaveFileEvent?.Invoke( this );
       }
 
-      private bool VerifySavingStatus()
-      {
-         try
-         {
-            if( this.cfg != null && this.cfg.IsDirty )
-            {
-               // DIALOG COFIRMATION
-               string msg = "Save File" + this.DefaultFileName + " before?";
-               DialogResult dialogResult = XtraMessageBox.Show( msg, "Warning", MessageBoxButtons.YesNoCancel );
-               switch( dialogResult )
-               {
-                  case DialogResult.Yes:
-                     this.SaveAsFile( this.DefaultFileName );
-                     return true; ;
-                  case DialogResult.No:
-                     return true;
-                  default:
-                     return false;
-               }
-            }
-            return true;
-         }
-         catch( System.Exception ex )
-         {
-         }
-         finally
-         {
-         }
-         return false;
-      }
+      #endregion
    }
 }

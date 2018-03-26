@@ -54,9 +54,47 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Events\AddAppCS\AddAppCSDelegates.cs" />
+    <Compile Include="Events\AddAppCS\AddAppCSException.cs" />
+    <Compile Include="Events\AddAppCS\AfterAddAppCSEventArgs.cs" />
+    <Compile Include="Events\AddAppCS\BeforeAddAppCSEventArgs.cs" />
+    <Compile Include="Events\AddDataStore\AddDataStoreException.cs" />
+    <Compile Include="Events\AddDataStore\AddDataSourceDelegates.cs" />
+    <Compile Include="Events\AddDataStore\AfterAddDataStoreEventArgs.cs" />
+    <Compile Include="Events\AddDataStore\BeforeAddDataStoreEventArgs.cs" />
+    <Compile Include="Events\CloseFile\CloseFileDelegates.cs" />
+    <Compile Include="Events\DelAppCS\AfterDelAppCSEventArgs.cs" />
+    <Compile Include="Events\DelAppCS\BeforeDelAppCSEventArgs.cs" />
+    <Compile Include="Events\CloseFile\AfterCloseFileEventArgs.cs" />
+    <Compile Include="Events\CloseFile\BeforeCloseFileEventArgs.cs" />
+    <Compile Include="Events\CloseFile\CloseFileException.cs" />
+    <Compile Include="Events\DelAppCS\DelAppCSDelegates.cs" />
+    <Compile Include="Events\DelAppCS\DelAppCSException.cs" />
+    <Compile Include="Events\DelDataStore\DelDataStoreDelegates.cs" />
+    <Compile Include="Events\FocusedAppCSChanged\FocusedAppCSChangedEventHandler.cs" />
+    <Compile Include="Events\FocusedAppCSChanged\FocusedAppCSChangedException.cs" />
+    <Compile Include="Events\FocusedDataStoreChanged\FocusedDataStoreChangedEventArgs.cs" />
+    <Compile Include="Events\FocusedDataStoreChanged\FocusedDataStoreChangedException.cs" />
+    <Compile Include="Events\SaveAs\SavedFileNameChangedEventArgs.cs" />
+    <Compile Include="Events\SaveAs\AfterSaveAsFileEventArgs.cs" />
+    <Compile Include="Events\SaveAs\BeforeSaveAsFileEventArgs.cs" />
+    <Compile Include="Events\SaveAs\SaveAsDelegates.cs" />
+    <Compile Include="Events\SaveAs\SaveAsFileException.cs" />
+    <Compile Include="Events\SaveFile\AfterSaveFileEventArgs.cs" />
+    <Compile Include="Events\SaveFile\BeforeSaveFileEventArgs.cs" />
+    <Compile Include="Events\OpenFile\AfterOpenFileEventArgs.cs" />
+    <Compile Include="Events\OpenFile\BeforeOpenFileEventArgs.cs" />
+    <Compile Include="Events\NewFile\AfterNewFileEventArgs.cs" />
+    <Compile Include="Events\NewFile\BeforeNewFileEventArgs.cs" />
+    <Compile Include="Events\NewFile\NewFileDelegates.cs" />
+    <Compile Include="Events\OpenFile\OpenFileDelegates.cs" />
+    <Compile Include="Events\OpenFile\OpenFileException.cs" />
+    <Compile Include="Events\SaveFile\SaveFileDelegates.cs" />
+    <Compile Include="Events\SaveFile\SaveFileException.cs" />
     <Compile Include="Control\LoginXtraUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Events\NewFile\NewFileException.cs" />
     <Compile Include="GUI\ConfigurationTestForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -97,6 +135,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="LinqXml.cs" />
+    <Compile Include="Events\AddDataStore\InvalidDataStoreConfigurationException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Component\SystemConnectionStringHandler.cs">
