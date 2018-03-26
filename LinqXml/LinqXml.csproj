@@ -54,6 +54,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Events\CloneAppCS\CloneAppCSDelegates.cs" />
+    <Compile Include="Events\CloneAppCS\CloneAppCSException.cs" />
+    <Compile Include="Events\CloneAppCS\AfterCloneAppCSEventArgs.cs" />
+    <Compile Include="Events\CloneAppCS\BeforeCloneAppCSEventArgs.cs" />
     <Compile Include="Events\AddAppCS\AddAppCSDelegates.cs" />
     <Compile Include="Events\AddAppCS\AddAppCSException.cs" />
     <Compile Include="Events\AddAppCS\AfterAddAppCSEventArgs.cs" />
@@ -62,6 +66,7 @@
     <Compile Include="Events\AddDataStore\AddDataSourceDelegates.cs" />
     <Compile Include="Events\AddDataStore\AfterAddDataStoreEventArgs.cs" />
     <Compile Include="Events\AddDataStore\BeforeAddDataStoreEventArgs.cs" />
+    <Compile Include="Events\CloneDataStore\CloneDataStoreDelegates.cs" />
     <Compile Include="Events\CloseFile\CloseFileDelegates.cs" />
     <Compile Include="Events\DelAppCS\AfterDelAppCSEventArgs.cs" />
     <Compile Include="Events\DelAppCS\BeforeDelAppCSEventArgs.cs" />

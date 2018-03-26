@@ -50,6 +50,8 @@
          this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
          this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
          this.configurationView1 = new LinqXml.Control.ConfigurationView();
+         this.cloneDSBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.cloneAppCSBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
          this.SuspendLayout();
          // 
@@ -76,9 +78,11 @@
             this.addAppCSBarButtonItem,
             this.delDataStoreBarButtonItem,
             this.delAppCSBarButtonItem,
-            this.newBarButtonItem});
+            this.newBarButtonItem,
+            this.cloneDSBarButtonItem,
+            this.cloneAppCSBarButtonItem});
          this.barManager1.MainMenu = this.bar2;
-         this.barManager1.MaxItemId = 12;
+         this.barManager1.MaxItemId = 14;
          this.barManager1.StatusBar = this.bar3;
          // 
          // bar1
@@ -102,10 +106,12 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.saveAsBarButtonItem),
             new DevExpress.XtraBars.LinkPersistInfo(this.closeBarButtonItem),
             new DevExpress.XtraBars.LinkPersistInfo(this.setWorkingDirectoryBarButtonItem),
-            new DevExpress.XtraBars.LinkPersistInfo(this.addDataStoreBarButtonItem),
             new DevExpress.XtraBars.LinkPersistInfo(this.addAppCSBarButtonItem),
-            new DevExpress.XtraBars.LinkPersistInfo(this.delDataStoreBarButtonItem),
-            new DevExpress.XtraBars.LinkPersistInfo(this.delAppCSBarButtonItem)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.cloneAppCSBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.delAppCSBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.addDataStoreBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.cloneDSBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.delDataStoreBarButtonItem)});
          this.bar2.OptionsBar.MultiLine = true;
          this.bar2.OptionsBar.UseWholeRow = true;
          this.bar2.Text = "Main menu";
@@ -221,7 +227,7 @@
          this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
          this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
          this.barDockControlTop.Manager = this.barManager1;
-         this.barDockControlTop.Size = new System.Drawing.Size(759, 51);
+         this.barDockControlTop.Size = new System.Drawing.Size(816, 51);
          // 
          // barDockControlBottom
          // 
@@ -229,7 +235,7 @@
          this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
          this.barDockControlBottom.Location = new System.Drawing.Point(0, 683);
          this.barDockControlBottom.Manager = this.barManager1;
-         this.barDockControlBottom.Size = new System.Drawing.Size(759, 25);
+         this.barDockControlBottom.Size = new System.Drawing.Size(816, 25);
          // 
          // barDockControlLeft
          // 
@@ -243,7 +249,7 @@
          // 
          this.barDockControlRight.CausesValidation = false;
          this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-         this.barDockControlRight.Location = new System.Drawing.Point(759, 51);
+         this.barDockControlRight.Location = new System.Drawing.Point(816, 51);
          this.barDockControlRight.Manager = this.barManager1;
          this.barDockControlRight.Size = new System.Drawing.Size(0, 632);
          // 
@@ -253,14 +259,30 @@
          this.configurationView1.Dock = System.Windows.Forms.DockStyle.Fill;
          this.configurationView1.Location = new System.Drawing.Point(0, 51);
          this.configurationView1.Name = "configurationView1";
-         this.configurationView1.Size = new System.Drawing.Size(759, 632);
+         this.configurationView1.Size = new System.Drawing.Size(816, 632);
          this.configurationView1.TabIndex = 4;
+         // 
+         // cloneDSBarButtonItem
+         // 
+         this.cloneDSBarButtonItem.Caption = "Clone DS";
+         this.cloneDSBarButtonItem.Enabled = false;
+         this.cloneDSBarButtonItem.Id = 12;
+         this.cloneDSBarButtonItem.Name = "cloneDSBarButtonItem";
+         this.cloneDSBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.cloneDSBarButtonItem_ItemClick);
+         // 
+         // cloneCSBarButtonItem
+         // 
+         this.cloneAppCSBarButtonItem.Caption = "Clone CS";
+         this.cloneAppCSBarButtonItem.Enabled = false;
+         this.cloneAppCSBarButtonItem.Id = 13;
+         this.cloneAppCSBarButtonItem.Name = "cloneCSBarButtonItem";
+         this.cloneAppCSBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.cloneAppCSBarButtonItem_ItemClick);
          // 
          // ConfigurationTestForm
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-         this.ClientSize = new System.Drawing.Size(759, 708);
+         this.ClientSize = new System.Drawing.Size(816, 708);
          this.Controls.Add(this.configurationView1);
          this.Controls.Add(this.barDockControlLeft);
          this.Controls.Add(this.barDockControlRight);
@@ -298,6 +320,8 @@
       private DevExpress.XtraBars.BarButtonItem delDataStoreBarButtonItem;
       private DevExpress.XtraBars.BarButtonItem delAppCSBarButtonItem;
       private DevExpress.XtraBars.BarButtonItem newBarButtonItem;
+      private DevExpress.XtraBars.BarButtonItem cloneAppCSBarButtonItem;
+      private DevExpress.XtraBars.BarButtonItem cloneDSBarButtonItem;
    }
 }
 

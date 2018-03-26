@@ -11,6 +11,8 @@ using LinqXml.Control.Configuration.NewFile;
 using LinqXml.Control.Configuration.OpenFile;
 using LinqXml.Control.SaveAs;
 using LinqXml.Control.SaveFile;
+using LinqXml.Events.CloneAppCS;
+using LinqXml.Events.CloneDataStore;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -55,7 +57,8 @@ namespace LinqXml.Control
          this.AfterSaveAsFileEvent += this.AfterSaveAsFileEventPostStatuses;
          this.AfterSaveFileEvent += this.AfterSaveFileEventPostStatuses;
          this.AfterCloseFileEvent += this.AfterCloseFileEventPostStatuses;
-         this.AfterAddConnectionStringEvent += this.AfterAddConnectionStringEventPostStatuses;
+         this.AfterAddAppCSEvent += this.AfterAddAppCSEventPostStatuses;
+         this.AfterDelAppCSEvent += this.AfterDelAppCSEventPostStatuses;
          // this.AddAllNodes( true );
          //this.LoadNodes( );
       }
@@ -153,9 +156,9 @@ namespace LinqXml.Control
          }
          else if( node.Tag is ConnectionString )
          {
-            FocusedConnectionStringChangedEventArgs args = new FocusedConnectionStringChangedEventArgs( );
+            FocusedAppCSChangedEventArgs args = new FocusedAppCSChangedEventArgs( );
             args.ConnectionString = node.Tag as ConnectionString;
-            this.FocusedConnectionStringChangedEvent?.Invoke( this, args );
+            this.FocusedAppCSChangedEvent?.Invoke( this, args );
             //
             if( args.ConnectionString.IsSys )
             {
@@ -342,22 +345,32 @@ namespace LinqXml.Control
 
       public event AfterCloseFileEventHandler AfterCloseFileEvent;
 
+      //-------------------------------------------------------------------
       public event AllowedAddAppCSEventHandler AllowedAddAppCSEvent;
 
       public event NotAllowedAddAppCSEventHandler NotAllowedAddAppCSEvent;
 
-      public event BeforeAddAppCSEventHandler BeforeAddConnectionStringEvent;
+      public event BeforeAddAppCSEventHandler BeforeAddAppCSEvent;
 
-      public event AfterAddAppCSEventHandler AfterAddConnectionStringEvent;
+      public event AfterAddAppCSEventHandler AfterAddAppCSEvent;
+      //
+      public event AllowedToCloneAppCSEventHandler AllowedToCloneAppCSEvent;
 
+      public event NotAllowedToCloneAppCSEventHandler NotAllowedToCloneAppCSEvent;
+
+      public event BeforeCloneAppCSEventHandler BeforeCloneAppCSEvent;
+
+      public event AfterCloneAppCSEventHandler AfterCloneAppCSEvent;
+      //
       public event AllowedDelAppCSEventHandler AllowedDelAppCSEvent;
 
       public event NotAllowedDelAppCSEventHandler NotAllowedDelAppCSEvent;
 
-      public event BeforeDelAppCSEventHandler BeforeDelConnectionStringEvent;
+      public event BeforeDelAppCSEventHandler BeforeDelAppCSEvent;
 
-      public event AfterDelAppCSEventHandler AfterDelConnectionStringEvent;
+      public event AfterDelAppCSEventHandler AfterDelAppCSEvent;
 
+      //-------------------------------------------------------------------
       public event AllowedAddDataStoreEventHandler AllowedAddDataStoreEvent;
 
       public event NotAllowedAddDataStoreEventHandler NotAllowedAddDataStoreEvent;
@@ -365,21 +378,28 @@ namespace LinqXml.Control
       public event BeforeAddDataStoreEventHandler BeforeAddDataStoreEvent;
 
       public event AfterAddDataStoreEventHandler AfterAddDataStoreEvent;
+      //
+      public event AllowedToCloneDataStoreEventHandler AllowedToCloneDataStoreEvent;
 
+      public event NotAllowedToCloneDataStoreEventHandler NotAllowedToCloneDataStoreEvent;
+      //
       public event AllowedDelDataStoreEventHandler AllowedDelDataStoreEvent;
 
       public event NotAllowedDelDataStoreEventHandler NotAllowedDelDataStoreEvent;
 
+      //-------------------------------------------------------------------
+      public event FocusedAppCSChangedEventHandler FocusedAppCSChangedEvent;
+
       public event FocusedDataStoreChangedEventHandler FocusedDataStoreChangedEvent;
 
-      public event FocusedAppCSChangedEventHandler FocusedConnectionStringChangedEvent;
-
       #region --- Before and After NewFile EVENTS + HANDLERS + EXCEPTIONS ---
-      public void NewFile( string filename )
+      private const string NEW_FILENAME = "[NewFile]";
+
+      public void NewFile()
       {
          BeforeNewFileEventArgs args1 = new BeforeNewFileEventArgs( );
          AfterNewFileEventArgs args2 = new AfterNewFileEventArgs( args1 );
-         args1.Filename = filename;
+         args1.Filename = NEW_FILENAME;
          this.BeforeNewFileEvent?.Invoke( this, args1 );
          if( !args1.Cancel )
          {
@@ -731,24 +751,24 @@ namespace LinqXml.Control
 
       // SetWorkingDirectorty
 
-      #region --- Before and After AddConnectionString EVENTS + HANDLERS + EXCEPTIONS ---
-      public void AddConnectionString()
+      #region --- Before and After AddAppCS EVENTS + HANDLERS + EXCEPTIONS ---
+      public void AddAppCS()
       {
          BeforeAddAppCSEventArgs args1 = new BeforeAddAppCSEventArgs( );
          AfterAddAppCSEventArgs args2 = new AfterAddAppCSEventArgs( args1 );
-         this.BeforeAddConnectionStringEvent?.Invoke( this, args1 );
+         this.BeforeAddAppCSEvent?.Invoke( this, args1 );
          if( !args1.Cancel )
          {
-            this.AddConnectionStringEvent( args1 );
+            this.AddAppCSEvent( args1 );
          }
-         this.AfterAddConnectionStringEvent?.Invoke( this, args2 );
+         this.AfterAddAppCSEvent?.Invoke( this, args2 );
       }
 
-      private void AddConnectionStringEvent( BeforeAddAppCSEventArgs args )
+      private void AddAppCSEvent( BeforeAddAppCSEventArgs args )
       {
          try
          {
-            this.AddConnectionStringCore( args );
+            this.AddAppCSCore( args );
          }
          catch( System.Exception ex )
          {
@@ -759,7 +779,7 @@ namespace LinqXml.Control
          }
       }
 
-      private void AddConnectionStringCore( BeforeAddAppCSEventArgs args )
+      private void AddAppCSCore( BeforeAddAppCSEventArgs args )
       {
          if( this.cfg == null )
          {
@@ -801,64 +821,76 @@ namespace LinqXml.Control
             }
             return;
          }
-         this.cfg.AddConnectionString( new ConnectionString( newName ) );
+         this.cfg.AddAppCS( new ConnectionString( newName ) );
          this.LoadNodes( );
       }
 
-      private void AfterAddConnectionStringEventPostStatuses( object sender, AfterAddAppCSEventArgs ea )
+      private void AfterAddAppCSEventPostStatuses( object sender, AfterAddAppCSEventArgs ea )
       {
          if( !ea.isOk )
          {
             return;
          }
-
-         this.AllowedToSaveFileEvent?.Invoke( this );
+         if( string.Compare( this.DefaultFileName, NEW_FILENAME, StringComparison.Ordinal ) == 0 )
+         {
+            this.AllowedToSaveAsFileEvent?.Invoke( this );
+         }
+         else
+         {
+            this.AllowedToSaveFileEvent?.Invoke( this );
+         }
       }
       #endregion
 
-      #region --- Before and After DelConnectionString EVENTS + HANDLERS + EXCEPTIONS ---
-      public void DelConnectionString( ConnectionString appCS )
-      {
-         BeforeDelAppCSEventArgs args1 = new BeforeDelAppCSEventArgs( );
-         AfterDelAppCSEventArgs args2 = new AfterDelAppCSEventArgs( args1 );
-         args1.AppCS = appCS;
-         this.BeforeDelConnectionStringEvent?.Invoke( this, args1 );
-         if( !args1.Cancel )
-         {
-            this.DelConnectionStringEvent( args1 );
-         }
-         this.AfterDelConnectionStringEvent?.Invoke( this, args2 );
-      }
-
-      public void DelConnectionStringXXX()
+      #region --- Before and After DelAppCSEvent EVENTS + HANDLERS + EXCEPTIONS ---
+      public void DelAppCS()
       {
          // VERIFY IF THE APPCS IS USED BY ANYONE OR IF EXISTS A SYSCS WITH THE SAME NAME!!!
          TreeListMultiSelection selection = this.treeView.Selection;
          if( selection.Count > 0 )
          {
             TreeListNode node = selection[ 0 ];
-            if( node.NextNode != null )
-            {
-               node.NextNode.TreeList.SetFocusedNode( node.NextNode );
-            }
-            else if( node.PrevNode != null )
-            {
-               node.PrevNode.TreeList.SetFocusedNode( node.PrevNode );
-            }
             ConnectionString appCS = node.Tag as ConnectionString;
-            this.DelConnectionString( appCS );
-            this.AllowedToSaveFileEvent?.Invoke( this );
+            AfterDelAppCSEventArgs args = this.DelAppCSEvent( appCS );
+            if( args.isOk )
+            {
+               if( node.NextNode != null )
+               {
+                  node.NextNode.TreeList.SetFocusedNode( node.NextNode );
+               }
+               else if( node.PrevNode != null )
+               {
+                  node.PrevNode.TreeList.SetFocusedNode( node.PrevNode );
+               }
+               node.Remove( );
+            }
             return;
          }
          XtraMessageBox.Show( "Some ConnectionString need to be selected first!", "Error", MessageBoxButtons.OK );
       }
 
-      private void DelConnectionStringEvent( BeforeDelAppCSEventArgs args )
+      public AfterDelAppCSEventArgs DelAppCSEvent( ConnectionString appCS )
+      {
+         BeforeDelAppCSEventArgs args1 = new BeforeDelAppCSEventArgs( );
+         AfterDelAppCSEventArgs args2 = new AfterDelAppCSEventArgs( args1 );
+         args1.AppCS = appCS;
+         this.BeforeDelAppCSEvent?.Invoke( this, args1 );
+         if( !args1.Cancel )
+         {
+            this.DelAppCSEvent( args1 );
+         }
+         this.AfterDelAppCSEvent?.Invoke( this, args2 );
+         return args2;
+      }
+
+      private void DelAppCSEvent( BeforeDelAppCSEventArgs args )
       {
          try
          {
+            //@#$% VERIFY REFERENTIAL INTEGRITY APPCS+SYSCS -->> DATASTORE
             // DIALOG COFIRMATION
-            DialogResult dialogResult = XtraMessageBox.Show( "Are you sure?", "Warning", MessageBoxButtons.YesNoCancel );
+            string msg = $"Your are about to delete ConnectionString \"{args.AppCS.Name}\"...\nAre you sure?";
+            DialogResult dialogResult = XtraMessageBox.Show( msg, "Warning", MessageBoxButtons.YesNoCancel );
             switch( dialogResult )
             {
                case DialogResult.Yes:
@@ -868,7 +900,7 @@ namespace LinqXml.Control
                   return;
             }
             // BEFORE DEL
-            ConnectionString delAppCS = this.cfg.DelConnectionString( args.AppCS.Name );
+            ConnectionString delAppCS = this.cfg.DelAppCS( args.AppCS.Name );
          }
          catch( System.Exception ex )
          {
@@ -878,9 +910,83 @@ namespace LinqXml.Control
          {
          }
       }
+
+      private void AfterDelAppCSEventPostStatuses( object sender, AfterDelAppCSEventArgs ea )
+      {
+         if( !ea.isOk )
+         {
+            return;
+         }
+         if( string.Compare( this.DefaultFileName, NEW_FILENAME, StringComparison.Ordinal ) == 0 )
+         {
+            this.AllowedToSaveAsFileEvent?.Invoke( this );
+         }
+         else
+         {
+            this.AllowedToSaveFileEvent?.Invoke( this );
+         }
+      }
+      #endregion
+
+      #region --- Before and After CloneAppCS EVENTS + HANDLERS + EXCEPTIONS ---
+      public void CloneAppCS()
+      {
+         throw new NotImplementedException( );
+      }
+      public void CloneAppCS( string filename )
+      {
+         BeforeCloneAppCSEventArgs args1 = new BeforeCloneAppCSEventArgs( );
+         AfterCloneAppCSEventArgs args2 = new AfterCloneAppCSEventArgs( args1 );
+         args1.Filename = filename;
+         this.BeforeCloneAppCSEvent?.Invoke( this, args1 );
+         if( !args1.Cancel )
+         {
+            this.CloneAppCSEvent( args1 );
+         }
+         this.AfterCloneAppCSEvent?.Invoke( this, args2 );
+      }
+
+      private void CloneAppCSEvent( BeforeCloneAppCSEventArgs args )
+      {
+         try
+         {
+            //--
+         }
+         catch( System.Exception ex )
+         {
+            args.Exception = new CloneAppCSException( null, ex );
+         }
+         finally
+         {
+         }
+      }
+
+      private void AfterCloneAppCSEventPostStatuses( object sender, AfterCloneAppCSEventArgs ea )
+      {
+         if( ea.isOk )
+         {
+            return;
+         }
+      }
       #endregion
 
       #region --- Before and After AddDataStore EVENTS + HANDLERS + EXCEPTIONS ---
+      public void AddDataStore()
+      {
+         LoginUserControl myControl = new LoginUserControl( );
+         if( DevExpress.XtraEditors.XtraDialog.Show( myControl, "Sign in", MessageBoxButtons.OKCancel ) == DialogResult.OK )
+         {
+            // do something 
+         }
+         if( string.Compare( this.DefaultFileName, NEW_FILENAME, StringComparison.Ordinal ) == 0 )
+         {
+            this.AllowedToSaveAsFileEvent?.Invoke( this );
+         }
+         else
+         {
+            this.AllowedToSaveFileEvent?.Invoke( this );
+         }
+      }
       public void AddDataStore( string filename )
       {
          BeforeAddDataStoreEventArgs args1 = new BeforeAddDataStoreEventArgs( );
@@ -893,17 +999,6 @@ namespace LinqXml.Control
          }
          this.AfterAddDataStoreEvent?.Invoke( this, args2 );
       }
-
-      public void AddDataStoreXXX()
-      {
-         LoginUserControl myControl = new LoginUserControl( );
-         if( DevExpress.XtraEditors.XtraDialog.Show( myControl, "Sign in", MessageBoxButtons.OKCancel ) == DialogResult.OK )
-         {
-            // do something 
-         }
-         this.AllowedToSaveFileEvent?.Invoke( this );
-      }
-
 
       private void AddDataStoreEvent( BeforeAddDataStoreEventArgs args )
       {
@@ -930,13 +1025,25 @@ namespace LinqXml.Control
       // this.AfterAddDataStoreEvent += this.AfterAddDataStoreEventPostStatuses;
       #endregion
 
+      public void CloneDataStore()
+      {
+         throw new NotImplementedException( );
+      }
       public void DelDataStore()
       {
          string name = null;
          DataStore delDS = this.cfg.DelDataStore( name );
-         this.AllowedToSaveFileEvent?.Invoke( this );
+         if( string.Compare( this.DefaultFileName, NEW_FILENAME, StringComparison.Ordinal ) == 0 )
+         {
+            this.AllowedToSaveAsFileEvent?.Invoke( this );
+         }
+         else
+         {
+            this.AllowedToSaveFileEvent?.Invoke( this );
+         }
       }
-
       #endregion
+
+      //
    }
 }

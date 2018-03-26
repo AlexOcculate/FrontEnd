@@ -15,15 +15,15 @@ namespace LinqXml
       #region --- OnPropertyChanged EVENTS + HANDLERS + EXCEPTIONS --- 
       public event PropertyChangedEventHandler PropertyChanged;
 
-      protected void OnPropertyChanged(PropertyChangedEventArgs e)
+      protected void OnPropertyChanged( PropertyChangedEventArgs e )
       {
-         this.PropertyChanged?.Invoke(this, e);
+         this.PropertyChanged?.Invoke( this, e );
       }
 
-      protected void OnPropertyChanged(string propertyName)
+      protected void OnPropertyChanged( string propertyName )
       {
          this.IsDirty = true;
-         this.OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
+         this.OnPropertyChanged( new PropertyChangedEventArgs( propertyName ) );
       }
       #endregion
 
@@ -39,23 +39,23 @@ namespace LinqXml
       {
          get
          {
-            if(this._stgDir == null || string.IsNullOrWhiteSpace(this._stgDir))
+            if( this._stgDir == null || string.IsNullOrWhiteSpace( this._stgDir ) )
             {
                return null;
             }
-            return this._stgDir.Trim();
+            return this._stgDir.Trim( );
          }
          set
          {
             string val = null;
-            if(!(value == null || string.IsNullOrWhiteSpace(value)))
+            if( !(value == null || string.IsNullOrWhiteSpace( value )) )
             {
-               val = value.Trim();
+               val = value.Trim( );
             }
-            if(this._stgDir != val)
+            if( this._stgDir != val )
             {
                this._stgDir = val;
-               this.OnPropertyChanged(nameof(this.StageDirPath));
+               this.OnPropertyChanged( nameof( this.StageDirPath ) );
             }
          }
       }
@@ -66,18 +66,18 @@ namespace LinqXml
       {
          get
          {
-            if(this._dsList == null)
+            if( this._dsList == null )
             {
-               this._dsList = new List<DataStore>();
+               this._dsList = new List<DataStore>( );
             }
             return this._dsList;
          }
          set
          {
-            if(this._dsList != value)
+            if( this._dsList != value )
             {
                this._dsList = value;
-               this.OnPropertyChanged(nameof(this.DsList));
+               this.OnPropertyChanged( nameof( this.DsList ) );
             }
          }
       }
@@ -88,18 +88,18 @@ namespace LinqXml
       {
          get
          {
-            if(this._appCsList == null)
+            if( this._appCsList == null )
             {
-               this._appCsList = new List<ConnectionString>();
+               this._appCsList = new List<ConnectionString>( );
             }
             return this._appCsList;
          }
          set
          {
-            if(this._appCsList != value)
+            if( this._appCsList != value )
             {
                this._appCsList = value;
-               this.OnPropertyChanged(nameof(this.AppCsList));
+               this.OnPropertyChanged( nameof( this.AppCsList ) );
             }
          }
       }
@@ -110,18 +110,18 @@ namespace LinqXml
       {
          get
          {
-            if(this._sysCsList == null)
+            if( this._sysCsList == null )
             {
-               this._sysCsList = new List<ConnectionString>();
+               this._sysCsList = new List<ConnectionString>( );
             }
             return this._sysCsList;
          }
          set
          {
-            if(this._sysCsList != value)
+            if( this._sysCsList != value )
             {
                this._sysCsList = value;
-               this.OnPropertyChanged(nameof(this.SysCsList));
+               this.OnPropertyChanged( nameof( this.SysCsList ) );
             }
          }
       }
@@ -168,39 +168,39 @@ namespace LinqXml
          //      )
          //   )
          //)
-         XElement dsCfg = new XElement("dsCfg");
-         if(this.StageDirPath != null)
+         XElement dsCfg = new XElement( "dsCfg" );
+         if( this.StageDirPath != null )
          {
-            dsCfg.Add(new XElement("stgDir", this.StageDirPath));
+            dsCfg.Add( new XElement( "stgDir", this.StageDirPath ) );
          }
          //
-         XElement dsColl = new XElement("dsCol");
-         for(int i = 0; i < this.DsList.Count; i++)
+         XElement dsColl = new XElement( "dsCol" );
+         for( int i = 0; i < this.DsList.Count; i++ )
          {
-            DataStore dataStore = this.DsList[i];
-            XElement ds = dataStore.GetXElement();
-            dsColl.Add(ds);
+            DataStore dataStore = this.DsList[ i ];
+            XElement ds = dataStore.GetXElement( );
+            dsColl.Add( ds );
          }
-         dsCfg.Add(dsColl);
+         dsCfg.Add( dsColl );
          //
-         XElement csColl = new XElement("csCol");
-         for(int i = 0; i < this.AppCsList.Count; i++)
+         XElement csColl = new XElement( "csCol" );
+         for( int i = 0; i < this.AppCsList.Count; i++ )
          {
-            ConnectionString connectionString = this.AppCsList[i];
-            XElement cs = connectionString.GetXElement();
-            csColl.Add(cs);
+            ConnectionString connectionString = this.AppCsList[ i ];
+            XElement cs = connectionString.GetXElement( );
+            csColl.Add( cs );
          }
-         dsCfg.Add(csColl);
+         dsCfg.Add( csColl );
          //
-         XElement cfg = new XElement("cfg", dsCfg);
+         XElement cfg = new XElement( "cfg", dsCfg );
          return cfg;
       }
 
       public static Configuration GetPoco()
       {
-         List<ConnectionString> syscsList = ConnectionString.GetPocoList();
+         List<ConnectionString> syscsList = ConnectionString.GetPocoList( );
 
-         Configuration configuration = new Configuration()
+         Configuration configuration = new Configuration( )
          {
             SysCsList = syscsList,
             IsDirty = true
@@ -209,27 +209,27 @@ namespace LinqXml
          return configuration;
       }
 
-      public static Configuration GetPoco(XElement e)
+      public static Configuration GetPoco( XElement e )
       {
-         XElement dsCfgElement = e.Element("dsCfg");
-         if(dsCfgElement == null)
+         XElement dsCfgElement = e.Element( "dsCfg" );
+         if( dsCfgElement == null )
          {
-            throw new InvalidDataStoreConfigurationException("ERROR: Invalid file!");
+            throw new InvalidDataStoreConfigurationException( "ERROR: Invalid file!" );
          }
          //
-         XElement stgDirElement = dsCfgElement.Element("stgDir");
+         XElement stgDirElement = dsCfgElement.Element( "stgDir" );
          string stgDir = stgDirElement?.Value;
          //
-         List<DataStore> dsList = DataStore.GetPocoList(dsCfgElement);
+         List<DataStore> dsList = DataStore.GetPocoList( dsCfgElement );
          //
-         XElement csCollElement = dsCfgElement.Element("csCol");
-         List<ConnectionString> csList = ConnectionString.GetPocoList(csCollElement);
+         XElement csCollElement = dsCfgElement.Element( "csCol" );
+         List<ConnectionString> csList = ConnectionString.GetPocoList( csCollElement );
          //
          //List<ConnectionString> syscsList = ConnectionString.GetPocoList( );
 
-         Configuration o = GetPoco();
+         Configuration o = GetPoco( );
          {
-            o.StageDirPath = normalizestring(stgDir);
+            o.StageDirPath = normalizestring( stgDir );
             o.DsList = dsList;
             o.AppCsList = csList;
             o.IsDirty = false;
@@ -238,56 +238,56 @@ namespace LinqXml
          return o;
       }
 
-      private static string normalizestring(string str)
+      private static string normalizestring( string str )
       {
-         if(str == null || string.IsNullOrWhiteSpace(str))
+         if( str == null || string.IsNullOrWhiteSpace( str ) )
          {
             return null;
          }
-         string str2 = str.Trim();
+         string str2 = str.Trim( );
          return str2;
       }
 
-      public void AddConnectionString(ConnectionString cs)
+      public void AddAppCS( ConnectionString cs )
       {
-         if(cs == null)
+         if( cs == null )
          {
             return;
          }
-         if(this.AppCsList.Contains(cs))
+         if( this.AppCsList.Contains( cs ) )
          {
             return;
          }
-         this.AppCsList.Add(cs);
-         this.OnPropertyChanged(nameof(this.AppCsList));
+         this.AppCsList.Add( cs );
+         this.OnPropertyChanged( nameof( this.AppCsList ) );
       }
 
-      public void AddDataStore(DataStore ds)
+      public void AddDataStore( DataStore ds )
       {
-         if(ds == null)
+         if( ds == null )
          {
             return;
          }
-         if(this.DsList.Contains(ds))
+         if( this.DsList.Contains( ds ) )
          {
             return;
          }
-         this.DsList.Add(ds);
-         this.OnPropertyChanged(nameof(this.DsList));
+         this.DsList.Add( ds );
+         this.OnPropertyChanged( nameof( this.DsList ) );
          this.IsDirty = true;
       }
 
-      public bool ContainsAppCS(string name)
+      public bool ContainsAppCS( string name )
       {
-         string nm = normalizestring(name);
-         if(nm == null)
+         string nm = normalizestring( name );
+         if( nm == null )
          {
             return false;
          }
 
-         foreach(ConnectionString item in this.AppCsList)
+         foreach( ConnectionString item in this.AppCsList )
          {
-            if(string.Compare(item.Name, nm, StringComparison.Ordinal) == 0)
+            if( string.Compare( item.Name, nm, StringComparison.Ordinal ) == 0 )
             {
                return true;
             }
@@ -295,17 +295,17 @@ namespace LinqXml
          return false;
       }
 
-      public bool ContainsSysCS(string name)
+      public bool ContainsSysCS( string name )
       {
-         string nm = normalizestring(name);
-         if(nm == null)
+         string nm = normalizestring( name );
+         if( nm == null )
          {
             return false;
          }
 
-         foreach(ConnectionString item in this.SysCsList)
+         foreach( ConnectionString item in this.SysCsList )
          {
-            if(string.Compare(item.Name, nm, StringComparison.Ordinal) == 0)
+            if( string.Compare( item.Name, nm, StringComparison.Ordinal ) == 0 )
             {
                return true;
             }
@@ -313,17 +313,17 @@ namespace LinqXml
          return false;
       }
 
-      public bool ContainsDataStore(string name)
+      public bool ContainsDataStore( string name )
       {
-         string nm = normalizestring(name);
-         if(nm == null)
+         string nm = normalizestring( name );
+         if( nm == null )
          {
             return false;
          }
 
-         foreach(ConnectionString item in this.SysCsList)
+         foreach( ConnectionString item in this.SysCsList )
          {
-            if(string.Compare(item.Name, nm, StringComparison.Ordinal) == 0)
+            if( string.Compare( item.Name, nm, StringComparison.Ordinal ) == 0 )
             {
                return true;
             }
@@ -331,19 +331,19 @@ namespace LinqXml
          return false;
       }
 
-      public ConnectionString DelConnectionString(string cs)
+      public ConnectionString DelAppCS( string cs )
       {
-         string name = normalizestring(cs);
-         if(name != null)
+         string name = normalizestring( cs );
+         if( name != null )
          {
-            if(this.ContainsAppCS(name))
+            if( this.ContainsAppCS( name ) )
             {
-               foreach(ConnectionString item in this.AppCsList)
+               foreach( ConnectionString item in this.AppCsList )
                {
-                  if(string.Compare(item.Name, cs, StringComparison.Ordinal) == 0)
+                  if( string.Compare( item.Name, cs, StringComparison.Ordinal ) == 0 )
                   {
-                     bool removed = this.AppCsList.Remove(item);
-                     this.OnPropertyChanged(nameof(this.AppCsList));
+                     bool removed = this.AppCsList.Remove( item );
+                     this.OnPropertyChanged( nameof( this.AppCsList ) );
                      return item;
                   }
                }
@@ -352,19 +352,19 @@ namespace LinqXml
          return null;
       }
 
-      public DataStore DelDataStore(string ds)
+      public DataStore DelDataStore( string ds )
       {
-         string nm = normalizestring(ds);
-         if(nm != null)
+         string nm = normalizestring( ds );
+         if( nm != null )
          {
-            if(this.ContainsDataStore(nm))
+            if( this.ContainsDataStore( nm ) )
             {
-               foreach(DataStore item in this.DsList)
+               foreach( DataStore item in this.DsList )
                {
-                  if(string.Compare(item.Name, nm, StringComparison.Ordinal) == 0)
+                  if( string.Compare( item.Name, nm, StringComparison.Ordinal ) == 0 )
                   {
-                     bool removed = this.DsList.Remove(item);
-                     this.OnPropertyChanged(nameof(this.DsList));
+                     bool removed = this.DsList.Remove( item );
+                     this.OnPropertyChanged( nameof( this.DsList ) );
                      return item;
                   }
                }
@@ -375,23 +375,25 @@ namespace LinqXml
 
       public void VerifyWhatIsAllowed()
       {
-         if(this.DsList.Count <= 0)
+         if( this.DsList.Count <= 0 )
          {
-            this.NotAllowedDelDataStoreEvent?.Invoke(this);
-         } else
-         {
-            this.AllowedDelDataStoreEvent?.Invoke(this);
+            this.NotAllowedDelDataStoreEvent?.Invoke( this );
          }
-         this.AllowedAddDataStoreEvent?.Invoke(this);
+         else
+         {
+            this.AllowedDelDataStoreEvent?.Invoke( this );
+         }
+         this.AllowedAddDataStoreEvent?.Invoke( this );
          //
-         if(this.AppCsList.Count <= 0)
+         if( this.AppCsList.Count <= 0 )
          {
-            this.NotAllowedDelAppCSEvent?.Invoke(this);
-         } else
-         {
-            this.AllowedDelAppCSEvent?.Invoke(this);
+            this.NotAllowedDelAppCSEvent?.Invoke( this );
          }
-         this.AllowedAddAppCSEvent?.Invoke(this);
+         else
+         {
+            this.AllowedDelAppCSEvent?.Invoke( this );
+         }
+         this.AllowedAddAppCSEvent?.Invoke( this );
       }
    }
 }

@@ -32,7 +32,7 @@
                ProviderName = "   System.Data.SqlClient          ",
                String = " 1234567890   "
             };
-            cfg.AddConnectionString( cs );
+            cfg.AddAppCS( cs );
          }
          XElement xElement = cfg.GetXElement( );
          //{
