@@ -2,6 +2,7 @@
 using LinqXml.Control.Configuration.AddDataStore;
 using LinqXml.Control.Configuration.DelAppCS;
 using LinqXml.Control.Configuration.DelDataStore;
+using LinqXml.Events.CloneAppCS;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -130,15 +131,19 @@ namespace LinqXml
       public event AllowedAddAppCSEventHandler AllowedAddAppCSEvent;
 
       public event NotAllowedAddAppCSEventHandler NotAllowedAddAppCSEvent;
+      //
+      public event AllowedToCloneAppCSEventHandler AllowedToCloneAppCSEvent;
 
+      public event NotAllowedToCloneAppCSEventHandler NotAllowedToCloneAppCSEvent;
+      //
       public event AllowedDelAppCSEventHandler AllowedDelAppCSEvent;
 
       public event NotAllowedDelAppCSEventHandler NotAllowedDelAppCSEvent;
-
+      //
       public event AllowedAddDataStoreEventHandler AllowedAddDataStoreEvent;
 
       public event NotAllowedAddDataStoreEventHandler NotAllowedAddDataStoreEvent;
-
+      //
       public event AllowedDelDataStoreEventHandler AllowedDelDataStoreEvent;
 
       public event NotAllowedDelDataStoreEventHandler NotAllowedDelDataStoreEvent;
@@ -306,6 +311,18 @@ namespace LinqXml
          foreach( ConnectionString item in this.SysCsList )
          {
             if( string.Compare( item.Name, nm, StringComparison.Ordinal ) == 0 )
+            {
+               return true;
+            }
+         }
+         return false;
+      }
+
+      public bool IsBeingReferenced( ConnectionString appCS )
+      {
+         foreach( DataStore ds in this.DsList )
+         {
+            if( string.Compare( ds.ConnectionStringName, appCS.Name, StringComparison.Ordinal ) == 0 )
             {
                return true;
             }

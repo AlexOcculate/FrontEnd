@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Linq;
@@ -109,7 +110,7 @@ namespace LinqXml
       {
          this._isSys = false;
       }
-      public ConnectionString( string name ) : this()
+      public ConnectionString( string name ) : this( )
       {
          this.Name = name;
       }
@@ -228,6 +229,14 @@ namespace LinqXml
                }
             ).ToList( );
          return list;
+      }
+
+      public ConnectionString Clone()
+      {
+         ConnectionString o = new ConnectionString( this.Name + "_COPY" );
+         o.ProviderName = this.ProviderName;
+         o.String = this.String;
+         return o;
       }
    }
 }

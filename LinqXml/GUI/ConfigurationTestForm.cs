@@ -168,6 +168,26 @@ namespace LinqXml
          this.addAppCSBarButtonItem.Enabled = false;
       }
 
+      private void ConfigurationView1_AllowedToCloneDataStoreEvent( object sender )
+      {
+         this.cloneDSBarButtonItem.Enabled = true;
+      }
+
+      private void ConfigurationView1_NotAllowedToCloneDataStoreEvent( object sender )
+      {
+         this.cloneDSBarButtonItem.Enabled = false;
+      }
+
+      private void ConfigurationView1_AllowedToCloneAppCSEvent( object sender )
+      {
+         this.cloneAppCSBarButtonItem.Enabled = true;
+      }
+
+      private void ConfigurationView1_NotAllowedToCloneAppCSEvent( object sender )
+      {
+         this.cloneAppCSBarButtonItem.Enabled = false;
+      }
+
       //private void configurationView1_AllowedAddAppCSEvent( object sender )
       //{
       //   this.addAppCSBarButtonItem.Enabled = true;
@@ -308,24 +328,5 @@ namespace LinqXml
       }
 
       #endregion
-      private void ConfigurationView1_AllowedToCloneDataStoreEvent(object sender)
-      {
-         this.cloneDSBarButtonItem.Enabled = true;
-      }
-
-      private void ConfigurationView1_NotAllowedToCloneDataStoreEvent(object sender)
-      {
-         this.cloneDSBarButtonItem.Enabled = false;
-      }
-
-      private void ConfigurationView1_AllowedToCloneAppCSEvent(object sender)
-      {
-         this.cloneAppCSBarButtonItem.Enabled = true;
-      }
-
-      private void ConfigurationView1_NotAllowedToCloneAppCSEvent(object sender)
-      {
-         this.cloneAppCSBarButtonItem.Enabled = false;
-      }
    }
 }

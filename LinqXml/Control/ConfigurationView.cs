@@ -58,6 +58,7 @@ namespace LinqXml.Control
          this.AfterSaveFileEvent += this.AfterSaveFileEventPostStatuses;
          this.AfterCloseFileEvent += this.AfterCloseFileEventPostStatuses;
          this.AfterAddAppCSEvent += this.AfterAddAppCSEventPostStatuses;
+         this.AfterCloneAppCSEvent += this.AfterCloneAppCSEventPostStatuses;
          this.AfterDelAppCSEvent += this.AfterDelAppCSEventPostStatuses;
          // this.AddAllNodes( true );
          //this.LoadNodes( );
@@ -72,9 +73,11 @@ namespace LinqXml.Control
          this.NotAllowedToCloseFileEvent?.Invoke( this );
          //
          this.NotAllowedAddAppCSEvent?.Invoke( this );
+         this.NotAllowedToCloneAppCSEvent?.Invoke( this );
          this.NotAllowedDelAppCSEvent?.Invoke( this );
          //
          this.NotAllowedAddDataStoreEvent?.Invoke( this );
+         this.NotAllowedToCloneDataStoreEvent?.Invoke( this );
          this.NotAllowedDelDataStoreEvent?.Invoke( this );
       }
       #endregion
@@ -138,6 +141,7 @@ namespace LinqXml.Control
       {
          if( e.Node?.Tag == null )
          {  //@#$% Is not working...
+            this.NotAllowedToCloneAppCSEvent?.Invoke( this );
             this.NotAllowedDelAppCSEvent?.Invoke( this );
             this.NotAllowedDelDataStoreEvent?.Invoke( this );
             return;
@@ -151,7 +155,9 @@ namespace LinqXml.Control
             args.DataStore = node.Tag as DataStore;
             this.FocusedDataStoreChangedEvent?.Invoke( this, args );
             //
+            this.NotAllowedToCloneAppCSEvent?.Invoke( this );
             this.NotAllowedDelAppCSEvent?.Invoke( this );
+            this.AllowedToCloneDataStoreEvent?.Invoke( this );
             this.AllowedDelDataStoreEvent?.Invoke( this );
          }
          else if( node.Tag is ConnectionString )
@@ -168,11 +174,15 @@ namespace LinqXml.Control
             {
                this.AllowedDelAppCSEvent?.Invoke( this );
             }
+            this.AllowedToCloneAppCSEvent?.Invoke( this );
             this.NotAllowedDelDataStoreEvent?.Invoke( this );
+            this.NotAllowedToCloneDataStoreEvent?.Invoke( this );
          }
          else
          {
+            this.NotAllowedToCloneAppCSEvent?.Invoke( this );
             this.NotAllowedDelAppCSEvent?.Invoke( this );
+            this.NotAllowedToCloneDataStoreEvent?.Invoke( this );
             this.NotAllowedDelDataStoreEvent?.Invoke( this );
          }
       }
@@ -218,30 +228,34 @@ namespace LinqXml.Control
          }
       }
 
+      private TreeListNode dsNode;
+      private TreeListNode csNode;
+      private TreeListNode appcsNode;
+
       private void LoadTreeListNodes( TreeList treeView )
       {
          //XDocument doc = LinqXmlTest.GetDsCfgDoc( );
          //this.cfg = Configuration.GetPoco( doc.Root );
          // nodedata, parentId, imgIdx, selectImgIdx, stateImgIdx, chkState, tag
-         TreeListNode dsNode = this.treeView.AppendNode( new object[ ] { "DataStores" }, -1 );
-         TreeListNode csNode = this.treeView.AppendNode( new object[ ] { nameof( ConnectionString ) }, -1 );
-         TreeListNode appcsNode = this.treeView.AppendNode( new object[ ] { nameof( Application ) }, csNode );
-         TreeListNode syscsNode = this.treeView.AppendNode( new object[ ] { "System" }, csNode );
+         this.dsNode = this.treeView.AppendNode( new object[ ] { "DataStores" }, -1 );
+         this.csNode = this.treeView.AppendNode( new object[ ] { nameof( ConnectionString ) }, -1 );
+         this.appcsNode = this.treeView.AppendNode( new object[ ] { nameof( Application ) }, this.csNode );
+         TreeListNode syscsNode = this.treeView.AppendNode( new object[ ] { "System" }, this.csNode );
          //
-         dsNode.ImageIndex = -1; dsNode.SelectImageIndex = -1; dsNode.StateImageIndex = -1;
-         csNode.ImageIndex = -1; csNode.SelectImageIndex = -1; csNode.StateImageIndex = -1;
-         appcsNode.ImageIndex = -1; appcsNode.SelectImageIndex = -1; appcsNode.StateImageIndex = -1;
+         this.dsNode.ImageIndex = -1; this.dsNode.SelectImageIndex = -1; this.dsNode.StateImageIndex = -1;
+         this.csNode.ImageIndex = -1; this.csNode.SelectImageIndex = -1; this.csNode.StateImageIndex = -1;
+         this.appcsNode.ImageIndex = -1; this.appcsNode.SelectImageIndex = -1; this.appcsNode.StateImageIndex = -1;
          syscsNode.ImageIndex = -1; syscsNode.SelectImageIndex = -1; syscsNode.StateImageIndex = -1;
          //
          foreach( DataStore ds in this.cfg.DsList )
          {
-            TreeListNode node = this.treeView.AppendNode( new object[ ] { ds.Name }, dsNode );
+            TreeListNode node = this.treeView.AppendNode( new object[ ] { ds.Name }, this.dsNode );
             node.ImageIndex = node.SelectImageIndex = 0; node.StateImageIndex = 0;
             node.Tag = ds;
          }
          foreach( ConnectionString cs in this.cfg.AppCsList )
          {
-            TreeListNode node = this.treeView.AppendNode( new object[ ] { cs.Name }, appcsNode );
+            TreeListNode node = this.treeView.AppendNode( new object[ ] { cs.Name }, this.appcsNode );
             node.ImageIndex = node.SelectImageIndex = 0; node.StateImageIndex = 0;
             node.Tag = cs;
          }
@@ -311,6 +325,7 @@ namespace LinqXml.Control
 
       public event AfterNewFileEventHandler AfterNewFileEvent;
 
+      // -----
       public event AllowedToOpenFileEventHandler AllowedToOpenFileEvent;
 
       public event NotAllowedToOpenFileEventHandler NotAllowedToOpenFileEvent;
@@ -319,6 +334,7 @@ namespace LinqXml.Control
 
       public event AfterOpenFileEventHandler AfterOpenFileEvent;
 
+      // -----
       public event AllowedToSaveFileEventHandler AllowedToSaveFileEvent;
 
       public event NotAllowedToSaveFileEventHandler NotAllowedToSaveFileEvent;
@@ -327,6 +343,7 @@ namespace LinqXml.Control
 
       public event AfterSaveFileEventHandler AfterSaveFileEvent;
 
+      // -----
       public event AllowedToSaveAsFileEventHandler AllowedToSaveAsFileEvent;
 
       public event NotAllowedToSaveAsFileEventHandler NotAllowedToSaveAsFileEvent;
@@ -335,8 +352,10 @@ namespace LinqXml.Control
 
       public event AfterSaveAsFileEventHandler AfterSaveAsFileEvent;
 
+      // -----
       public event SavedFileNameChangedEventHandler SavedFileNameChangedEvent;
 
+      // -----
       public event AllowedToCloseFileEventHandler AllowedToCloseFileEvent;
 
       public event NotAllowedToCloseFileEventHandler NotAllowedToCloseFileEvent;
@@ -353,7 +372,8 @@ namespace LinqXml.Control
       public event BeforeAddAppCSEventHandler BeforeAddAppCSEvent;
 
       public event AfterAddAppCSEventHandler AfterAddAppCSEvent;
-      //
+
+      // -----
       public event AllowedToCloneAppCSEventHandler AllowedToCloneAppCSEvent;
 
       public event NotAllowedToCloneAppCSEventHandler NotAllowedToCloneAppCSEvent;
@@ -361,7 +381,8 @@ namespace LinqXml.Control
       public event BeforeCloneAppCSEventHandler BeforeCloneAppCSEvent;
 
       public event AfterCloneAppCSEventHandler AfterCloneAppCSEvent;
-      //
+
+      // -----
       public event AllowedDelAppCSEventHandler AllowedDelAppCSEvent;
 
       public event NotAllowedDelAppCSEventHandler NotAllowedDelAppCSEvent;
@@ -369,6 +390,9 @@ namespace LinqXml.Control
       public event BeforeDelAppCSEventHandler BeforeDelAppCSEvent;
 
       public event AfterDelAppCSEventHandler AfterDelAppCSEvent;
+
+      // -----
+      public event FocusedAppCSChangedEventHandler FocusedAppCSChangedEvent;
 
       //-------------------------------------------------------------------
       public event AllowedAddDataStoreEventHandler AllowedAddDataStoreEvent;
@@ -378,19 +402,22 @@ namespace LinqXml.Control
       public event BeforeAddDataStoreEventHandler BeforeAddDataStoreEvent;
 
       public event AfterAddDataStoreEventHandler AfterAddDataStoreEvent;
-      //
+
+      // -----
       public event AllowedToCloneDataStoreEventHandler AllowedToCloneDataStoreEvent;
 
       public event NotAllowedToCloneDataStoreEventHandler NotAllowedToCloneDataStoreEvent;
-      //
+
+      // -----
       public event AllowedDelDataStoreEventHandler AllowedDelDataStoreEvent;
 
       public event NotAllowedDelDataStoreEventHandler NotAllowedDelDataStoreEvent;
 
       //-------------------------------------------------------------------
-      public event FocusedAppCSChangedEventHandler FocusedAppCSChangedEvent;
-
       public event FocusedDataStoreChangedEventHandler FocusedDataStoreChangedEvent;
+
+      //-------------------------------------------------------------------
+      #endregion
 
       #region --- Before and After NewFile EVENTS + HANDLERS + EXCEPTIONS ---
       private const string NEW_FILENAME = "[NewFile]";
@@ -819,7 +846,6 @@ namespace LinqXml.Control
                   args.Cancel = true;
                   return;
             }
-            return;
          }
          this.cfg.AddAppCS( new ConnectionString( newName ) );
          this.LoadNodes( );
@@ -838,6 +864,71 @@ namespace LinqXml.Control
          else
          {
             this.AllowedToSaveFileEvent?.Invoke( this );
+         }
+      }
+      #endregion
+
+      #region --- Before and After CloneAppCS EVENTS + HANDLERS + EXCEPTIONS ---
+      public void CloneAppCS()
+      {
+         // VERIFY IF THE APPCS IS USED BY ANYONE OR IF EXISTS A SYSCS WITH THE SAME NAME!!!
+         TreeListMultiSelection selection = this.treeView.Selection;
+         if( selection.Count > 0 )
+         {
+            TreeListNode origNode = selection[ 0 ];
+            ConnectionString appCS = origNode.Tag as ConnectionString;
+            AfterCloneAppCSEventArgs args = this.CloneAppCS( appCS );
+            if( args.isOk )
+            {
+               TreeListNode newNode = this.treeView.AppendNode( new object[ ] { args.args.NewCS.Name }, this.appcsNode );
+               newNode.ImageIndex = newNode.SelectImageIndex = 0; newNode.StateImageIndex = 0;
+               newNode.Tag = args.args.NewCS;
+               //newNode.TreeList.SetFocusedNode( newNode );
+               this.treeView.SetFocusedNode( newNode );
+            }
+            return;
+         }
+         XtraMessageBox.Show( "Some ConnectionString need to be selected first!", "Error", MessageBoxButtons.OK );
+      }
+
+      public AfterCloneAppCSEventArgs CloneAppCS( ConnectionString appCS )
+      {
+         BeforeCloneAppCSEventArgs args1 = new BeforeCloneAppCSEventArgs( );
+         AfterCloneAppCSEventArgs args2 = new AfterCloneAppCSEventArgs( args1 );
+         args1.OrigCS = appCS;
+         this.BeforeCloneAppCSEvent?.Invoke( this, args1 );
+         if( !args1.Cancel )
+         {
+            this.CloneAppCSEvent( args1 );
+         }
+         this.AfterCloneAppCSEvent?.Invoke( this, args2 );
+         return args2;
+      }
+
+      private void CloneAppCSEvent( BeforeCloneAppCSEventArgs args )
+      {
+         try
+         {
+            ConnectionString o = args.OrigCS.Clone( );
+            bool containsAppCS = this.cfg.ContainsAppCS( o.Name );
+            o.Name = containsAppCS ? o.Name + "_Copy" : o.Name;
+            this.cfg.AddAppCS( o );
+            args.NewCS = o;
+         }
+         catch( System.Exception ex )
+         {
+            args.Exception = new CloneAppCSException( null, ex );
+         }
+         finally
+         {
+         }
+      }
+
+      private void AfterCloneAppCSEventPostStatuses( object sender, AfterCloneAppCSEventArgs ea )
+      {
+         if( ea.isOk )
+         {
+            return;
          }
       }
       #endregion
@@ -889,7 +980,31 @@ namespace LinqXml.Control
          {
             //@#$% VERIFY REFERENTIAL INTEGRITY APPCS+SYSCS -->> DATASTORE
             // DIALOG COFIRMATION
-            string msg = $"Your are about to delete ConnectionString \"{args.AppCS.Name}\"...\nAre you sure?";
+            bool isBeingReferenced = this.cfg.IsBeingReferenced( args.AppCS );
+            bool containsSysCS = this.cfg.ContainsSysCS( args.AppCS.Name );
+            string msg = $"Your are about to delete AppCS \"{args.AppCS.Name}\"...";
+            if( isBeingReferenced && containsSysCS )
+            {
+               msg += "\nBy remove this AppCS, all references will be point to SysCS";
+            }
+            else if( isBeingReferenced && !containsSysCS )
+            {
+               msg = "You are not allowed to remove this AppCS!"
+                  + "\nTo avoid dangling references from DataStores!"
+                  ;
+               XtraMessageBox.Show( msg, "Error", MessageBoxButtons.OK );
+               args.Cancel = true;
+               args.Exception = new DelAppCSException( msg );
+               return;
+            }
+            else if( !isBeingReferenced && containsSysCS )
+            {
+               msg += "\nBy remove this you will unhide the existent SysCS!";
+            }
+            else if( !isBeingReferenced && !containsSysCS )
+            {
+            }
+            msg += "\nAre you sure?";
             DialogResult dialogResult = XtraMessageBox.Show( msg, "Warning", MessageBoxButtons.YesNoCancel );
             switch( dialogResult )
             {
@@ -928,48 +1043,6 @@ namespace LinqXml.Control
       }
       #endregion
 
-      #region --- Before and After CloneAppCS EVENTS + HANDLERS + EXCEPTIONS ---
-      public void CloneAppCS()
-      {
-         throw new NotImplementedException( );
-      }
-      public void CloneAppCS( string filename )
-      {
-         BeforeCloneAppCSEventArgs args1 = new BeforeCloneAppCSEventArgs( );
-         AfterCloneAppCSEventArgs args2 = new AfterCloneAppCSEventArgs( args1 );
-         args1.Filename = filename;
-         this.BeforeCloneAppCSEvent?.Invoke( this, args1 );
-         if( !args1.Cancel )
-         {
-            this.CloneAppCSEvent( args1 );
-         }
-         this.AfterCloneAppCSEvent?.Invoke( this, args2 );
-      }
-
-      private void CloneAppCSEvent( BeforeCloneAppCSEventArgs args )
-      {
-         try
-         {
-            //--
-         }
-         catch( System.Exception ex )
-         {
-            args.Exception = new CloneAppCSException( null, ex );
-         }
-         finally
-         {
-         }
-      }
-
-      private void AfterCloneAppCSEventPostStatuses( object sender, AfterCloneAppCSEventArgs ea )
-      {
-         if( ea.isOk )
-         {
-            return;
-         }
-      }
-      #endregion
-
       #region --- Before and After AddDataStore EVENTS + HANDLERS + EXCEPTIONS ---
       public void AddDataStore()
       {
@@ -987,6 +1060,7 @@ namespace LinqXml.Control
             this.AllowedToSaveFileEvent?.Invoke( this );
          }
       }
+
       public void AddDataStore( string filename )
       {
          BeforeAddDataStoreEventArgs args1 = new BeforeAddDataStoreEventArgs( );
@@ -1029,6 +1103,7 @@ namespace LinqXml.Control
       {
          throw new NotImplementedException( );
       }
+
       public void DelDataStore()
       {
          string name = null;
@@ -1042,7 +1117,6 @@ namespace LinqXml.Control
             this.AllowedToSaveFileEvent?.Invoke( this );
          }
       }
-      #endregion
 
       //
    }
