@@ -42,6 +42,21 @@ namespace LinqXml
          //
          this.configurationView1.SavedFileNameChangedEvent += this.ConfigurationView1_SavedFileNameChangedEvent;
          //
+         this.configurationView1.AllowedToExpandAllEvent += this.ConfigurationView1_AllowedToExpandAllEvent;
+         this.configurationView1.NotAllowedToExpandAllEvent += this.ConfigurationView1_NotAllowedToExpandAllEvent;
+         //
+         this.configurationView1.AllowedToExpandNodeEvent += this.ConfigurationView1_AllowedToExpandNodeEvent;
+         this.configurationView1.NotAllowedToExpandNodeEvent += this.ConfigurationView1_NotAllowedToExpandNodeEvent;
+         //
+         this.configurationView1.AllowedToExpandChildrenEvent += this.ConfigurationView1_AllowedToExpandChildrenEvent;
+         this.configurationView1.NotAllowedToExpandChildrenEvent += this.ConfigurationView1_NotAllowedToExpandChildrenEvent;
+         //
+         this.configurationView1.AllowedToCollapseAllEvent += this.ConfigurationView1_AllowedToCollapseAllEvent;
+         this.configurationView1.NotAllowedToCollapseAllEvent += this.ConfigurationView1_NotAllowedToCollapseAllEvent;
+         //
+         this.configurationView1.AllowedToCollapseNodeEvent += this.ConfigurationView1_AllowedToCollapseNodeEvent;
+         this.configurationView1.NotAllowedToCollapseNodeEvent += this.ConfigurationView1_NotAllowedToCollapseNodeEvent1;
+         //
          this.configurationView1.AllowedAddAppCSEvent += this.ConfigurationView1_AllowedAddAppCSEvent;
          this.configurationView1.NotAllowedAddAppCSEvent += this.ConfigurationView1_NotAllowedAddAppCSEvent;
          //
@@ -59,6 +74,56 @@ namespace LinqXml
          //
          this.configurationView1.AllowedDelDataStoreEvent += this.ConfigurationView1_AllowedDelDataStoreEvent;
          this.configurationView1.NotAllowedDelDataStoreEvent += this.ConfigurationView1_NotAllowedDelDataStoreEvent;
+      }
+
+      private void ConfigurationView1_NotAllowedToCollapseNodeEvent1( object sender )
+      {
+         this.collapsedNodeBarButtonItem.Enabled = false;
+      }
+
+      private void ConfigurationView1_AllowedToCollapseNodeEvent( object sender )
+      {
+         this.collapsedNodeBarButtonItem.Enabled = true;
+      }
+
+      private void ConfigurationView1_NotAllowedToCollapseAllEvent( object sender )
+      {
+         this.collapseAllBarButtonItem.Enabled = false;
+      }
+
+      private void ConfigurationView1_AllowedToCollapseAllEvent( object sender )
+      {
+         this.collapseAllBarButtonItem.Enabled = true;
+      }
+
+      private void ConfigurationView1_NotAllowedToExpandChildrenEvent( object sender )
+      {
+         this.expandChildrenBarButtonItem.Enabled = false;
+      }
+
+      private void ConfigurationView1_AllowedToExpandChildrenEvent( object sender )
+      {
+         this.expandChildrenBarButtonItem.Enabled = true;
+      }
+
+      private void ConfigurationView1_NotAllowedToExpandNodeEvent( object sender )
+      {
+         this.expandNodeBarButtonItem.Enabled = false;
+      }
+
+      private void ConfigurationView1_AllowedToExpandNodeEvent( object sender )
+      {
+         this.expandNodeBarButtonItem.Enabled = true;
+      }
+
+      private void ConfigurationView1_NotAllowedToExpandAllEvent( object sender )
+      {
+         this.expandAllBarButtonItem.Enabled = false;
+      }
+
+      private void ConfigurationView1_AllowedToExpandAllEvent( object sender )
+      {
+         this.expandAllBarButtonItem.Enabled = true;
       }
 
       #endregion
@@ -168,22 +233,22 @@ namespace LinqXml
          this.addAppCSBarButtonItem.Enabled = false;
       }
 
-      private void ConfigurationView1_AllowedToCloneDataStoreEvent( object sender )
+      private void ConfigurationView1_AllowedToCloneDataStoreEvent(object sender)
       {
          this.cloneDSBarButtonItem.Enabled = true;
       }
 
-      private void ConfigurationView1_NotAllowedToCloneDataStoreEvent( object sender )
+      private void ConfigurationView1_NotAllowedToCloneDataStoreEvent(object sender)
       {
          this.cloneDSBarButtonItem.Enabled = false;
       }
 
-      private void ConfigurationView1_AllowedToCloneAppCSEvent( object sender )
+      private void ConfigurationView1_AllowedToCloneAppCSEvent(object sender)
       {
          this.cloneAppCSBarButtonItem.Enabled = true;
       }
 
-      private void ConfigurationView1_NotAllowedToCloneAppCSEvent( object sender )
+      private void ConfigurationView1_NotAllowedToCloneAppCSEvent(object sender)
       {
          this.cloneAppCSBarButtonItem.Enabled = false;
       }
@@ -327,6 +392,34 @@ namespace LinqXml
          this.configurationView1.CloneDataStore();
       }
 
+
+      #endregion
+
+      #region --- Expand and Collapse ---
+      private void expandAllBarButtonItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      {
+         this.configurationView1.ExpandAll();
+      }
+
+      private void collapseAllBarButtonItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      {
+         this.configurationView1.CollapseAll();
+      }
+
+      private void expandNodeBarButtonItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      {
+         this.configurationView1.ExpandNode();
+      }
+
+      private void expandChildrenBarButtonItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      {
+         this.configurationView1.ExpandChildren();
+      }
+
+      private void collapsedNodeBarButtonItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      {
+         this.configurationView1.CollapseNode();
+      }
       #endregion
    }
 }

@@ -13,6 +13,7 @@ using LinqXml.Control.SaveAs;
 using LinqXml.Control.SaveFile;
 using LinqXml.Events.CloneAppCS;
 using LinqXml.Events.CloneDataStore;
+using LinqXml.Events.ExpandCollapseNode;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -139,6 +140,27 @@ namespace LinqXml.Control
 
       private void treeView_FocusedNodeChanged( object sender, FocusedNodeChangedEventArgs e )
       {
+         TreeListNode oldNode = e.OldNode;
+         TreeListNode newNode = e.Node;
+
+         if( newNode.Expanded )
+         {
+            this.NotAllowedToExpandAllEvent?.Invoke( this );
+            this.NotAllowedToExpandNodeEvent?.Invoke( this );
+            this.NotAllowedToExpandChildrenEvent?.Invoke( this );
+            //
+            this.AllowedToCollapseAllEvent?.Invoke( this );
+            this.AllowedToCollapseNodeEvent?.Invoke( this );
+         }
+         else
+         {
+            this.AllowedToExpandAllEvent?.Invoke( this );
+            this.AllowedToExpandAllEvent?.Invoke( this );
+            this.AllowedToExpandChildrenEvent?.Invoke( this );
+            //
+            this.NotAllowedToCollapseAllEvent?.Invoke( this );
+            this.NotAllowedToCollapseNodeEvent?.Invoke( this );
+         }
          if( e.Node?.Tag == null )
          {  //@#$% Is not working...
             this.NotAllowedToCloneAppCSEvent?.Invoke( this );
@@ -146,13 +168,11 @@ namespace LinqXml.Control
             this.NotAllowedDelDataStoreEvent?.Invoke( this );
             return;
          }
-         TreeListNode oldNode = e.OldNode;
-         TreeListNode node = e.Node;
-         string cellText = node[ 0 ] as string;
-         if( node.Tag is DataStore )
+         string cellText = newNode[ 0 ] as string;
+         if( newNode.Tag is DataStore )
          {
             FocusedDataStoreChangedEventArgs args = new FocusedDataStoreChangedEventArgs( );
-            args.DataStore = node.Tag as DataStore;
+            args.DataStore = newNode.Tag as DataStore;
             this.FocusedDataStoreChangedEvent?.Invoke( this, args );
             //
             this.NotAllowedToCloneAppCSEvent?.Invoke( this );
@@ -160,10 +180,10 @@ namespace LinqXml.Control
             this.AllowedToCloneDataStoreEvent?.Invoke( this );
             this.AllowedDelDataStoreEvent?.Invoke( this );
          }
-         else if( node.Tag is ConnectionString )
+         else if( newNode.Tag is ConnectionString )
          {
             FocusedAppCSChangedEventArgs args = new FocusedAppCSChangedEventArgs( );
-            args.ConnectionString = node.Tag as ConnectionString;
+            args.ConnectionString = newNode.Tag as ConnectionString;
             this.FocusedAppCSChangedEvent?.Invoke( this, args );
             //
             if( args.ConnectionString.IsSys )
@@ -364,6 +384,21 @@ namespace LinqXml.Control
 
       public event AfterCloseFileEventHandler AfterCloseFileEvent;
 
+      //-------------------------------------------------------------------
+      public event AllowedToExpandAllEventHandler AllowedToExpandAllEvent;
+      public event NotAllowedToExpandAllEventHandler NotAllowedToExpandAllEvent;
+      //
+      public event AllowedToExpandNodeEventHandler AllowedToExpandNodeEvent;
+      public event NotAllowedToExpandNodeEventHandler NotAllowedToExpandNodeEvent;
+      //
+      public event AllowedToExpandChildrenEventHandler AllowedToExpandChildrenEvent;
+      public event NotAllowedToExpandChildrenEventHandler NotAllowedToExpandChildrenEvent;
+      //
+      public event AllowedToCollapseAllEventHandler AllowedToCollapseAllEvent;
+      public event NotAllowedToCollapseAllEventHandler NotAllowedToCollapseAllEvent;
+      //
+      public event AllowedToCollapseNodeEventHandler AllowedToCollapseNodeEvent;
+      public event NotAllowedToCollapseNodeEventHandler NotAllowedToCollapseNodeEvent;
       //-------------------------------------------------------------------
       public event AllowedAddAppCSEventHandler AllowedAddAppCSEvent;
 
@@ -778,6 +813,45 @@ namespace LinqXml.Control
 
       // SetWorkingDirectorty
 
+      #region --- Expand and Collapse ---
+      public void ExpandAll()
+      {
+         this.treeView.ExpandAll( );
+      }
+      public void ExpandNode()
+      {
+         TreeListMultiSelection selection = this.treeView.Selection;
+         if( selection.Count > 0 )
+         {
+            TreeListNode node = selection[ 0 ];
+            node.Expand( );
+         }
+      }
+      public void ExpandChildren()
+      {
+         TreeListMultiSelection selection = this.treeView.Selection;
+         if( selection.Count > 0 )
+         {
+            TreeListNode node = selection[ 0 ];
+            node.ExpandAll( );
+         }
+      }
+
+      public void CollapseAll()
+      {
+         this.treeView.CollapseAll( );
+      }
+      public void CollapseNode()
+      {
+         TreeListMultiSelection selection = this.treeView.Selection;
+         if( selection.Count > 0 )
+         {
+            TreeListNode node = selection[ 0 ];
+            node.Collapse( );
+         }
+      }
+      #endregion
+
       #region --- Before and After AddAppCS EVENTS + HANDLERS + EXCEPTIONS ---
       public void AddAppCS()
       {
@@ -1117,7 +1191,5 @@ namespace LinqXml.Control
             this.AllowedToSaveFileEvent?.Invoke( this );
          }
       }
-
-      //
    }
 }

@@ -38,10 +38,17 @@
          this.saveAsBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
          this.closeBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
          this.setWorkingDirectoryBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
-         this.addDataStoreBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
          this.addAppCSBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
-         this.delDataStoreBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.cloneAppCSBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
          this.delAppCSBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.addDataStoreBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.cloneDSBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.delDataStoreBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.expandAllBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.expandNodeBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.expandChildrenBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.collapseAllBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+         this.collapsedNodeBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
          this.bar3 = new DevExpress.XtraBars.Bar();
          this.labelStatusBarStaticItem = new DevExpress.XtraBars.BarStaticItem();
          this.objnmStatusBarStaticItem = new DevExpress.XtraBars.BarStaticItem();
@@ -50,8 +57,6 @@
          this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
          this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
          this.configurationView1 = new LinqXml.Control.ConfigurationView();
-         this.cloneDSBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
-         this.cloneAppCSBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
          this.SuspendLayout();
          // 
@@ -80,9 +85,14 @@
             this.delAppCSBarButtonItem,
             this.newBarButtonItem,
             this.cloneDSBarButtonItem,
-            this.cloneAppCSBarButtonItem});
+            this.cloneAppCSBarButtonItem,
+            this.collapseAllBarButtonItem,
+            this.expandAllBarButtonItem,
+            this.expandNodeBarButtonItem,
+            this.expandChildrenBarButtonItem,
+            this.collapsedNodeBarButtonItem});
          this.barManager1.MainMenu = this.bar2;
-         this.barManager1.MaxItemId = 14;
+         this.barManager1.MaxItemId = 20;
          this.barManager1.StatusBar = this.bar3;
          // 
          // bar1
@@ -111,7 +121,12 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.delAppCSBarButtonItem),
             new DevExpress.XtraBars.LinkPersistInfo(this.addDataStoreBarButtonItem),
             new DevExpress.XtraBars.LinkPersistInfo(this.cloneDSBarButtonItem),
-            new DevExpress.XtraBars.LinkPersistInfo(this.delDataStoreBarButtonItem)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.delDataStoreBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.expandAllBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.expandNodeBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.expandChildrenBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.collapseAllBarButtonItem),
+            new DevExpress.XtraBars.LinkPersistInfo(this.collapsedNodeBarButtonItem)});
          this.bar2.OptionsBar.MultiLine = true;
          this.bar2.OptionsBar.UseWholeRow = true;
          this.bar2.Text = "Main menu";
@@ -164,6 +179,30 @@
          this.setWorkingDirectoryBarButtonItem.Name = "setWorkingDirectoryBarButtonItem";
          this.setWorkingDirectoryBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.setWorkingDirectoryBarButtonItem_ItemClick);
          // 
+         // addAppCSBarButtonItem
+         // 
+         this.addAppCSBarButtonItem.Caption = "Add CS";
+         this.addAppCSBarButtonItem.Enabled = false;
+         this.addAppCSBarButtonItem.Id = 8;
+         this.addAppCSBarButtonItem.Name = "addAppCSBarButtonItem";
+         this.addAppCSBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.addAppCSBarButtonItem_ItemClick);
+         // 
+         // cloneAppCSBarButtonItem
+         // 
+         this.cloneAppCSBarButtonItem.Caption = "Clone CS";
+         this.cloneAppCSBarButtonItem.Enabled = false;
+         this.cloneAppCSBarButtonItem.Id = 13;
+         this.cloneAppCSBarButtonItem.Name = "cloneAppCSBarButtonItem";
+         this.cloneAppCSBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.cloneAppCSBarButtonItem_ItemClick);
+         // 
+         // delAppCSBarButtonItem
+         // 
+         this.delAppCSBarButtonItem.Caption = "Del CS";
+         this.delAppCSBarButtonItem.Enabled = false;
+         this.delAppCSBarButtonItem.Id = 10;
+         this.delAppCSBarButtonItem.Name = "delAppCSBarButtonItem";
+         this.delAppCSBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.delAppCsBarButtonItem_ItemClick);
+         // 
          // addDataStoreBarButtonItem
          // 
          this.addDataStoreBarButtonItem.Caption = "Add DS";
@@ -172,13 +211,13 @@
          this.addDataStoreBarButtonItem.Name = "addDataStoreBarButtonItem";
          this.addDataStoreBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.addDataStoreBarButtonItem_ItemClick);
          // 
-         // addAppCSBarButtonItem
+         // cloneDSBarButtonItem
          // 
-         this.addAppCSBarButtonItem.Caption = "Add CS";
-         this.addAppCSBarButtonItem.Enabled = false;
-         this.addAppCSBarButtonItem.Id = 8;
-         this.addAppCSBarButtonItem.Name = "addAppCSBarButtonItem";
-         this.addAppCSBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.addAppCSBarButtonItem_ItemClick);
+         this.cloneDSBarButtonItem.Caption = "Clone DS";
+         this.cloneDSBarButtonItem.Enabled = false;
+         this.cloneDSBarButtonItem.Id = 12;
+         this.cloneDSBarButtonItem.Name = "cloneDSBarButtonItem";
+         this.cloneDSBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.cloneDSBarButtonItem_ItemClick);
          // 
          // delDataStoreBarButtonItem
          // 
@@ -188,13 +227,45 @@
          this.delDataStoreBarButtonItem.Name = "delDataStoreBarButtonItem";
          this.delDataStoreBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.delDataStoreBarButtonItem_ItemClick);
          // 
-         // delAppCSBarButtonItem
+         // expandAllBarButtonItem
          // 
-         this.delAppCSBarButtonItem.Caption = "Del CS";
-         this.delAppCSBarButtonItem.Enabled = false;
-         this.delAppCSBarButtonItem.Id = 10;
-         this.delAppCSBarButtonItem.Name = "delAppCSBarButtonItem";
-         this.delAppCSBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.delAppCsBarButtonItem_ItemClick);
+         this.expandAllBarButtonItem.Caption = "Expand All";
+         this.expandAllBarButtonItem.Enabled = false;
+         this.expandAllBarButtonItem.Id = 15;
+         this.expandAllBarButtonItem.Name = "expandAllBarButtonItem";
+         this.expandAllBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.expandAllBarButtonItem_ItemClick);
+         // 
+         // expandNodeBarButtonItem
+         // 
+         this.expandNodeBarButtonItem.Caption = "Expand Node";
+         this.expandNodeBarButtonItem.Enabled = false;
+         this.expandNodeBarButtonItem.Id = 16;
+         this.expandNodeBarButtonItem.Name = "expandNodeBarButtonItem";
+         this.expandNodeBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.expandNodeBarButtonItem_ItemClick);
+         // 
+         // expandChildrenBarButtonItem
+         // 
+         this.expandChildrenBarButtonItem.Caption = "Expand Children";
+         this.expandChildrenBarButtonItem.Enabled = false;
+         this.expandChildrenBarButtonItem.Id = 17;
+         this.expandChildrenBarButtonItem.Name = "expandChildrenBarButtonItem";
+         this.expandChildrenBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.expandChildrenBarButtonItem_ItemClick);
+         // 
+         // collapseAllBarButtonItem
+         // 
+         this.collapseAllBarButtonItem.Caption = "Collapse All";
+         this.collapseAllBarButtonItem.Enabled = false;
+         this.collapseAllBarButtonItem.Id = 14;
+         this.collapseAllBarButtonItem.Name = "collapseAllBarButtonItem";
+         this.collapseAllBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.collapseAllBarButtonItem_ItemClick);
+         // 
+         // collapsedNodeBarButtonItem
+         // 
+         this.collapsedNodeBarButtonItem.Caption = "Collapse Node";
+         this.collapsedNodeBarButtonItem.Enabled = false;
+         this.collapsedNodeBarButtonItem.Id = 18;
+         this.collapsedNodeBarButtonItem.Name = "collapsedNodeBarButtonItem";
+         this.collapsedNodeBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.collapsedNodeBarButtonItem_ItemClick);
          // 
          // bar3
          // 
@@ -227,7 +298,7 @@
          this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
          this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
          this.barDockControlTop.Manager = this.barManager1;
-         this.barDockControlTop.Size = new System.Drawing.Size(816, 51);
+         this.barDockControlTop.Size = new System.Drawing.Size(755, 73);
          // 
          // barDockControlBottom
          // 
@@ -235,54 +306,38 @@
          this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
          this.barDockControlBottom.Location = new System.Drawing.Point(0, 683);
          this.barDockControlBottom.Manager = this.barManager1;
-         this.barDockControlBottom.Size = new System.Drawing.Size(816, 25);
+         this.barDockControlBottom.Size = new System.Drawing.Size(755, 25);
          // 
          // barDockControlLeft
          // 
          this.barDockControlLeft.CausesValidation = false;
          this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-         this.barDockControlLeft.Location = new System.Drawing.Point(0, 51);
+         this.barDockControlLeft.Location = new System.Drawing.Point(0, 73);
          this.barDockControlLeft.Manager = this.barManager1;
-         this.barDockControlLeft.Size = new System.Drawing.Size(0, 632);
+         this.barDockControlLeft.Size = new System.Drawing.Size(0, 610);
          // 
          // barDockControlRight
          // 
          this.barDockControlRight.CausesValidation = false;
          this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-         this.barDockControlRight.Location = new System.Drawing.Point(816, 51);
+         this.barDockControlRight.Location = new System.Drawing.Point(755, 73);
          this.barDockControlRight.Manager = this.barManager1;
-         this.barDockControlRight.Size = new System.Drawing.Size(0, 632);
+         this.barDockControlRight.Size = new System.Drawing.Size(0, 610);
          // 
          // configurationView1
          // 
          this.configurationView1.DefaultFileName = "cfg.xml";
          this.configurationView1.Dock = System.Windows.Forms.DockStyle.Fill;
-         this.configurationView1.Location = new System.Drawing.Point(0, 51);
+         this.configurationView1.Location = new System.Drawing.Point(0, 73);
          this.configurationView1.Name = "configurationView1";
-         this.configurationView1.Size = new System.Drawing.Size(816, 632);
+         this.configurationView1.Size = new System.Drawing.Size(755, 610);
          this.configurationView1.TabIndex = 4;
-         // 
-         // cloneDSBarButtonItem
-         // 
-         this.cloneDSBarButtonItem.Caption = "Clone DS";
-         this.cloneDSBarButtonItem.Enabled = false;
-         this.cloneDSBarButtonItem.Id = 12;
-         this.cloneDSBarButtonItem.Name = "cloneDSBarButtonItem";
-         this.cloneDSBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.cloneDSBarButtonItem_ItemClick);
-         // 
-         // cloneCSBarButtonItem
-         // 
-         this.cloneAppCSBarButtonItem.Caption = "Clone CS";
-         this.cloneAppCSBarButtonItem.Enabled = false;
-         this.cloneAppCSBarButtonItem.Id = 13;
-         this.cloneAppCSBarButtonItem.Name = "cloneCSBarButtonItem";
-         this.cloneAppCSBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.cloneAppCSBarButtonItem_ItemClick);
          // 
          // ConfigurationTestForm
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-         this.ClientSize = new System.Drawing.Size(816, 708);
+         this.ClientSize = new System.Drawing.Size(755, 708);
          this.Controls.Add(this.configurationView1);
          this.Controls.Add(this.barDockControlLeft);
          this.Controls.Add(this.barDockControlRight);
@@ -322,10 +377,10 @@
       private DevExpress.XtraBars.BarButtonItem newBarButtonItem;
       private DevExpress.XtraBars.BarButtonItem cloneAppCSBarButtonItem;
       private DevExpress.XtraBars.BarButtonItem cloneDSBarButtonItem;
+      private DevExpress.XtraBars.BarButtonItem collapseAllBarButtonItem;
+      private DevExpress.XtraBars.BarButtonItem expandAllBarButtonItem;
+      private DevExpress.XtraBars.BarButtonItem expandNodeBarButtonItem;
+      private DevExpress.XtraBars.BarButtonItem expandChildrenBarButtonItem;
+      private DevExpress.XtraBars.BarButtonItem collapsedNodeBarButtonItem;
    }
 }
-
-/*
-         this.configurationView1.AllowedAddAppCSEvent += new LinqXml.Control.ConfigurationView.AllowedAddAppCSEventHandler(this.configurationView1_AllowedAddAppCSEvent);
-         this.configurationView1.NotAllowedAddAppCSEvent += new LinqXml.Control.ConfigurationView.NotAllowedAddAppCSEventHandler(this.configurationView1_NotAllowedAddAppCSEvent);
-*/

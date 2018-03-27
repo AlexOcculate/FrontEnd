@@ -77,6 +77,7 @@
     <Compile Include="Events\DelAppCS\DelAppCSDelegates.cs" />
     <Compile Include="Events\DelAppCS\DelAppCSException.cs" />
     <Compile Include="Events\DelDataStore\DelDataStoreDelegates.cs" />
+    <Compile Include="Events\ExpandCollapseNode\ExpandCollapseNode.cs" />
     <Compile Include="Events\FocusedAppCSChanged\FocusedAppCSChangedEventHandler.cs" />
     <Compile Include="Events\FocusedAppCSChanged\FocusedAppCSChangedException.cs" />
     <Compile Include="Events\FocusedDataStoreChanged\FocusedDataStoreChangedEventArgs.cs" />
