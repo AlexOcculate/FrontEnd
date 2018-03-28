@@ -136,6 +136,17 @@ namespace LinqXml
          }
       }
       #endregion
+
+      #region --- Ctors... ---
+      public DataStore()
+      {
+
+      }
+      public DataStore( string name ) : this( )
+      {
+         this.Name = name;
+      }
+      #endregion
       //
       public System.Xml.Linq.XElement GetXElement()
       {
@@ -247,6 +258,16 @@ namespace LinqXml
                }
             ).ToList( );
          return list;
+      }
+      public DataStore Clone()
+      {
+         DataStore o = new DataStore( this.Name + "_COPY" );
+         o.ConnectionStringName = this.ConnectionStringName;
+         o.LoadDefaultDatabaseOnly = this.LoadDefaultDatabaseOnly;
+         o.LoadSystemObjects = this.LoadSystemObjects;
+         o.WithFields = this.WithFields;
+         o.StagePathDir = this.StagePathDir;
+         return o;
       }
    }
 }

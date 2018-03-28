@@ -1,7 +1,135 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XmlTemplateCategoryInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="MyTemplates" OptExpanded="true">
   <TemplateCategory Name="ActiveQueryBuilder" OptExpanded="true">
-    <TemplateCategory Name="ZYZ">
+    <TemplateCategory Name="ZYZ" OptExpanded="true">
+      <Template Name="treeList.Init">
+        <Comment>Initialize a TreeList</Comment>
+        <Expansion Priority="0">
+          <Body>      private void AddAllNodes( bool showAll )
+      {
+         this.treeView.AppendNode( new object[ ]
+         { "Solution \'VisualStudioInspiredUIDemo\' (1 project)" },
+                                  -1,
+                                  -1,
+                                  -1,
+                                  3 ); //0
+         this.treeView.AppendNode( new object[ ] { "VisualStudioInspiredUIDemo" }, -1, -1, -1, 4 );//1
+         this.treeView.AppendNode( new object[ ] { "Properties" }, 1, -1, -1, 2 );//2
+         this.treeView.AppendNode( new object[ ] { "References" }, 1, -1, -1, 5 );//3
+         this.treeView.AppendNode( new object[ ] { "System" }, 3, -1, -1, 5 );
+         this.treeView.AppendNode( new object[ ] { "System.Drawing" }, 3, -1, -1, 5 );
+         this.treeView.AppendNode( new object[ ] { "System.Windows.Forms" }, 3, -1, -1, 5 );
+         this.treeView.AppendNode( new object[ ] { "DevExpress.Utils" }, 3, -1, -1, 5 );
+         this.treeView.AppendNode( new object[ ] { "DevExpress.XtraBars" }, 3, -1, -1, 5 );
+         this.treeView.AppendNode( new object[ ] { "DevExpress.XtraEditors" }, 3, -1, -1, 5 );
+         if( showAll )
+         {
+            this.treeView.AppendNode( new object[ ] { "bin" }, 1, -1, -1, 9 ); //10
+            this.treeView.AppendNode( new object[ ] { "Debug" }, 10, -1, -1, 9 );
+            this.treeView.AppendNode( new object[ ] { "Release" }, 10, -1, -1, 9 );
+            this.treeView.AppendNode( new object[ ] { "obj" }, 1, -1, -1, 9 );//13
+            this.treeView.AppendNode( new object[ ] { "Debug" }, 13, -1, -1, 9 );
+            this.treeView.AppendNode( new object[ ] { "Release" }, 13, -1, -1, 9 );
+         }
+         this.treeView.AppendNode( new object[ ] { "Modules" }, 1, -1, -1, 7 );//16/10
+         this.treeView.AppendNode( new object[ ] { "Resources" }, 1, -1, -1, 7 );//17
+         this.treeView.AppendNode( new object[ ] { "AssemblyInfo.cs" }, 2, -1, -1, 10 );
+         this.treeView.AppendNode( new object[ ] { "frmMain.cs" }, 1, -1, -1, 11 );//19
+         this.treeView.AppendNode( new object[ ] { "ucCodeEditor.cs" }, showAll ? 16 : 10, -1, -1, 12 ); //20
+         this.treeView.AppendNode( new object[ ] { "ucSolutionExplorer.cs" }, showAll ? 16 : 10, -1, -1, 12 ); //21
+         this.treeView.AppendNode( new object[ ] { "ucToolbox.cs" }, showAll ? 16 : 10, -1, -1, 12 ); //22
+         if( showAll )
+         {
+            this.treeView.AppendNode( new object[ ] { "frmMain.resx" }, 19, -1, -1, 13 );
+            this.treeView.AppendNode( new object[ ] { "ucCodeEditor.resx" }, 20, -1, -1, 13 );
+            this.treeView.AppendNode( new object[ ] { "ucSolutionExplorer.resx" }, 21, -1, -1, 13 );
+            this.treeView.AppendNode( new object[ ] { "ucToolbox.resx" }, 22, -1, -1, 13 );
+         }
+      }
+</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="ossd">
+        <Comment>Open / Save / FolderBrowsing Dialogs</Comment>
+        <Expansion Priority="0">
+          <Body>      private string GetDefaultFilePath()
+      {
+         string x = "Data\\" + this.defaultFileName;
+         return Path.GetDirectoryName( FilesHelper.FindingFileName( Application.StartupPath, x ) );
+      }
+
+      private void OpenItemClick()
+      {
+         using( XtraOpenFileDialog dialog = new XtraOpenFileDialog( ) )
+         {
+            dialog.InitialDirectory = this.initialPath;
+            dialog.ShowDragDropConfirmation = true;
+            dialog.AutoUpdateFilterDescription = false;
+            dialog.Filter = "Text files (*.txt)|*.txt";
+            DialogResult dialogResult = dialog.ShowDialog( );
+            if( dialogResult == DialogResult.OK )
+            {
+               //this.SetMemoEditText( dialog.FileName );
+            }
+         }
+      }
+
+      private void SaveItemClick()
+      {
+         using( XtraSaveFileDialog dialog = new XtraSaveFileDialog( ) )
+         {
+            dialog.InitialDirectory = this.initialPath;
+            dialog.ShowDragDropConfirmation = true;
+            dialog.Filter = "Text files|*.txt";
+            dialog.CreatePrompt = true;
+            dialog.OverwritePrompt = true;
+            DialogResult dialogResult = dialog.ShowDialog( );
+            if( dialogResult == DialogResult.OK )
+            {
+               //System.IO.File.WriteAllText( dialog.FileName, this.mainModule.Text );
+            }
+         }
+      }
+
+      private void SetWorkingFolderItemClick()
+      {
+         using( XtraFolderBrowserDialog dialog = new XtraFolderBrowserDialog( ) )
+         {
+            dialog.SelectedPath = this.initialPath;
+            if( dialog.ShowDialog( ) == DialogResult.OK )
+            {
+               this.initialPath = dialog.SelectedPath;
+            }
+         }
+      }</Body>
+          <Context />
+          <ContextString>[InCSharp][InClass]</ContextString>
+          <UsingClause>DevExpress.XtraEditors</UsingClause>
+          <UsingClause>System.Windows.Forms</UsingClause>
+          <UsingClause>System.IO</UsingClause>
+        </Expansion>
+      </Template>
+      <Template Name="dialog">
+        <Comment>Create a XtraMessageDialog</Comment>
+        <Expansion Priority="0">
+          <Body>// DIALOG COFIRMATION
+DialogResult dialogResult = XtraMessageBox.Show("Are you sure?", "Warning", MessageBoxButtons.YesNoCancel);
+switch(dialogResult)
+{
+   case DialogResult.Yes:
+      break;
+   default:
+      args.Cancel = true;
+      return;
+}
+</Body>
+          <Context />
+          <ContextString>[OnEmptyLine] || [InMethod] || [InProperty]</ContextString>
+          <UsingClause>System.Windows.Forms</UsingClause>
+          <UsingClause>DevExpress.XtraEditors</UsingClause>
+        </Expansion>
+      </Template>
       <Template Name="qwerty">
         <Expansion Priority="0">
           <Body>«?Set(EventName,EventName)»
@@ -34,12 +162,21 @@
     </TemplateCategory>
     <Template Name="neahba">
       <Expansion Priority="0">
-        <Body>#define «Paste»_EVENT_DEFINED
-#if «Paste»_EVENT_DEFINED
-//
+        <Body>//
       #region --- Before and After «Paste» EVENTS + HANDLERS + EXCEPTIONS ---
-      public delegate void Before«Paste»EventHandler( object sender, Before«Paste»EventArgs ea );
+//
+      public event AllowedTo«Paste»EventHandler Allowed«Paste»Event;
+      public event NotAllowedTo«Paste»EventHandler NotAllowed«Paste»Event;
+//
       public event Before«Paste»EventHandler Before«Paste»Event;
+      public event After«Paste»EventHandler After«Paste»Event;
+//
+      public delegate void AllowedTo«Paste»EventHandler( object sender );
+      public delegate void NotAllowedTo«Paste»EventHandler( object sender );
+//
+      public delegate void Before«Paste»EventHandler( object sender, Before«Paste»EventArgs ea );
+      public delegate void After«Paste»EventHandler( object sender, After«Paste»EventArgs ea );
+//
       public class Before«Paste»EventArgs : System.EventArgs
       {
          public bool Cancel { get; set; }
@@ -47,8 +184,6 @@
          public «Paste»Exception Exception { get; set; }
       }
 //
-      public delegate void After«Paste»EventHandler( object sender, After«Paste»EventArgs ea );
-      public event After«Paste»EventHandler After«Paste»Event;
       public class After«Paste»EventArgs : System.EventArgs
       {
          private Before«Paste»EventArgs args;
@@ -110,12 +245,15 @@
          }
       }
 //
-      private void After«Paste»EventStatus( object sender, After«Paste»EventArgs ea )
+      private void After«Paste»EventPostStatuses( object sender, After«Paste»EventArgs ea )
       {
+         if( ea.isOk )
+         {
+            return;
+         }
       }
-// this.After«Paste»Event += this.After«Paste»EventStatus;
-      #endregion
-#endif
+// this.After«Paste»Event += this.After«Paste»EventPostStatuses;
+
 </Body>
         <Context />
         <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InString])</ContextString>
@@ -1073,66 +1211,6 @@ public class «Link(EventName)»CompletedException : System.Exception
       </Expansion>
     </Template>
   </TemplateCategory>
-  <Template Name="ossd">
-    <Comment>Open / Save / FolderBrowsing Dialogs</Comment>
-    <Expansion Priority="0">
-      <Body>      private string GetDefaultFilePath()
-      {
-         string x = "Data\\" + this.defaultFileName;
-         return Path.GetDirectoryName( FilesHelper.FindingFileName( Application.StartupPath, x ) );
-      }
-
-      private void OpenItemClick()
-      {
-         using( XtraOpenFileDialog dialog = new XtraOpenFileDialog( ) )
-         {
-            dialog.InitialDirectory = this.initialPath;
-            dialog.ShowDragDropConfirmation = true;
-            dialog.AutoUpdateFilterDescription = false;
-            dialog.Filter = "Text files (*.txt)|*.txt";
-            DialogResult dialogResult = dialog.ShowDialog( );
-            if( dialogResult == DialogResult.OK )
-            {
-               //this.SetMemoEditText( dialog.FileName );
-            }
-         }
-      }
-
-      private void SaveItemClick()
-      {
-         using( XtraSaveFileDialog dialog = new XtraSaveFileDialog( ) )
-         {
-            dialog.InitialDirectory = this.initialPath;
-            dialog.ShowDragDropConfirmation = true;
-            dialog.Filter = "Text files|*.txt";
-            dialog.CreatePrompt = true;
-            dialog.OverwritePrompt = true;
-            DialogResult dialogResult = dialog.ShowDialog( );
-            if( dialogResult == DialogResult.OK )
-            {
-               //System.IO.File.WriteAllText( dialog.FileName, this.mainModule.Text );
-            }
-         }
-      }
-
-      private void SetWorkingFolderItemClick()
-      {
-         using( XtraFolderBrowserDialog dialog = new XtraFolderBrowserDialog( ) )
-         {
-            dialog.SelectedPath = this.initialPath;
-            if( dialog.ShowDialog( ) == DialogResult.OK )
-            {
-               this.initialPath = dialog.SelectedPath;
-            }
-         }
-      }</Body>
-      <Context />
-      <ContextString>[InCSharp][InClass]</ContextString>
-      <UsingClause>DevExpress.XtraEditors</UsingClause>
-      <UsingClause>System.Windows.Forms</UsingClause>
-      <UsingClause>System.IO</UsingClause>
-    </Expansion>
-  </Template>
   <Template Name="NewEventAndHandlers">
     <Comment>New Event and Handlers via paste a Event Name</Comment>
     <Expansion Priority="0">

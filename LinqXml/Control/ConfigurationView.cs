@@ -15,6 +15,7 @@ using LinqXml.Events.CloneAppCS;
 using LinqXml.Events.CloneDataStore;
 using LinqXml.Events.ExpandCollapseNode;
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -58,9 +59,13 @@ namespace LinqXml.Control
          this.AfterSaveAsFileEvent += this.AfterSaveAsFileEventPostStatuses;
          this.AfterSaveFileEvent += this.AfterSaveFileEventPostStatuses;
          this.AfterCloseFileEvent += this.AfterCloseFileEventPostStatuses;
+         //
          this.AfterAddAppCSEvent += this.AfterAddAppCSEventPostStatuses;
          this.AfterCloneAppCSEvent += this.AfterCloneAppCSEventPostStatuses;
          this.AfterDelAppCSEvent += this.AfterDelAppCSEventPostStatuses;
+         //
+         this.AfterAddDataStoreEvent += this.AfterAddDataStoreEventPostStatuses;
+         //
          // this.AddAllNodes( true );
          //this.LoadNodes( );
       }
@@ -143,17 +148,21 @@ namespace LinqXml.Control
          TreeListNode oldNode = e.OldNode;
          TreeListNode newNode = e.Node;
 
-         if( newNode.Expanded )
+         //         newNode = newNode == null ? oldNode : newNode;
+         if( newNode != null/* && newNode.Expanded*/)
          {
+            this.xxxyyyzzz( newNode );
             this.NotAllowedToExpandAllEvent?.Invoke( this );
             this.NotAllowedToExpandNodeEvent?.Invoke( this );
             this.NotAllowedToExpandChildrenEvent?.Invoke( this );
             //
             this.AllowedToCollapseAllEvent?.Invoke( this );
             this.AllowedToCollapseNodeEvent?.Invoke( this );
+            string cellText = newNode[ 0 ] as string;
          }
          else
          {
+            this.xxxyyyzzz( oldNode );
             this.AllowedToExpandAllEvent?.Invoke( this );
             this.AllowedToExpandAllEvent?.Invoke( this );
             this.AllowedToExpandChildrenEvent?.Invoke( this );
@@ -161,14 +170,19 @@ namespace LinqXml.Control
             this.NotAllowedToCollapseAllEvent?.Invoke( this );
             this.NotAllowedToCollapseNodeEvent?.Invoke( this );
          }
-         if( e.Node?.Tag == null )
-         {  //@#$% Is not working...
+         if( newNode?.Tag == null )
+         {
             this.NotAllowedToCloneAppCSEvent?.Invoke( this );
             this.NotAllowedDelAppCSEvent?.Invoke( this );
+            //
+            this.NotAllowedToCloneDataStoreEvent?.Invoke( this );
             this.NotAllowedDelDataStoreEvent?.Invoke( this );
             return;
          }
-         string cellText = newNode[ 0 ] as string;
+      }
+
+      private void xxxyyyzzz( TreeListNode newNode )
+      {
          if( newNode.Tag is DataStore )
          {
             FocusedDataStoreChangedEventArgs args = new FocusedDataStoreChangedEventArgs( );
@@ -202,6 +216,7 @@ namespace LinqXml.Control
          {
             this.NotAllowedToCloneAppCSEvent?.Invoke( this );
             this.NotAllowedDelAppCSEvent?.Invoke( this );
+            //
             this.NotAllowedToCloneDataStoreEvent?.Invoke( this );
             this.NotAllowedDelDataStoreEvent?.Invoke( this );
          }
@@ -241,6 +256,10 @@ namespace LinqXml.Control
             this.treeView.Nodes.Clear( );
             this.LoadTreeListNodes( this.treeView );
             this.treeView.ExpandAll( );
+         }
+         catch( Exception ex )
+         {
+            string message = ex.Message;
          }
          finally
          {
@@ -292,7 +311,7 @@ namespace LinqXml.Control
       #region --- [External Events] Observed ---
       private void Cfg_PropertyChanged( object sender, System.ComponentModel.PropertyChangedEventArgs e )
       { //@#$%
-         this.LoadNodes( );
+         // this.LoadNodes( );
       }
 
       private void Cfg_NotAllowedDelAppCSEvent( object sender )
@@ -337,119 +356,182 @@ namespace LinqXml.Control
       #endregion
 
       #region --- [Local Events] Handlers ---
-      public event AllowedNewFileEventHandler AllowedNewFileEvent;
-
-      public event NotAllowedNewFileEventHandler NotAllowedNewFileEvent;
-
-      public event BeforeNewFileEventHandler BeforeNewFileEvent;
-
-      public event AfterNewFileEventHandler AfterNewFileEvent;
-
-      // -----
-      public event AllowedToOpenFileEventHandler AllowedToOpenFileEvent;
-
-      public event NotAllowedToOpenFileEventHandler NotAllowedToOpenFileEvent;
-
-      public event BeforeOpenFileEventHandler BeforeOpenFileEvent;
-
-      public event AfterOpenFileEventHandler AfterOpenFileEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00001-File-New" )] public event AllowedNewFileEventHandler AllowedNewFileEvent;
+      [Description( "Gets or sets whether the \"Remove\" button is visible." )]
+      [Browsable( true )]
+      [CategoryAttribute( "00001-File-New" )] public event NotAllowedNewFileEventHandler NotAllowedNewFileEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00001-File-New" )] public event BeforeNewFileEventHandler BeforeNewFileEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00001-File-New" )] public event AfterNewFileEventHandler AfterNewFileEvent;
 
       // -----
-      public event AllowedToSaveFileEventHandler AllowedToSaveFileEvent;
-
-      public event NotAllowedToSaveFileEventHandler NotAllowedToSaveFileEvent;
-
-      public event BeforeSaveFileEventHandler BeforeSaveFileEvent;
-
-      public event AfterSaveFileEventHandler AfterSaveFileEvent;
-
-      // -----
-      public event AllowedToSaveAsFileEventHandler AllowedToSaveAsFileEvent;
-
-      public event NotAllowedToSaveAsFileEventHandler NotAllowedToSaveAsFileEvent;
-
-      public event BeforeSaveAsFileEventHandler BeforeSaveAsFileEvent;
-
-      public event AfterSaveAsFileEventHandler AfterSaveAsFileEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00002-File-Open" )] public event AllowedToOpenFileEventHandler AllowedToOpenFileEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00002-File-Open" )] public event NotAllowedToOpenFileEventHandler NotAllowedToOpenFileEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00002-File-Open" )] public event BeforeOpenFileEventHandler BeforeOpenFileEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00002-File-Open" )] public event AfterOpenFileEventHandler AfterOpenFileEvent;
 
       // -----
-      public event SavedFileNameChangedEventHandler SavedFileNameChangedEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00003-File-Save" )] public event AllowedToSaveFileEventHandler AllowedToSaveFileEvent;
+
+      [Browsable( true )]
+      [CategoryAttribute( "00003-File-Save" )] public event NotAllowedToSaveFileEventHandler NotAllowedToSaveFileEvent;
+
+      [Browsable( true )]
+      [CategoryAttribute( "00003-File-Save" )] public event BeforeSaveFileEventHandler BeforeSaveFileEvent;
+
+      [Browsable( true )]
+      [CategoryAttribute( "00003-File-Save" )] public event AfterSaveFileEventHandler AfterSaveFileEvent;
 
       // -----
-      public event AllowedToCloseFileEventHandler AllowedToCloseFileEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00004-File-SaveAs" )] public event AllowedToSaveAsFileEventHandler AllowedToSaveAsFileEvent;
 
-      public event NotAllowedToCloseFileEventHandler NotAllowedToCloseFileEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00004-File-SaveAs" )] public event NotAllowedToSaveAsFileEventHandler NotAllowedToSaveAsFileEvent;
 
-      public event BeforeCloseFileEventHandler BeforeCloseFileEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00004-File-SaveAs" )] public event BeforeSaveAsFileEventHandler BeforeSaveAsFileEvent;
 
-      public event AfterCloseFileEventHandler AfterCloseFileEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00004-File-SaveAs" )] public event AfterSaveAsFileEventHandler AfterSaveAsFileEvent;
+
+      // -----
+      [Browsable( true )]
+      [CategoryAttribute( "00004-File-SaveAs" )] public event SavedFileNameChangedEventHandler SavedFileNameChangedEvent;
+
+      // -----
+      [Browsable( true )]
+      [CategoryAttribute( "00005-File-Close" )] public event AllowedToCloseFileEventHandler AllowedToCloseFileEvent;
+
+      [Browsable( true )]
+      [CategoryAttribute( "00005-File-Close" )] public event NotAllowedToCloseFileEventHandler NotAllowedToCloseFileEvent;
+
+      [Browsable( true )]
+      [CategoryAttribute( "00005-File-Close" )] public event BeforeCloseFileEventHandler BeforeCloseFileEvent;
+
+      [Browsable( true )]
+      [CategoryAttribute( "00005-File-Close" )] public event AfterCloseFileEventHandler AfterCloseFileEvent;
+      //-------------------------------------------------------------------
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Tree-Expand" )] public event AllowedToExpandAllEventHandler AllowedToExpandAllEvent;
+
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Tree-Expand" )] public event NotAllowedToExpandAllEventHandler NotAllowedToExpandAllEvent;
+
+      //
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Tree-Expand" )] public event AllowedToExpandNodeEventHandler AllowedToExpandNodeEvent;
+
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Tree-Expand" )] public event NotAllowedToExpandNodeEventHandler NotAllowedToExpandNodeEvent;
+
+      //
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Tree-Expand" )] public event AllowedToExpandChildrenEventHandler AllowedToExpandChildrenEvent;
+
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Tree-Expand" )] public event NotAllowedToExpandChildrenEventHandler NotAllowedToExpandChildrenEvent;
+
+      //
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Tree-Collapse" )] public event AllowedToCollapseAllEventHandler AllowedToCollapseAllEvent;
+
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Tree-Collapse" )] public event NotAllowedToCollapseAllEventHandler NotAllowedToCollapseAllEvent;
+
+      //
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Tree-Collapse" )] public event AllowedToCollapseNodeEventHandler AllowedToCollapseNodeEvent;
+
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Tree-Collapse" )] public event NotAllowedToCollapseNodeEventHandler NotAllowedToCollapseNodeEvent;
 
       //-------------------------------------------------------------------
-      public event AllowedToExpandAllEventHandler AllowedToExpandAllEvent;
-      public event NotAllowedToExpandAllEventHandler NotAllowedToExpandAllEvent;
-      //
-      public event AllowedToExpandNodeEventHandler AllowedToExpandNodeEvent;
-      public event NotAllowedToExpandNodeEventHandler NotAllowedToExpandNodeEvent;
-      //
-      public event AllowedToExpandChildrenEventHandler AllowedToExpandChildrenEvent;
-      public event NotAllowedToExpandChildrenEventHandler NotAllowedToExpandChildrenEvent;
-      //
-      public event AllowedToCollapseAllEventHandler AllowedToCollapseAllEvent;
-      public event NotAllowedToCollapseAllEventHandler NotAllowedToCollapseAllEvent;
-      //
-      public event AllowedToCollapseNodeEventHandler AllowedToCollapseNodeEvent;
-      public event NotAllowedToCollapseNodeEventHandler NotAllowedToCollapseNodeEvent;
-      //-------------------------------------------------------------------
-      public event AllowedAddAppCSEventHandler AllowedAddAppCSEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Obj-AppCS-Add" )] public event AllowedAddAppCSEventHandler AllowedAddAppCSEvent;
 
-      public event NotAllowedAddAppCSEventHandler NotAllowedAddAppCSEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Obj-AppCS-Add" )] public event NotAllowedAddAppCSEventHandler NotAllowedAddAppCSEvent;
 
-      public event BeforeAddAppCSEventHandler BeforeAddAppCSEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Obj-AppCS-Add" )] public event BeforeAddAppCSEventHandler BeforeAddAppCSEvent;
 
-      public event AfterAddAppCSEventHandler AfterAddAppCSEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Obj-AppCS-Add" )] public event AfterAddAppCSEventHandler AfterAddAppCSEvent;
 
       // -----
-      public event AllowedToCloneAppCSEventHandler AllowedToCloneAppCSEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Obj-AppCS-Clone" )] public event AllowedToCloneAppCSEventHandler AllowedToCloneAppCSEvent;
 
-      public event NotAllowedToCloneAppCSEventHandler NotAllowedToCloneAppCSEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Obj-AppCS-Clone" )] public event NotAllowedToCloneAppCSEventHandler NotAllowedToCloneAppCSEvent;
 
-      public event BeforeCloneAppCSEventHandler BeforeCloneAppCSEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Obj-AppCS-Clone" )] public event BeforeCloneAppCSEventHandler BeforeCloneAppCSEvent;
 
-      public event AfterCloneAppCSEventHandler AfterCloneAppCSEvent;
-
-      // -----
-      public event AllowedDelAppCSEventHandler AllowedDelAppCSEvent;
-
-      public event NotAllowedDelAppCSEventHandler NotAllowedDelAppCSEvent;
-
-      public event BeforeDelAppCSEventHandler BeforeDelAppCSEvent;
-
-      public event AfterDelAppCSEventHandler AfterDelAppCSEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Obj-AppCS-Clone" )] public event AfterCloneAppCSEventHandler AfterCloneAppCSEvent;
 
       // -----
-      public event FocusedAppCSChangedEventHandler FocusedAppCSChangedEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Obj-AppCS-Del" )] public event AllowedDelAppCSEventHandler AllowedDelAppCSEvent;
+
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Obj-AppCS-Del" )] public event NotAllowedDelAppCSEventHandler NotAllowedDelAppCSEvent;
+
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Obj-AppCS-Del" )] public event BeforeDelAppCSEventHandler BeforeDelAppCSEvent;
+
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Obj-AppCS-Del" )] public event AfterDelAppCSEventHandler AfterDelAppCSEvent;
+
+      // -----
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Obj-AppCS-Focused" )] public event FocusedAppCSChangedEventHandler FocusedAppCSChangedEvent;
 
       //-------------------------------------------------------------------
-      public event AllowedAddDataStoreEventHandler AllowedAddDataStoreEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Obj-DataStore-Add" )] public event AllowedAddDataStoreEventHandler AllowedAddDataStoreEvent;
 
-      public event NotAllowedAddDataStoreEventHandler NotAllowedAddDataStoreEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Obj-DataStore-Add" )] public event NotAllowedAddDataStoreEventHandler NotAllowedAddDataStoreEvent;
 
-      public event BeforeAddDataStoreEventHandler BeforeAddDataStoreEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Obj-DataStore-Add" )] public event BeforeAddDataStoreEventHandler BeforeAddDataStoreEvent;
 
-      public event AfterAddDataStoreEventHandler AfterAddDataStoreEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Obj-DataStore-Add" )] public event AfterAddDataStoreEventHandler AfterAddDataStoreEvent;
 
       // -----
-      public event AllowedToCloneDataStoreEventHandler AllowedToCloneDataStoreEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Obj-DataStore-Clone" )] public event AllowedToCloneDataStoreEventHandler AllowedToCloneDataStoreEvent;
 
-      public event NotAllowedToCloneDataStoreEventHandler NotAllowedToCloneDataStoreEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Obj-DataStore-Clone" )] public event NotAllowedToCloneDataStoreEventHandler NotAllowedToCloneDataStoreEvent;
+
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Obj-DataStore-Clone" )] public event BeforeCloneDataStoreEventHandler BeforeCloneDataStoreEvent;
+
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Obj-DataStore-Clone" )] public event AfterCloneDataStoreEventHandler AfterCloneDataStoreEvent;
 
       // -----
-      public event AllowedDelDataStoreEventHandler AllowedDelDataStoreEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Obj-DataStore-Del" )] public event AllowedDelDataStoreEventHandler AllowedDelDataStoreEvent;
 
-      public event NotAllowedDelDataStoreEventHandler NotAllowedDelDataStoreEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Obj-DataStore-Del" )] public event NotAllowedDelDataStoreEventHandler NotAllowedDelDataStoreEvent;
 
       //-------------------------------------------------------------------
-      public event FocusedDataStoreChangedEventHandler FocusedDataStoreChangedEvent;
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Obj-DataStore-Focused" )] public event FocusedDataStoreChangedEventHandler FocusedDataStoreChangedEvent;
 
       //-------------------------------------------------------------------
       #endregion
@@ -584,6 +666,7 @@ namespace LinqXml.Control
          this.cfg.VerifyWhatIsAllowed( );
          //
          this.AllowedToOpenFileEvent?.Invoke( this );
+         this.AllowedToSaveFileEvent?.Invoke( this );
          this.AllowedToSaveAsFileEvent?.Invoke( this );
          this.AllowedToCloseFileEvent?.Invoke( this );
          //@#$% Mandrake!!!
@@ -818,6 +901,7 @@ namespace LinqXml.Control
       {
          this.treeView.ExpandAll( );
       }
+
       public void ExpandNode()
       {
          TreeListMultiSelection selection = this.treeView.Selection;
@@ -827,6 +911,7 @@ namespace LinqXml.Control
             node.Expand( );
          }
       }
+
       public void ExpandChildren()
       {
          TreeListMultiSelection selection = this.treeView.Selection;
@@ -841,6 +926,7 @@ namespace LinqXml.Control
       {
          this.treeView.CollapseAll( );
       }
+
       public void CollapseNode()
       {
          TreeListMultiSelection selection = this.treeView.Selection;
@@ -890,7 +976,7 @@ namespace LinqXml.Control
          }
 
          string defaultName = $"CS{this.cfg.AppCsList.Count + 1:00000}";
-         string rtn = XtraInputBox.Show( "Enter a new unique name for it!", "New ConnectionString", defaultName );
+         string rtn = XtraInputBox.Show( "Enter a new unique name for it!", "New AppCS", defaultName );
          if( string.IsNullOrWhiteSpace( rtn ) )
          {
             args.Cancel = true;
@@ -903,14 +989,14 @@ namespace LinqXml.Control
          bool foundAtAppCS = this.cfg.ContainsAppCS( newName );
          if( foundAtAppCS )
          {
-            XtraMessageBox.Show( "Duplicate Application ConnectionString name, try again!", "Error", MessageBoxButtons.OK );
+            XtraMessageBox.Show( "Duplicate AppCS name, try again!", "Error", MessageBoxButtons.OK );
             args.Cancel = true;
             args.Exception = new AddAppCSException( "name must be unique!" );
             return;
          }
          if( foundAtSysCS )
          {
-            DialogResult dialogResult = XtraMessageBox.Show( "This name hides another System ConnectionString name!", "Warning", MessageBoxButtons.OKCancel );
+            DialogResult dialogResult = XtraMessageBox.Show( "This name hides another SysCS name!", "Warning", MessageBoxButtons.OKCancel );
             switch( dialogResult )
             {
                case DialogResult.OK:
@@ -962,7 +1048,7 @@ namespace LinqXml.Control
             }
             return;
          }
-         XtraMessageBox.Show( "Some ConnectionString need to be selected first!", "Error", MessageBoxButtons.OK );
+         XtraMessageBox.Show( "Some AppCS or SysCS need to be selected first!", "Error", MessageBoxButtons.OK );
       }
 
       public AfterCloneAppCSEventArgs CloneAppCS( ConnectionString appCS )
@@ -1120,26 +1206,8 @@ namespace LinqXml.Control
       #region --- Before and After AddDataStore EVENTS + HANDLERS + EXCEPTIONS ---
       public void AddDataStore()
       {
-         LoginUserControl myControl = new LoginUserControl( );
-         if( DevExpress.XtraEditors.XtraDialog.Show( myControl, "Sign in", MessageBoxButtons.OKCancel ) == DialogResult.OK )
-         {
-            // do something 
-         }
-         if( string.Compare( this.DefaultFileName, NEW_FILENAME, StringComparison.Ordinal ) == 0 )
-         {
-            this.AllowedToSaveAsFileEvent?.Invoke( this );
-         }
-         else
-         {
-            this.AllowedToSaveFileEvent?.Invoke( this );
-         }
-      }
-
-      public void AddDataStore( string filename )
-      {
          BeforeAddDataStoreEventArgs args1 = new BeforeAddDataStoreEventArgs( );
          AfterAddDataStoreEventArgs args2 = new AfterAddDataStoreEventArgs( args1 );
-         args1.Filename = filename;
          this.BeforeAddDataStoreEvent?.Invoke( this, args1 );
          if( !args1.Cancel )
          {
@@ -1150,8 +1218,39 @@ namespace LinqXml.Control
 
       private void AddDataStoreEvent( BeforeAddDataStoreEventArgs args )
       {
+         if( this.cfg == null )
+         {
+            args.Cancel = true;
+            args.Exception = new AddDataStoreException( "cfg is null!" );
+            return;
+         }
          try
          {
+            string defaultName = $"DS{this.cfg.DsList.Count + 1:00000}";
+            string rtn = XtraInputBox.Show( "Enter a new unique name for it!", "New DataStore", defaultName );
+            if( string.IsNullOrWhiteSpace( rtn ) )
+            {
+               args.Cancel = true;
+               args.Exception = new AddDataStoreException( "name cannot be null!" );
+               return;
+            }
+            string newName = rtn.Trim( );
+            //
+            bool foundDataStore = this.cfg.ContainsDataStore( newName );
+            if( foundDataStore )
+            {
+               XtraMessageBox.Show( "Duplicate DataStore name, try again!", "Error", MessageBoxButtons.OK );
+               args.Cancel = true;
+               args.Exception = new AddDataStoreException( "name must be unique!" );
+               return;
+            }
+            DataStore newDS = new DataStore( newName );
+            this.cfg.AddDataStore( newDS );
+            TreeListNode newNode = this.treeView.AppendNode( new object[ ] { newDS.Name }, this.dsNode );
+            newNode.ImageIndex = newNode.SelectImageIndex = 0; newNode.StateImageIndex = 0;
+            newNode.Tag = newDS;
+            //newNode.TreeList.SetFocusedNode( newNode );
+            this.treeView.SetFocusedNode( newNode );
          }
          catch( System.Exception ex )
          {
@@ -1169,14 +1268,74 @@ namespace LinqXml.Control
             return;
          }
       }
-
-      // this.AfterAddDataStoreEvent += this.AfterAddDataStoreEventPostStatuses;
       #endregion
 
+      #region --- Before and After CloneDataStore EVENTS + HANDLERS + EXCEPTIONS ---
       public void CloneDataStore()
       {
-         throw new NotImplementedException( );
+         // VERIFY IF THE APPCS IS USED BY ANYONE OR IF EXISTS A SYSCS WITH THE SAME NAME!!!
+         TreeListMultiSelection selection = this.treeView.Selection;
+         if( selection.Count > 0 )
+         {
+            TreeListNode origNode = selection[ 0 ];
+            DataStore ds = origNode.Tag as DataStore;
+            AfterCloneDataStoreEventArgs args = this.CloneDataStore( ds );
+            if( args.isOk )
+            {
+               TreeListNode newNode = this.treeView.AppendNode( new object[ ] { args.args.NewDS.Name }, this.dsNode );
+               newNode.ImageIndex = newNode.SelectImageIndex = 0; newNode.StateImageIndex = 0;
+               newNode.Tag = args.args.NewDS;
+               //newNode.TreeList.SetFocusedNode( newNode );
+               this.treeView.SetFocusedNode( newNode );
+            }
+            return;
+         }
+         XtraMessageBox.Show( "Some DataStore need to be selected first!", "Error", MessageBoxButtons.OK );
       }
+
+      public AfterCloneDataStoreEventArgs CloneDataStore( DataStore ds )
+      {
+         BeforeCloneDataStoreEventArgs args1 = new BeforeCloneDataStoreEventArgs( );
+         AfterCloneDataStoreEventArgs args2 = new AfterCloneDataStoreEventArgs( args1 );
+         args1.OrigDS = ds;
+         this.BeforeCloneDataStoreEvent?.Invoke( this, args1 );
+         if( !args1.Cancel )
+         {
+            this.CloneDataStoreEvent( args1 );
+         }
+         this.AfterCloneDataStoreEvent?.Invoke( this, args2 );
+         return args2;
+      }
+
+      private void CloneDataStoreEvent( BeforeCloneDataStoreEventArgs args )
+      {
+         try
+         {
+            DataStore o = args.OrigDS.Clone( );
+            bool contains = this.cfg.ContainsDataStore( o.Name );
+            o.Name = contains ? o.Name + "_Copy" : o.Name;
+            this.cfg.AddDataStore( o );
+            args.NewDS = o;
+         }
+         catch( System.Exception ex )
+         {
+            args.Exception = new CloneDataStoreException( null, ex );
+         }
+         finally
+         {
+         }
+      }
+
+      private void AfterCloneDataStoreEventPostStatuses( object sender, AfterCloneDataStoreEventArgs ea )
+      {
+         if( ea.isOk )
+         {
+            return;
+         }
+      }
+
+      // this.AfterCloneDataStoreEvent += this.AfterCloneDataStoreEventPostStatuses;
+      #endregion
 
       public void DelDataStore()
       {
@@ -1192,4 +1351,5 @@ namespace LinqXml.Control
          }
       }
    }
+   //
 }
