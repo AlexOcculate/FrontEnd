@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6C47B937-0951-4377-B8EE-4C3A0BD7F95A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DPEvents</RootNamespace>
+    <AssemblyName>DPEvents</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppCS\AddAppCS\AddAppCSDelegates.cs" />
+    <Compile Include="AppCS\AddAppCS\AddAppCSException.cs" />
+    <Compile Include="AppCS\AddAppCS\AfterAddAppCSEventArgs.cs" />
+    <Compile Include="AppCS\AddAppCS\BeforeAddAppCSEventArgs.cs" />
+    <Compile Include="DataStore\AddDataStore\AddDataSourceDelegates.cs" />
+    <Compile Include="DataStore\AddDataStore\AddDataStoreException.cs" />
+    <Compile Include="DataStore\AddDataStore\AfterAddDataStoreEventArgs.cs" />
+    <Compile Include="DataStore\AddDataStore\BeforeAddDataStoreEventArgs.cs" />
+    <Compile Include="DataStore\AddDataStore\InvalidDataStoreConfigurationException.cs" />
+    <Compile Include="AppCS\CloneAppCS\AfterCloneAppCSEventArgs.cs" />
+    <Compile Include="AppCS\CloneAppCS\BeforeCloneAppCSEventArgs.cs" />
+    <Compile Include="AppCS\CloneAppCS\CloneAppCSDelegates.cs" />
+    <Compile Include="AppCS\CloneAppCS\CloneAppCSException.cs" />
+    <Compile Include="DataStore\CloneDataStore\AfterCloneDataStoreEventArgs.cs" />
+    <Compile Include="DataStore\CloneDataStore\BeforeCloneDataStoreEventArgs.cs" />
+    <Compile Include="DataStore\CloneDataStore\CloneDataStoreDelegates.cs" />
+    <Compile Include="DataStore\CloneDataStore\CloneDataStoreException.cs" />
+    <Compile Include="File\CloseFile\AfterCloseFileEventArgs.cs" />
+    <Compile Include="File\CloseFile\BeforeCloseFileEventArgs.cs" />
+    <Compile Include="File\CloseFile\CloseFileDelegates.cs" />
+    <Compile Include="File\CloseFile\CloseFileException.cs" />
+    <Compile Include="AppCS\DelAppCS\AfterDelAppCSEventArgs.cs" />
+    <Compile Include="AppCS\DelAppCS\BeforeDelAppCSEventArgs.cs" />
+    <Compile Include="AppCS\DelAppCS\DelAppCSDelegates.cs" />
+    <Compile Include="AppCS\DelAppCS\DelAppCSException.cs" />
+    <Compile Include="DataStore\DelDataStore\AfterDelDataStoreEventArgs.cs" />
+    <Compile Include="DataStore\DelDataStore\BeforeDelDataStoreEventArgs.cs" />
+    <Compile Include="DataStore\DelDataStore\DelDataStoreDelegates.cs" />
+    <Compile Include="DataStore\DelDataStore\DelDataStoreException.cs" />
+    <Compile Include="ExpandCollapseNode\ExpandCollapseNode.cs" />
+    <Compile Include="AppCS\FocusedAppCSChanged\FocusedAppCSChangedEventArgs.cs" />
+    <Compile Include="AppCS\FocusedAppCSChanged\FocusedAppCSChangedDelegates.cs" />
+    <Compile Include="AppCS\FocusedAppCSChanged\FocusedAppCSChangedException.cs" />
+    <Compile Include="DataStore\FocusedDataStoreChanged\FocusedDataStoreChangedDelegates.cs" />
+    <Compile Include="DataStore\FocusedDataStoreChanged\FocusedDataStoreChangedEventArgs.cs" />
+    <Compile Include="DataStore\FocusedDataStoreChanged\FocusedDataStoreChangedException.cs" />
+    <Compile Include="File\NewFile\AfterNewFileEventArgs.cs" />
+    <Compile Include="File\NewFile\BeforeNewFileEventArgs.cs" />
+    <Compile Include="File\NewFile\NewFileDelegates.cs" />
+    <Compile Include="File\NewFile\NewFileException.cs" />
+    <Compile Include="File\OpenFile\AfterOpenFileEventArgs.cs" />
+    <Compile Include="File\OpenFile\BeforeOpenFileEventArgs.cs" />
+    <Compile Include="File\OpenFile\OpenFileDelegates.cs" />
+    <Compile Include="File\OpenFile\OpenFileException.cs" />
+    <Compile Include="Model\Configuration.cs" />
+    <Compile Include="Model\ConnectionString.cs" />
+    <Compile Include="Model\DataStore.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="File\SaveAs\AfterSaveAsFileEventArgs.cs" />
+    <Compile Include="File\SaveAs\BeforeSaveAsFileEventArgs.cs" />
+    <Compile Include="File\SaveAs\SaveAsDelegates.cs" />
+    <Compile Include="File\SaveAs\SaveAsFileException.cs" />
+    <Compile Include="File\SaveAs\SavedFileNameChangedEventArgs.cs" />
+    <Compile Include="File\SaveFile\AfterSaveFileEventArgs.cs" />
+    <Compile Include="File\SaveFile\BeforeSaveFileEventArgs.cs" />
+    <Compile Include="File\SaveFile\SaveFileDelegates.cs" />
+    <Compile Include="File\SaveFile\SaveFileException.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
