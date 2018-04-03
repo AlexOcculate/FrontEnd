@@ -55,6 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Events\DelDataStore\AfterDelDataStoreEventArgs.cs" />
+    <Compile Include="Events\DelDataStore\BeforeDelDataStoreEventArgs.cs" />
+    <Compile Include="Events\DelDataStore\DelDataStoreException.cs" />
     <Compile Include="Events\CloneDataStore\AfterCloneDataStoreEventArgs.cs" />
     <Compile Include="Events\CloneDataStore\BeforeCloneDataStoreEventArgs.cs" />
     <Compile Include="Events\CloneDataStore\CloneDataStoreException.cs" />

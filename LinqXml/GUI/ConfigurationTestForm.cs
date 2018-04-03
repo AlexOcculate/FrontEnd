@@ -9,7 +9,7 @@ namespace LinqXml
       #region --- Ctors ---
       public ConfigurationTestForm()
       {
-         this.InitializeComponent();
+         this.InitializeComponent( );
          this.configurationView1.BeforeOpenFileEvent += this.ConfigurationView1_BeforeOpenFileEvent;
          this.configurationView1.AfterOpenFileEvent += this.ConfigurationView1_AfterOpenFileEvent;
          this.configurationView1.BeforeSaveAsFileEvent += this.ConfigurationView1_BeforeSaveAsFileEvent;
@@ -129,126 +129,126 @@ namespace LinqXml
       #endregion
 
       #region --- [External Events] Observed ---
-      private void ConfigurationView1_AfterAddAppCSEvent(object sender, AfterAddAppCSEventArgs ea)
+      private void ConfigurationView1_AfterAddAppCSEvent( object sender, AfterAddAppCSEventArgs ea )
       {
       }
 
-      private void ConfigurationView1_BeforeAddAppCSEvent(object sender, BeforeAddAppCSEventArgs ea)
+      private void ConfigurationView1_BeforeAddAppCSEvent( object sender, BeforeAddAppCSEventArgs ea )
       {
       }
 
-      private void ConfigurationView1_SavedFileNameChangedEvent(object sender, SavedFileNameChangedEventArgs args)
+      private void ConfigurationView1_SavedFileNameChangedEvent( object sender, SavedFileNameChangedEventArgs args )
       {
-         string x = nameof(ConfigurationTestForm);
+         string x = nameof( ConfigurationTestForm );
          this.Text = $"{x} [{args.NewFilename}]";
       }
 
-      private void ConfigurationView1_AllowedToSaveAsFileEvent(object sender)
+      private void ConfigurationView1_AllowedToSaveAsFileEvent( object sender )
       {
          this.saveAsBarButtonItem.Enabled = true;
       }
 
-      private void ConfigurationView1_NotAllowedToSaveAsFileEvent(object sender)
+      private void ConfigurationView1_NotAllowedToSaveAsFileEvent( object sender )
       {
          this.saveAsBarButtonItem.Enabled = false;
       }
 
-      private void ConfigurationView1_NotAllowedToSaveFileEvent(object sender)
+      private void ConfigurationView1_NotAllowedToSaveFileEvent( object sender )
       {
          this.saveBarButtonItem.Enabled = false;
       }
 
-      private void ConfigurationView1_AllowedToSaveFileEvent(object sender)
+      private void ConfigurationView1_AllowedToSaveFileEvent( object sender )
       {
          this.saveBarButtonItem.Enabled = true;
       }
 
-      private void ConfigurationView1_AllowedNewFileEvent(object sender)
+      private void ConfigurationView1_AllowedNewFileEvent( object sender )
       {
          this.newBarButtonItem.Enabled = true;
       }
 
-      private void ConfigurationView1_NotAllowedNewFileEvent(object sender)
+      private void ConfigurationView1_NotAllowedNewFileEvent( object sender )
       {
          this.newBarButtonItem.Enabled = false;
       }
 
-      private void ConfigurationView1_NotAllowedToOpenFileEvent(object sender)
+      private void ConfigurationView1_NotAllowedToOpenFileEvent( object sender )
       {
          this.openBarButtonItem.Enabled = false;
       }
 
-      private void ConfigurationView1_AllowedToOpenFileEvent(object sender)
+      private void ConfigurationView1_AllowedToOpenFileEvent( object sender )
       {
          this.openBarButtonItem.Enabled = true;
       }
 
-      private void ConfigurationView1_NotAllowedToCloseFileEvent(object sender)
+      private void ConfigurationView1_NotAllowedToCloseFileEvent( object sender )
       {
          this.closeBarButtonItem.Enabled = false;
       }
 
-      private void ConfigurationView1_AllowedToCloseFileEvent(object sender)
+      private void ConfigurationView1_AllowedToCloseFileEvent( object sender )
       {
          this.closeBarButtonItem.Enabled = true;
       }
 
-      private void ConfigurationView1_NotAllowedDelDataStoreEvent(object sender)
+      private void ConfigurationView1_NotAllowedDelDataStoreEvent( object sender )
       {
          this.delDataStoreBarButtonItem.Enabled = false;
       }
 
-      private void ConfigurationView1_AllowedDelDataStoreEvent(object sender)
+      private void ConfigurationView1_AllowedDelDataStoreEvent( object sender )
       {
          this.delDataStoreBarButtonItem.Enabled = true;
       }
 
-      private void ConfigurationView1_NotAllowedAddDataStoreEvent(object sender)
+      private void ConfigurationView1_NotAllowedAddDataStoreEvent( object sender )
       {
          this.addDataStoreBarButtonItem.Enabled = false;
       }
 
-      private void ConfigurationView1_AllowedAddDataStoreEvent(object sender)
+      private void ConfigurationView1_AllowedAddDataStoreEvent( object sender )
       {
          this.addDataStoreBarButtonItem.Enabled = true;
       }
 
-      private void ConfigurationView1_NotAllowedDelAppCSEvent(object sender)
+      private void ConfigurationView1_NotAllowedDelAppCSEvent( object sender )
       {
          this.delAppCSBarButtonItem.Enabled = false;
       }
 
-      private void ConfigurationView1_AllowedDelAppCSEvent(object sender)
+      private void ConfigurationView1_AllowedDelAppCSEvent( object sender )
       {
          this.delAppCSBarButtonItem.Enabled = true;
       }
 
-      private void ConfigurationView1_AllowedAddAppCSEvent(object sender)
+      private void ConfigurationView1_AllowedAddAppCSEvent( object sender )
       {
          this.addAppCSBarButtonItem.Enabled = true;
       }
 
-      private void ConfigurationView1_NotAllowedAddAppCSEvent(object sender)
+      private void ConfigurationView1_NotAllowedAddAppCSEvent( object sender )
       {
          this.addAppCSBarButtonItem.Enabled = false;
       }
 
-      private void ConfigurationView1_AllowedToCloneDataStoreEvent(object sender)
+      private void ConfigurationView1_AllowedToCloneDataStoreEvent( object sender )
       {
          this.cloneDSBarButtonItem.Enabled = true;
       }
 
-      private void ConfigurationView1_NotAllowedToCloneDataStoreEvent(object sender)
+      private void ConfigurationView1_NotAllowedToCloneDataStoreEvent( object sender )
       {
          this.cloneDSBarButtonItem.Enabled = false;
       }
 
-      private void ConfigurationView1_AllowedToCloneAppCSEvent(object sender)
+      private void ConfigurationView1_AllowedToCloneAppCSEvent( object sender )
       {
          this.cloneAppCSBarButtonItem.Enabled = true;
       }
 
-      private void ConfigurationView1_NotAllowedToCloneAppCSEvent(object sender)
+      private void ConfigurationView1_NotAllowedToCloneAppCSEvent( object sender )
       {
          this.cloneAppCSBarButtonItem.Enabled = false;
       }
@@ -263,162 +263,173 @@ namespace LinqXml
       //   this.addAppCSBarButtonItem.Enabled = false;
       //}
 
-      private void ConfigurationView1_FocusedDataStoreChangedEvent(object sender, FocusedDataStoreChangedEventArgs ea)
+      private void ConfigurationView1_FocusedDataStoreChangedEvent( object sender, FocusedDataStoreChangedEventArgs ea )
       {
          this.objnmStatusBarStaticItem.Caption = ea.DataStore.Name + " DataStore";
       }
 
-      private void ConfigurationView1_FocusedConnectionStringChangedEvent(object sender, FocusedAppCSChangedEventArgs ea)
+      private void ConfigurationView1_FocusedConnectionStringChangedEvent( object sender, FocusedAppCSChangedEventArgs ea )
       {
          this.objnmStatusBarStaticItem.Caption = ea.ConnectionString.Name + " ConnectionString";
       }
 
-      private void ConfigurationView1_BeforeOpenFileEvent(object sender, BeforeOpenFileEventArgs ea)
+      private void ConfigurationView1_BeforeOpenFileEvent( object sender, BeforeOpenFileEventArgs ea )
       {
          this.labelStatusBarStaticItem.Caption = ea.SuggestedFilename + " Opening...";
       }
 
-      private void ConfigurationView1_AfterOpenFileEvent(object sender, AfterOpenFileEventArgs ea)
+      private void ConfigurationView1_AfterOpenFileEvent( object sender, AfterOpenFileEventArgs ea )
       {
          this.labelStatusBarStaticItem.Caption = ea.args.OpenedFilename;
-         if(ea.isOk)
+         if( ea.isOk )
          {
             this.objnmStatusBarStaticItem.Caption = " OPENED";
-         } else if(ea.hasException)
+         }
+         else if( ea.hasException )
          {
             this.objnmStatusBarStaticItem.Caption = ea.args.Exception.InnerException.Message;
          }
       }
 
-      private void ConfigurationView1_BeforeCloseFileEvent(object sender, BeforeCloseFileEventArgs ea)
+      private void ConfigurationView1_BeforeCloseFileEvent( object sender, BeforeCloseFileEventArgs ea )
       {
          this.labelStatusBarStaticItem.Caption = "Closing...";
       }
 
-      private void ConfigurationView1_AfterCloseFileEvent(object sender, AfterCloseFileEventArgs ea)
+      private void ConfigurationView1_AfterCloseFileEvent( object sender, AfterCloseFileEventArgs ea )
       {
          this.labelStatusBarStaticItem.Caption = "CLOSED";
       }
 
-      private void ConfigurationView1_BeforeSaveFileEvent(object sender, BeforeSaveFileEventArgs ea)
+      private void ConfigurationView1_BeforeSaveFileEvent( object sender, BeforeSaveFileEventArgs ea )
       {
       }
 
-      private void ConfigurationView1_AfterSaveFileEvent(object sender, AfterSaveFileEventArgs ea)
+      private void ConfigurationView1_AfterSaveFileEvent( object sender, AfterSaveFileEventArgs ea )
       {
          this.labelStatusBarStaticItem.Caption = ea.args.SavedFilename + " SAVED";
       }
 
-      private void ConfigurationView1_BeforeSaveAsFileEvent(object sender, BeforeSaveAsFileEventArgs ea)
+      private void ConfigurationView1_BeforeSaveAsFileEvent( object sender, BeforeSaveAsFileEventArgs ea )
       {
          this.labelStatusBarStaticItem.Caption = ea.SavedFilename + " Saving As...";
       }
 
-      private void ConfigurationView1_AfterSaveAsFileEvent(object sender, AfterSaveAsFileEventArgs ea)
+      private void ConfigurationView1_AfterSaveAsFileEvent( object sender, AfterSaveAsFileEventArgs ea )
       {
          this.labelStatusBarStaticItem.Caption = ea.args.SavedFilename + " SAVED AS";
+         string x = nameof( ConfigurationTestForm );
+         if( string.IsNullOrWhiteSpace( ea.SavedFilename ) )
+         {
+            this.Text = $"{x} [{ea.args.SuggestedFilename}]";
+         }
+         else
+         {
+            this.Text = $"{x} [{ea.SavedFilename}]";
+         }
       }
 
-      private void ConfigurationView1_BeforeDelAppCSEvent(object sender, BeforeDelAppCSEventArgs ea)
+      private void ConfigurationView1_BeforeDelAppCSEvent( object sender, BeforeDelAppCSEventArgs ea )
       {
       }
 
-      private void ConfigurationView1_AfterDelAppCSEvent(object sender, AfterDelAppCSEventArgs ea)
+      private void ConfigurationView1_AfterDelAppCSEvent( object sender, AfterDelAppCSEventArgs ea )
       {
       }
       #endregion
 
       #region --- [Local Events] Handlers ---
-      private void ConfigurationTestForm_Load(object sender, EventArgs e)
+      private void ConfigurationTestForm_Load( object sender, EventArgs e )
       {
-         this.configurationView1.Initialize();
+         this.configurationView1.Initialize( );
       }
 
-      private void newBarButtonItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      private void newBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
-         this.configurationView1.NewFile();
+         this.configurationView1.NewFile( );
       }
 
-      private void openBarButtonItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      private void openBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
-         this.configurationView1.OpenFile();
+         this.configurationView1.OpenFile( );
       }
 
-      private void saveBarButtonItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      private void saveBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
-         this.configurationView1.SaveFile();
+         this.configurationView1.SaveFile( );
       }
 
-      private void saveAsBarButtonItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      private void saveAsBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
-         this.configurationView1.SaveAsFile();
+         this.configurationView1.SaveAsFile( );
       }
 
-      private void closeBarButtonItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      private void closeBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
-         this.configurationView1.CloseFile();
+         this.configurationView1.CloseFile( );
       }
 
-      private void setWorkingDirectoryBarButtonItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
-      {
-      }
-
-      private void addAppCSBarButtonItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
-      {
-         this.configurationView1.AddAppCS();
-      }
-
-      private void delAppCsBarButtonItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
-      {
-         this.configurationView1.DelAppCS();
-      }
-
-      private void addDataStoreBarButtonItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
-      {
-         this.configurationView1.AddDataStore();
-      }
-
-      private void delDataStoreBarButtonItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      private void setWorkingDirectoryBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
       }
 
-      private void cloneAppCSBarButtonItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      private void addAppCSBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
-         this.configurationView1.CloneAppCS();
+         this.configurationView1.AddAppCS( );
       }
 
-      private void cloneDSBarButtonItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      private void delAppCsBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
-         this.configurationView1.CloneDataStore();
+         this.configurationView1.DelAppCS( );
+      }
+
+      private void addDataStoreBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
+      {
+         this.configurationView1.AddDataStore( );
+      }
+
+      private void delDataStoreBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
+      {
+         this.configurationView1.DelDataStore();
+      }
+
+      private void cloneAppCSBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
+      {
+         this.configurationView1.CloneAppCS( );
+      }
+
+      private void cloneDSBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
+      {
+         this.configurationView1.CloneDataStore( );
       }
 
 
       #endregion
 
       #region --- Expand and Collapse ---
-      private void expandAllBarButtonItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      private void expandAllBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
-         this.configurationView1.ExpandAll();
+         this.configurationView1.ExpandAll( );
       }
 
-      private void collapseAllBarButtonItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      private void collapseAllBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
-         this.configurationView1.CollapseAll();
+         this.configurationView1.CollapseAll( );
       }
 
-      private void expandNodeBarButtonItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      private void expandNodeBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
-         this.configurationView1.ExpandNode();
+         this.configurationView1.ExpandNode( );
       }
 
-      private void expandChildrenBarButtonItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      private void expandChildrenBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
-         this.configurationView1.ExpandChildren();
+         this.configurationView1.ExpandChildren( );
       }
 
-      private void collapsedNodeBarButtonItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      private void collapsedNodeBarButtonItem_ItemClick( object sender, DevExpress.XtraBars.ItemClickEventArgs e )
       {
-         this.configurationView1.CollapseNode();
+         this.configurationView1.CollapseNode( );
       }
       #endregion
    }

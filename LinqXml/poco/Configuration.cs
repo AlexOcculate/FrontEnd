@@ -338,7 +338,7 @@ namespace LinqXml
             return false;
          }
 
-         foreach( ConnectionString item in this.SysCsList )
+         foreach( DataStore item in this.DsList )
          {
             if( string.Compare( item.Name, nm, StringComparison.Ordinal ) == 0 )
             {

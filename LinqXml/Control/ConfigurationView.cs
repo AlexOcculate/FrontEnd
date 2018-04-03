@@ -65,6 +65,8 @@ namespace LinqXml.Control
          this.AfterDelAppCSEvent += this.AfterDelAppCSEventPostStatuses;
          //
          this.AfterAddDataStoreEvent += this.AfterAddDataStoreEventPostStatuses;
+         this.AfterCloneDataStoreEvent += this.AfterCloneDataStoreEventPostStatuses;
+         this.AfterDelDataStoreEvent += this.AfterDelDataStoreEventPostStatuses;
          //
          // this.AddAllNodes( true );
          //this.LoadNodes( );
@@ -529,6 +531,12 @@ namespace LinqXml.Control
       [Browsable( true )]
       [CategoryAttribute( "00000-Obj-DataStore-Del" )] public event NotAllowedDelDataStoreEventHandler NotAllowedDelDataStoreEvent;
 
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Obj-DataStore-Del" )] public event BeforeDelDataStoreEventHandler BeforeDelDataStoreEvent;
+
+      [Browsable( true )]
+      [CategoryAttribute( "00000-Obj-DataStore-Del" )] public event AfterDelDataStoreEventHandler AfterDelDataStoreEvent;
+
       //-------------------------------------------------------------------
       [Browsable( true )]
       [CategoryAttribute( "00000-Obj-DataStore-Focused" )] public event FocusedDataStoreChangedEventHandler FocusedDataStoreChangedEvent;
@@ -797,6 +805,10 @@ namespace LinqXml.Control
                   args.SavedFilename = dialog.FileName;
                   this.x( ).Save( args.SavedFilename, SaveOptions.None );
                   //System.IO.File.WriteAllText( dialog.FileName, this.mainModule.Text );
+               }
+               else
+               {
+                  args.SuggestedFilename = NEW_FILENAME;
                }
             }
          }
@@ -1337,10 +1349,70 @@ namespace LinqXml.Control
       // this.AfterCloneDataStoreEvent += this.AfterCloneDataStoreEventPostStatuses;
       #endregion
 
+      #region --- Before and After DelDataStore EVENTS + HANDLERS + EXCEPTIONS ---
+
       public void DelDataStore()
       {
-         string name = null;
-         DataStore delDS = this.cfg.DelDataStore( name );
+         // VERIFY IF THE APPCS IS USED BY ANYONE OR IF EXISTS A SYSCS WITH THE SAME NAME!!!
+         TreeListMultiSelection selection = this.treeView.Selection;
+         if( selection.Count > 0 )
+         {
+            TreeListNode node = selection[ 0 ];
+            DataStore ds = node.Tag as DataStore;
+            AfterDelDataStoreEventArgs args = this.DelDataStore( ds );
+            if( args.isOk )
+            {
+               if( node.NextNode != null )
+               {
+                  node.NextNode.TreeList.SetFocusedNode( node.NextNode );
+               }
+               else if( node.PrevNode != null )
+               {
+                  node.PrevNode.TreeList.SetFocusedNode( node.PrevNode );
+               }
+               node.Remove( );
+            }
+            return;
+         }
+         XtraMessageBox.Show( "Some DataStore need to be selected first!", "Error", MessageBoxButtons.OK );
+      }
+
+      public AfterDelDataStoreEventArgs DelDataStore( DataStore ds )
+      {
+         BeforeDelDataStoreEventArgs args1 = new BeforeDelDataStoreEventArgs( );
+         AfterDelDataStoreEventArgs args2 = new AfterDelDataStoreEventArgs( args1 );
+         args1.DataStore = ds;
+         this.BeforeDelDataStoreEvent?.Invoke( this, args1 );
+         if( !args1.Cancel )
+         {
+            this.DelDataStoreEvent( args1 );
+         }
+         this.AfterDelDataStoreEvent?.Invoke( this, args2 );
+         return args2;
+      }
+      //
+      private void DelDataStoreEvent( BeforeDelDataStoreEventArgs args )
+      {
+         try
+         {
+            DataStore delDS = this.cfg.DelDataStore( args.DataStore.Name );
+         }
+         catch( System.Exception ex )
+         {
+            args.Exception = new DelDataStoreException( null, ex );
+         }
+         finally
+         {
+
+         }
+      }
+      //
+      private void AfterDelDataStoreEventPostStatuses( object sender, AfterDelDataStoreEventArgs ea )
+      {
+         if( ea.isOk )
+         {
+            return;
+         }
          if( string.Compare( this.DefaultFileName, NEW_FILENAME, StringComparison.Ordinal ) == 0 )
          {
             this.AllowedToSaveAsFileEvent?.Invoke( this );
@@ -1350,6 +1422,7 @@ namespace LinqXml.Control
             this.AllowedToSaveFileEvent?.Invoke( this );
          }
       }
+      // this.AfterDelDataStoreEvent += this.AfterDelDataStoreEventPostStatuses;
+      #endregion
    }
-   //
 }
