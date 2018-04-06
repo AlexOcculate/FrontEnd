@@ -358,8 +358,9 @@ namespace DataPhilosophiae.Control
 
       #region --- [Local Events] Handlers ---
       [Browsable( true )]
-      [CategoryAttribute( "00001-File-New" )] public event AllowedNewFileEventHandler AllowedNewFileEvent;
+      [CategoryAttribute( "00001-File-New" )]
       [Description( "Gets or sets whether the \"Remove\" button is visible." )]
+      public event AllowedNewFileEventHandler AllowedNewFileEvent;
       [Browsable( true )]
       [CategoryAttribute( "00001-File-New" )] public event NotAllowedNewFileEventHandler NotAllowedNewFileEvent;
       [Browsable( true )]
@@ -1423,5 +1424,6 @@ namespace DataPhilosophiae.Control
       }
       // this.AfterDelDataStoreEvent += this.AfterDelDataStoreEventPostStatuses;
       #endregion
+
    }
 }

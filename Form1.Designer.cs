@@ -29,8 +29,8 @@
       private void InitializeComponent()
       {
          this.components = new System.ComponentModel.Container();
-         DevExpress.Utils.Animation.PushTransition pushTransition1 = new DevExpress.Utils.Animation.PushTransition();
-         DevExpress.XtraBars.Docking2010.Views.Tabbed.DockingContainer dockingContainer1 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.DockingContainer();
+         DevExpress.Utils.Animation.PushTransition pushTransition2 = new DevExpress.Utils.Animation.PushTransition();
+         DevExpress.XtraBars.Docking2010.Views.Tabbed.DockingContainer dockingContainer2 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.DockingContainer();
          this.documentGroup1 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.DocumentGroup(this.components);
          this.xtraUserControl1Document = new DevExpress.XtraBars.Docking2010.Views.Tabbed.Document(this.components);
          this.metadataItemXtraUserControlDocument = new DevExpress.XtraBars.Docking2010.Views.Tabbed.Document(this.components);
@@ -108,6 +108,7 @@
          this.errorListDockPanel = new DevExpress.XtraBars.Docking.DockPanel();
          this.errorListDockPanel_Container = new DevExpress.XtraBars.Docking.ControlContainer();
          this.errorListXtraUserControl1 = new FrontEnd.ErrorListXtraUserControl();
+         this.hideContainerRight = new DevExpress.XtraBars.Docking.AutoHideContainer();
          this.rightPanelContainer = new DevExpress.XtraBars.Docking.DockPanel();
          this.dataStorePropertiesDockPanel = new DevExpress.XtraBars.Docking.DockPanel();
          this.propertiesDockPanel_Container = new DevExpress.XtraBars.Docking.ControlContainer();
@@ -128,7 +129,6 @@
          this.dataStorePopupMenu = new DevExpress.XtraBars.PopupMenu(this.components);
          this.solutionExplorerPopupMenu = new DevExpress.XtraBars.PopupMenu(this.components);
          this.tabbedView1 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.TabbedView(this.components);
-         this.hideContainerRight = new DevExpress.XtraBars.Docking.AutoHideContainer();
          ((System.ComponentModel.ISupportInitialize)(this.documentGroup1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.xtraUserControl1Document)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.metadataItemXtraUserControlDocument)).BeginInit();
@@ -144,6 +144,7 @@
          this.taskListDockPanel_Container.SuspendLayout();
          this.errorListDockPanel.SuspendLayout();
          this.errorListDockPanel_Container.SuspendLayout();
+         this.hideContainerRight.SuspendLayout();
          this.rightPanelContainer.SuspendLayout();
          this.dataStorePropertiesDockPanel.SuspendLayout();
          this.propertiesDockPanel_Container.SuspendLayout();
@@ -159,7 +160,6 @@
          ((System.ComponentModel.ISupportInitialize)(this.dataStorePopupMenu)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.solutionExplorerPopupMenu)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.tabbedView1)).BeginInit();
-         this.hideContainerRight.SuspendLayout();
          this.SuspendLayout();
          // 
          // documentGroup1
@@ -300,7 +300,7 @@
          // workspaceManager1
          // 
          this.workspaceManager1.TargetControl = this;
-         this.workspaceManager1.TransitionType = pushTransition1;
+         this.workspaceManager1.TransitionType = pushTransition2;
          // 
          // dockingBarSubItem
          // 
@@ -878,6 +878,15 @@
          this.errorListXtraUserControl1.Size = new System.Drawing.Size(1235, 172);
          this.errorListXtraUserControl1.TabIndex = 0;
          // 
+         // hideContainerRight
+         // 
+         this.hideContainerRight.BackColor = System.Drawing.SystemColors.Control;
+         this.hideContainerRight.Controls.Add(this.rightPanelContainer);
+         this.hideContainerRight.Dock = System.Windows.Forms.DockStyle.Right;
+         this.hideContainerRight.Location = new System.Drawing.Point(1274, 53);
+         this.hideContainerRight.Name = "hideContainerRight";
+         this.hideContainerRight.Size = new System.Drawing.Size(19, 715);
+         // 
          // rightPanelContainer
          // 
          this.rightPanelContainer.ActiveChild = this.dataStorePropertiesDockPanel;
@@ -904,7 +913,7 @@
          this.dataStorePropertiesDockPanel.Location = new System.Drawing.Point(5, 23);
          this.dataStorePropertiesDockPanel.Name = "dataStorePropertiesDockPanel";
          this.dataStorePropertiesDockPanel.Options.ShowCloseButton = false;
-         this.dataStorePropertiesDockPanel.OriginalSize = new System.Drawing.Size(322, 671);
+         this.dataStorePropertiesDockPanel.OriginalSize = new System.Drawing.Size(322, 669);
          this.dataStorePropertiesDockPanel.Size = new System.Drawing.Size(322, 669);
          this.dataStorePropertiesDockPanel.TabText = "DataStore";
          this.dataStorePropertiesDockPanel.Text = "DataStore Properties";
@@ -933,7 +942,7 @@
          this.snapshotPropertiesDockPanel.Location = new System.Drawing.Point(5, 23);
          this.snapshotPropertiesDockPanel.Name = "snapshotPropertiesDockPanel";
          this.snapshotPropertiesDockPanel.Options.ShowCloseButton = false;
-         this.snapshotPropertiesDockPanel.OriginalSize = new System.Drawing.Size(322, 671);
+         this.snapshotPropertiesDockPanel.OriginalSize = new System.Drawing.Size(322, 669);
          this.snapshotPropertiesDockPanel.Size = new System.Drawing.Size(322, 669);
          this.snapshotPropertiesDockPanel.TabText = "Snapshot";
          this.snapshotPropertiesDockPanel.Text = "Snapshot Properties";
@@ -962,7 +971,7 @@
          this.projectPropertiesDockPanel.Location = new System.Drawing.Point(5, 23);
          this.projectPropertiesDockPanel.Name = "projectPropertiesDockPanel";
          this.projectPropertiesDockPanel.Options.ShowCloseButton = false;
-         this.projectPropertiesDockPanel.OriginalSize = new System.Drawing.Size(322, 671);
+         this.projectPropertiesDockPanel.OriginalSize = new System.Drawing.Size(322, 669);
          this.projectPropertiesDockPanel.Size = new System.Drawing.Size(322, 669);
          this.projectPropertiesDockPanel.TabText = "Project";
          this.projectPropertiesDockPanel.Text = "Project Properties";
@@ -1093,18 +1102,9 @@
          this.tabbedView1.Documents.AddRange(new DevExpress.XtraBars.Docking2010.Views.BaseDocument[] {
             this.xtraUserControl1Document,
             this.metadataItemXtraUserControlDocument});
-         dockingContainer1.Element = this.documentGroup1;
+         dockingContainer2.Element = this.documentGroup1;
          this.tabbedView1.RootContainer.Nodes.AddRange(new DevExpress.XtraBars.Docking2010.Views.Tabbed.DockingContainer[] {
-            dockingContainer1});
-         // 
-         // hideContainerRight
-         // 
-         this.hideContainerRight.BackColor = System.Drawing.SystemColors.Control;
-         this.hideContainerRight.Controls.Add(this.rightPanelContainer);
-         this.hideContainerRight.Dock = System.Windows.Forms.DockStyle.Right;
-         this.hideContainerRight.Location = new System.Drawing.Point(1274, 53);
-         this.hideContainerRight.Name = "hideContainerRight";
-         this.hideContainerRight.Size = new System.Drawing.Size(19, 715);
+            dockingContainer2});
          // 
          // Form1
          // 
@@ -1136,6 +1136,7 @@
          this.taskListDockPanel_Container.ResumeLayout(false);
          this.errorListDockPanel.ResumeLayout(false);
          this.errorListDockPanel_Container.ResumeLayout(false);
+         this.hideContainerRight.ResumeLayout(false);
          this.rightPanelContainer.ResumeLayout(false);
          this.dataStorePropertiesDockPanel.ResumeLayout(false);
          this.propertiesDockPanel_Container.ResumeLayout(false);
@@ -1151,7 +1152,6 @@
          ((System.ComponentModel.ISupportInitialize)(this.dataStorePopupMenu)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.solutionExplorerPopupMenu)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.tabbedView1)).EndInit();
-         this.hideContainerRight.ResumeLayout(false);
          this.ResumeLayout(false);
          this.PerformLayout();
 

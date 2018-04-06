@@ -38,8 +38,14 @@
     <Reference Include="DevExpress.Utils.v17.2" />
     <Reference Include="DevExpress.XtraBars.v17.2" />
     <Reference Include="DevExpress.Sparkline.v17.2.Core" />
+    <Reference Include="DevExpress.XtraDialogs.v17.2, Version=17.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraEditors.v17.2" />
     <Reference Include="DevExpress.Printing.v17.2.Core" />
+    <Reference Include="DevExpress.XtraTreeList.v17.2, Version=17.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraVerticalGrid.v17.2, Version=17.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DPEvents">
+      <HintPath>..\DPEvents\bin\Debug\DPEvents.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -105,6 +111,12 @@
     <Content Include="Resources\syn_yellow.svg" />
     <Content Include="Resources\tbl_red.svg" />
     <Content Include="Resources\vw_red.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DPControls\DPControls.csproj">
+      <Project>{704B78CC-0307-43B0-97C0-ABFC9A20F28B}</Project>
+      <Name>DPControls</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
