@@ -28,13 +28,14 @@
       /// </summary>
       private void InitializeComponent()
       {
+         this.components = new System.ComponentModel.Container();
          DevExpress.Utils.Animation.PushTransition pushTransition1 = new DevExpress.Utils.Animation.PushTransition();
          DevExpress.XtraBars.Docking2010.Views.Tabbed.DockingContainer dockingContainer1 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.DockingContainer();
-         this.documentGroup1 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.DocumentGroup();
-         this.document1 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.Document();
-         this.document2 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.Document();
-         this.document3 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.Document();
-         this.barManager = new DevExpress.XtraBars.BarManager();
+         this.documentGroup1 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.DocumentGroup(this.components);
+         this.document1 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.Document(this.components);
+         this.document2 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.Document(this.components);
+         this.document3 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.Document(this.components);
+         this.barManager = new DevExpress.XtraBars.BarManager(this.components);
          this.toolsBar = new DevExpress.XtraBars.Bar();
          this.skinBarSubItem = new DevExpress.XtraBars.SkinBarSubItem();
          this.workspaceMenuItem = new DevExpress.XtraBars.BarWorkspaceMenuItem();
@@ -48,23 +49,9 @@
          this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
          this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
          this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
-         this.documentManager1 = new DevExpress.XtraBars.Docking2010.DocumentManager();
-         this.tabbedView1 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.TabbedView();
-         this.dockManager1 = new DevExpress.XtraBars.Docking.DockManager();
-         this.hideContainerRight = new DevExpress.XtraBars.Docking.AutoHideContainer();
-         this.rightPanelContainer = new DevExpress.XtraBars.Docking.DockPanel();
-         this.snapshotPropsDockPanel = new DevExpress.XtraBars.Docking.DockPanel();
-         this.snapshotDockPanel_Container = new DevExpress.XtraBars.Docking.ControlContainer();
-         this.appCSPropsDockPanel = new DevExpress.XtraBars.Docking.DockPanel();
-         this.appCSDockPropsPanel_Container = new DevExpress.XtraBars.Docking.ControlContainer();
-         this.sysCSPropsDockPanel = new DevExpress.XtraBars.Docking.DockPanel();
-         this.sysCSPropsDockPanel_Container = new DevExpress.XtraBars.Docking.ControlContainer();
-         this.dataStorePropsDockPanel = new DevExpress.XtraBars.Docking.DockPanel();
-         this.dataStorePropsDockPanel_Container = new DevExpress.XtraBars.Docking.ControlContainer();
-         this.solutionPropsDockPanel = new DevExpress.XtraBars.Docking.DockPanel();
-         this.solutionPropsDockPanel_Container = new DevExpress.XtraBars.Docking.ControlContainer();
-         this.projectPropsDockPanel = new DevExpress.XtraBars.Docking.DockPanel();
-         this.projectPropsDockPanel_Container = new DevExpress.XtraBars.Docking.ControlContainer();
+         this.documentManager1 = new DevExpress.XtraBars.Docking2010.DocumentManager(this.components);
+         this.tabbedView1 = new DevExpress.XtraBars.Docking2010.Views.Tabbed.TabbedView(this.components);
+         this.dockManager1 = new DevExpress.XtraBars.Docking.DockManager(this.components);
          this.hideContainerLeft = new DevExpress.XtraBars.Docking.AutoHideContainer();
          this.leftPanelContainer = new DevExpress.XtraBars.Docking.DockPanel();
          this.dataStoreTreeDockPanel = new DevExpress.XtraBars.Docking.DockPanel();
@@ -81,9 +68,29 @@
          this.dockPanel1_Container = new DevExpress.XtraBars.Docking.ControlContainer();
          this.dockPanel2 = new DevExpress.XtraBars.Docking.DockPanel();
          this.dockPanel2_Container = new DevExpress.XtraBars.Docking.ControlContainer();
+         this.rightPanelContainer = new DevExpress.XtraBars.Docking.DockPanel();
+         this.solutionPropDockPanel = new DevExpress.XtraBars.Docking.DockPanel();
+         this.solutionPropDockPanel_Container = new DevExpress.XtraBars.Docking.ControlContainer();
+         this.solutionPropXtraUserControl = new Prop.PropXtraUserControl();
+         this.sysCSPropsDockPanel = new DevExpress.XtraBars.Docking.DockPanel();
+         this.sysCSPropsDockPanel_Container = new DevExpress.XtraBars.Docking.ControlContainer();
+         this.sysCSPropXtraUserControl = new Prop.PropXtraUserControl();
+         this.appCSPropsDockPanel = new DevExpress.XtraBars.Docking.DockPanel();
+         this.appCSDockPropsPanel_Container = new DevExpress.XtraBars.Docking.ControlContainer();
+         this.appCSPropXtraUserControl = new Prop.PropXtraUserControl();
+         this.dataStorePropsDockPanel = new DevExpress.XtraBars.Docking.DockPanel();
+         this.dataStorePropsDockPanel_Container = new DevExpress.XtraBars.Docking.ControlContainer();
+         this.dataStorePropXtraUserControl = new Prop.PropXtraUserControl();
+         this.projectPropsDockPanel = new DevExpress.XtraBars.Docking.DockPanel();
+         this.projectPropsDockPanel_Container = new DevExpress.XtraBars.Docking.ControlContainer();
+         this.projectPropXtraUserControl = new Prop.PropXtraUserControl();
+         this.snapshotPropsDockPanel = new DevExpress.XtraBars.Docking.DockPanel();
+         this.snapshotDockPanel_Container = new DevExpress.XtraBars.Docking.ControlContainer();
+         this.snapshotPropXtraUserControl = new Prop.PropXtraUserControl();
          this.dockPanel3 = new DevExpress.XtraBars.Docking.DockPanel();
          this.dockPanel3_Container = new DevExpress.XtraBars.Docking.ControlContainer();
-         this.propertiesXtraUserControl1 = new FrontEnd.PropertiesXtraUserControl();
+         this.solutionPropsDockPanel_Container = new DevExpress.XtraBars.Docking.ControlContainer();
+         this.solutionPropsDockPanel = new DevExpress.XtraBars.Docking.DockPanel();
          ((System.ComponentModel.ISupportInitialize)(this.documentGroup1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.document1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.document2)).BeginInit();
@@ -92,15 +99,6 @@
          ((System.ComponentModel.ISupportInitialize)(this.documentManager1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.tabbedView1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.dockManager1)).BeginInit();
-         this.hideContainerRight.SuspendLayout();
-         this.rightPanelContainer.SuspendLayout();
-         this.snapshotPropsDockPanel.SuspendLayout();
-         this.appCSPropsDockPanel.SuspendLayout();
-         this.sysCSPropsDockPanel.SuspendLayout();
-         this.sysCSPropsDockPanel_Container.SuspendLayout();
-         this.dataStorePropsDockPanel.SuspendLayout();
-         this.solutionPropsDockPanel.SuspendLayout();
-         this.projectPropsDockPanel.SuspendLayout();
          this.hideContainerLeft.SuspendLayout();
          this.leftPanelContainer.SuspendLayout();
          this.dataStoreTreeDockPanel.SuspendLayout();
@@ -111,7 +109,21 @@
          this.jobListDockPanel.SuspendLayout();
          this.dockPanel1.SuspendLayout();
          this.dockPanel2.SuspendLayout();
+         this.rightPanelContainer.SuspendLayout();
+         this.solutionPropDockPanel.SuspendLayout();
+         this.solutionPropDockPanel_Container.SuspendLayout();
+         this.sysCSPropsDockPanel.SuspendLayout();
+         this.sysCSPropsDockPanel_Container.SuspendLayout();
+         this.appCSPropsDockPanel.SuspendLayout();
+         this.appCSDockPropsPanel_Container.SuspendLayout();
+         this.dataStorePropsDockPanel.SuspendLayout();
+         this.dataStorePropsDockPanel_Container.SuspendLayout();
+         this.projectPropsDockPanel.SuspendLayout();
+         this.projectPropsDockPanel_Container.SuspendLayout();
+         this.snapshotPropsDockPanel.SuspendLayout();
+         this.snapshotDockPanel_Container.SuspendLayout();
          this.dockPanel3.SuspendLayout();
+         this.solutionPropsDockPanel.SuspendLayout();
          this.SuspendLayout();
          // 
          // documentGroup1
@@ -300,13 +312,13 @@
          // dockManager1
          // 
          this.dockManager1.AutoHideContainers.AddRange(new DevExpress.XtraBars.Docking.AutoHideContainer[] {
-            this.hideContainerRight,
             this.hideContainerLeft,
             this.hideContainerBottom});
          this.dockManager1.Form = this;
          this.dockManager1.RootPanels.AddRange(new DevExpress.XtraBars.Docking.DockPanel[] {
             this.dockPanel1,
             this.dockPanel2,
+            this.rightPanelContainer,
             this.dockPanel3});
          this.dockManager1.TopZIndexControls.AddRange(new string[] {
             "DevExpress.XtraBars.BarDockControl",
@@ -319,145 +331,6 @@
             "DevExpress.XtraBars.Navigation.OfficeNavigationBar",
             "DevExpress.XtraBars.Navigation.TileNavPane",
             "DevExpress.XtraBars.TabFormControl"});
-         // 
-         // hideContainerRight
-         // 
-         this.hideContainerRight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(239)))));
-         this.hideContainerRight.Controls.Add(this.rightPanelContainer);
-         this.hideContainerRight.Dock = System.Windows.Forms.DockStyle.Right;
-         this.hideContainerRight.Location = new System.Drawing.Point(913, 51);
-         this.hideContainerRight.Name = "hideContainerRight";
-         this.hideContainerRight.Size = new System.Drawing.Size(19, 522);
-         // 
-         // rightPanelContainer
-         // 
-         this.rightPanelContainer.ActiveChild = this.sysCSPropsDockPanel;
-         this.rightPanelContainer.Controls.Add(this.appCSPropsDockPanel);
-         this.rightPanelContainer.Controls.Add(this.sysCSPropsDockPanel);
-         this.rightPanelContainer.Controls.Add(this.dataStorePropsDockPanel);
-         this.rightPanelContainer.Controls.Add(this.solutionPropsDockPanel);
-         this.rightPanelContainer.Controls.Add(this.projectPropsDockPanel);
-         this.rightPanelContainer.Controls.Add(this.snapshotPropsDockPanel);
-         this.rightPanelContainer.Dock = DevExpress.XtraBars.Docking.DockingStyle.Right;
-         this.rightPanelContainer.ID = new System.Guid("90a39f12-7076-4633-b031-3dabddc505aa");
-         this.rightPanelContainer.Location = new System.Drawing.Point(0, 0);
-         this.rightPanelContainer.Name = "rightPanelContainer";
-         this.rightPanelContainer.OriginalSize = new System.Drawing.Size(308, 200);
-         this.rightPanelContainer.SavedDock = DevExpress.XtraBars.Docking.DockingStyle.Right;
-         this.rightPanelContainer.SavedIndex = 2;
-         this.rightPanelContainer.Size = new System.Drawing.Size(308, 503);
-         this.rightPanelContainer.Tabbed = true;
-         this.rightPanelContainer.Text = "rightPanelContainer";
-         this.rightPanelContainer.Visibility = DevExpress.XtraBars.Docking.DockVisibility.AutoHide;
-         // 
-         // snapshotPropsDockPanel
-         // 
-         this.snapshotPropsDockPanel.Controls.Add(this.snapshotDockPanel_Container);
-         this.snapshotPropsDockPanel.Dock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
-         this.snapshotPropsDockPanel.ID = new System.Guid("e6927893-eea0-4efa-a163-2e0e90f255d3");
-         this.snapshotPropsDockPanel.Location = new System.Drawing.Point(5, 23);
-         this.snapshotPropsDockPanel.Name = "snapshotPropsDockPanel";
-         this.snapshotPropsDockPanel.OriginalSize = new System.Drawing.Size(299, 495);
-         this.snapshotPropsDockPanel.Size = new System.Drawing.Size(299, 476);
-         this.snapshotPropsDockPanel.Text = "Snapshot";
-         // 
-         // snapshotDockPanel_Container
-         // 
-         this.snapshotDockPanel_Container.Location = new System.Drawing.Point(0, 0);
-         this.snapshotDockPanel_Container.Name = "snapshotDockPanel_Container";
-         this.snapshotDockPanel_Container.Size = new System.Drawing.Size(299, 476);
-         this.snapshotDockPanel_Container.TabIndex = 0;
-         // 
-         // appCSPropsDockPanel
-         // 
-         this.appCSPropsDockPanel.Controls.Add(this.appCSDockPropsPanel_Container);
-         this.appCSPropsDockPanel.Dock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
-         this.appCSPropsDockPanel.ID = new System.Guid("093982b7-c244-4753-a3e8-f8b655733ff8");
-         this.appCSPropsDockPanel.Location = new System.Drawing.Point(5, 23);
-         this.appCSPropsDockPanel.Name = "appCSPropsDockPanel";
-         this.appCSPropsDockPanel.OriginalSize = new System.Drawing.Size(299, 495);
-         this.appCSPropsDockPanel.Size = new System.Drawing.Size(299, 476);
-         this.appCSPropsDockPanel.Text = "AppCS";
-         // 
-         // appCSDockPropsPanel_Container
-         // 
-         this.appCSDockPropsPanel_Container.Location = new System.Drawing.Point(0, 0);
-         this.appCSDockPropsPanel_Container.Name = "appCSDockPropsPanel_Container";
-         this.appCSDockPropsPanel_Container.Size = new System.Drawing.Size(299, 476);
-         this.appCSDockPropsPanel_Container.TabIndex = 0;
-         // 
-         // sysCSPropsDockPanel
-         // 
-         this.sysCSPropsDockPanel.Controls.Add(this.sysCSPropsDockPanel_Container);
-         this.sysCSPropsDockPanel.Dock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
-         this.sysCSPropsDockPanel.ID = new System.Guid("e12fbb2e-c9ea-43c9-96dd-de5e12bb3b2a");
-         this.sysCSPropsDockPanel.Location = new System.Drawing.Point(5, 23);
-         this.sysCSPropsDockPanel.Name = "sysCSPropsDockPanel";
-         this.sysCSPropsDockPanel.OriginalSize = new System.Drawing.Size(299, 495);
-         this.sysCSPropsDockPanel.Size = new System.Drawing.Size(299, 476);
-         this.sysCSPropsDockPanel.Text = "SysCS";
-         // 
-         // sysCSPropsDockPanel_Container
-         // 
-         this.sysCSPropsDockPanel_Container.Controls.Add(this.propertiesXtraUserControl1);
-         this.sysCSPropsDockPanel_Container.Location = new System.Drawing.Point(0, 0);
-         this.sysCSPropsDockPanel_Container.Name = "sysCSPropsDockPanel_Container";
-         this.sysCSPropsDockPanel_Container.Size = new System.Drawing.Size(299, 476);
-         this.sysCSPropsDockPanel_Container.TabIndex = 0;
-         // 
-         // dataStorePropsDockPanel
-         // 
-         this.dataStorePropsDockPanel.Controls.Add(this.dataStorePropsDockPanel_Container);
-         this.dataStorePropsDockPanel.Dock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
-         this.dataStorePropsDockPanel.ID = new System.Guid("d2d18cbf-765b-4e24-8f54-a49663211d6e");
-         this.dataStorePropsDockPanel.Location = new System.Drawing.Point(5, 23);
-         this.dataStorePropsDockPanel.Name = "dataStorePropsDockPanel";
-         this.dataStorePropsDockPanel.OriginalSize = new System.Drawing.Size(299, 495);
-         this.dataStorePropsDockPanel.Size = new System.Drawing.Size(299, 476);
-         this.dataStorePropsDockPanel.Text = "DataStore";
-         // 
-         // dataStorePropsDockPanel_Container
-         // 
-         this.dataStorePropsDockPanel_Container.Location = new System.Drawing.Point(0, 0);
-         this.dataStorePropsDockPanel_Container.Name = "dataStorePropsDockPanel_Container";
-         this.dataStorePropsDockPanel_Container.Size = new System.Drawing.Size(299, 476);
-         this.dataStorePropsDockPanel_Container.TabIndex = 0;
-         // 
-         // solutionPropsDockPanel
-         // 
-         this.solutionPropsDockPanel.Controls.Add(this.solutionPropsDockPanel_Container);
-         this.solutionPropsDockPanel.Dock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
-         this.solutionPropsDockPanel.ID = new System.Guid("65c77ea7-a190-4865-9a58-564934fac637");
-         this.solutionPropsDockPanel.Location = new System.Drawing.Point(5, 23);
-         this.solutionPropsDockPanel.Name = "solutionPropsDockPanel";
-         this.solutionPropsDockPanel.OriginalSize = new System.Drawing.Size(299, 495);
-         this.solutionPropsDockPanel.Size = new System.Drawing.Size(299, 476);
-         this.solutionPropsDockPanel.Text = "Solution";
-         // 
-         // solutionPropsDockPanel_Container
-         // 
-         this.solutionPropsDockPanel_Container.Location = new System.Drawing.Point(0, 0);
-         this.solutionPropsDockPanel_Container.Name = "solutionPropsDockPanel_Container";
-         this.solutionPropsDockPanel_Container.Size = new System.Drawing.Size(299, 476);
-         this.solutionPropsDockPanel_Container.TabIndex = 0;
-         // 
-         // projectPropsDockPanel
-         // 
-         this.projectPropsDockPanel.Controls.Add(this.projectPropsDockPanel_Container);
-         this.projectPropsDockPanel.Dock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
-         this.projectPropsDockPanel.ID = new System.Guid("feb05806-d13f-430c-84d7-fddab398ef71");
-         this.projectPropsDockPanel.Location = new System.Drawing.Point(5, 23);
-         this.projectPropsDockPanel.Name = "projectPropsDockPanel";
-         this.projectPropsDockPanel.OriginalSize = new System.Drawing.Size(299, 495);
-         this.projectPropsDockPanel.Size = new System.Drawing.Size(299, 476);
-         this.projectPropsDockPanel.Text = "Project";
-         // 
-         // projectPropsDockPanel_Container
-         // 
-         this.projectPropsDockPanel_Container.Location = new System.Drawing.Point(0, 0);
-         this.projectPropsDockPanel_Container.Name = "projectPropsDockPanel_Container";
-         this.projectPropsDockPanel_Container.Size = new System.Drawing.Size(299, 476);
-         this.projectPropsDockPanel_Container.TabIndex = 0;
          // 
          // hideContainerLeft
          // 
@@ -528,7 +401,7 @@
          this.hideContainerBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
          this.hideContainerBottom.Location = new System.Drawing.Point(19, 554);
          this.hideContainerBottom.Name = "hideContainerBottom";
-         this.hideContainerBottom.Size = new System.Drawing.Size(894, 19);
+         this.hideContainerBottom.Size = new System.Drawing.Size(913, 19);
          // 
          // bottomPanelContainer
          // 
@@ -599,7 +472,7 @@
          // 
          this.dockPanel1_Container.Location = new System.Drawing.Point(0, 0);
          this.dockPanel1_Container.Name = "dockPanel1_Container";
-         this.dockPanel1_Container.Size = new System.Drawing.Size(888, 475);
+         this.dockPanel1_Container.Size = new System.Drawing.Size(502, 475);
          this.dockPanel1_Container.TabIndex = 0;
          // 
          // dockPanel2
@@ -615,8 +488,194 @@
          // 
          this.dockPanel2_Container.Location = new System.Drawing.Point(0, 0);
          this.dockPanel2_Container.Name = "dockPanel2_Container";
-         this.dockPanel2_Container.Size = new System.Drawing.Size(888, 475);
+         this.dockPanel2_Container.Size = new System.Drawing.Size(502, 475);
          this.dockPanel2_Container.TabIndex = 0;
+         // 
+         // rightPanelContainer
+         // 
+         this.rightPanelContainer.ActiveChild = this.snapshotPropsDockPanel;
+         this.rightPanelContainer.Controls.Add(this.sysCSPropsDockPanel);
+         this.rightPanelContainer.Controls.Add(this.appCSPropsDockPanel);
+         this.rightPanelContainer.Controls.Add(this.dataStorePropsDockPanel);
+         this.rightPanelContainer.Controls.Add(this.solutionPropDockPanel);
+         this.rightPanelContainer.Controls.Add(this.projectPropsDockPanel);
+         this.rightPanelContainer.Controls.Add(this.snapshotPropsDockPanel);
+         this.rightPanelContainer.Dock = DevExpress.XtraBars.Docking.DockingStyle.Right;
+         this.rightPanelContainer.ID = new System.Guid("90a39f12-7076-4633-b031-3dabddc505aa");
+         this.rightPanelContainer.Location = new System.Drawing.Point(527, 51);
+         this.rightPanelContainer.Name = "rightPanelContainer";
+         this.rightPanelContainer.OriginalSize = new System.Drawing.Size(405, 200);
+         this.rightPanelContainer.Size = new System.Drawing.Size(405, 503);
+         this.rightPanelContainer.Tabbed = true;
+         this.rightPanelContainer.Text = "rightPanelContainer";
+         // 
+         // solutionPropDockPanel
+         // 
+         this.solutionPropDockPanel.Controls.Add(this.solutionPropDockPanel_Container);
+         this.solutionPropDockPanel.Dock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
+         this.solutionPropDockPanel.ID = new System.Guid("96fc9dbb-e1d1-41c8-a6d0-2b1ebd3bd5ae");
+         this.solutionPropDockPanel.Location = new System.Drawing.Point(5, 23);
+         this.solutionPropDockPanel.Name = "solutionPropDockPanel";
+         this.solutionPropDockPanel.OriginalSize = new System.Drawing.Size(200, 200);
+         this.solutionPropDockPanel.Size = new System.Drawing.Size(396, 449);
+         this.solutionPropDockPanel.Text = "Solution";
+         // 
+         // solutionPropDockPanel_Container
+         // 
+         this.solutionPropDockPanel_Container.Controls.Add(this.solutionPropXtraUserControl);
+         this.solutionPropDockPanel_Container.Location = new System.Drawing.Point(0, 0);
+         this.solutionPropDockPanel_Container.Name = "solutionPropDockPanel_Container";
+         this.solutionPropDockPanel_Container.Size = new System.Drawing.Size(396, 449);
+         this.solutionPropDockPanel_Container.TabIndex = 0;
+         // 
+         // solutionPropXtraUserControl
+         // 
+         this.solutionPropXtraUserControl.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.solutionPropXtraUserControl.Location = new System.Drawing.Point(0, 0);
+         this.solutionPropXtraUserControl.Margin = new System.Windows.Forms.Padding(2);
+         this.solutionPropXtraUserControl.Name = "solutionPropXtraUserControl";
+         this.solutionPropXtraUserControl.Size = new System.Drawing.Size(396, 449);
+         this.solutionPropXtraUserControl.TabIndex = 0;
+         // 
+         // sysCSPropsDockPanel
+         // 
+         this.sysCSPropsDockPanel.Controls.Add(this.sysCSPropsDockPanel_Container);
+         this.sysCSPropsDockPanel.Dock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
+         this.sysCSPropsDockPanel.ID = new System.Guid("e12fbb2e-c9ea-43c9-96dd-de5e12bb3b2a");
+         this.sysCSPropsDockPanel.Location = new System.Drawing.Point(5, 23);
+         this.sysCSPropsDockPanel.Name = "sysCSPropsDockPanel";
+         this.sysCSPropsDockPanel.OriginalSize = new System.Drawing.Size(299, 449);
+         this.sysCSPropsDockPanel.Size = new System.Drawing.Size(396, 449);
+         this.sysCSPropsDockPanel.Text = "SysCS";
+         // 
+         // sysCSPropsDockPanel_Container
+         // 
+         this.sysCSPropsDockPanel_Container.Controls.Add(this.sysCSPropXtraUserControl);
+         this.sysCSPropsDockPanel_Container.Location = new System.Drawing.Point(0, 0);
+         this.sysCSPropsDockPanel_Container.Name = "sysCSPropsDockPanel_Container";
+         this.sysCSPropsDockPanel_Container.Size = new System.Drawing.Size(396, 449);
+         this.sysCSPropsDockPanel_Container.TabIndex = 0;
+         // 
+         // sysCSPropXtraUserControl
+         // 
+         this.sysCSPropXtraUserControl.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.sysCSPropXtraUserControl.Location = new System.Drawing.Point(0, 0);
+         this.sysCSPropXtraUserControl.Margin = new System.Windows.Forms.Padding(2);
+         this.sysCSPropXtraUserControl.Name = "sysCSPropXtraUserControl";
+         this.sysCSPropXtraUserControl.Size = new System.Drawing.Size(396, 449);
+         this.sysCSPropXtraUserControl.TabIndex = 0;
+         // 
+         // appCSPropsDockPanel
+         // 
+         this.appCSPropsDockPanel.Controls.Add(this.appCSDockPropsPanel_Container);
+         this.appCSPropsDockPanel.Dock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
+         this.appCSPropsDockPanel.ID = new System.Guid("093982b7-c244-4753-a3e8-f8b655733ff8");
+         this.appCSPropsDockPanel.Location = new System.Drawing.Point(5, 23);
+         this.appCSPropsDockPanel.Name = "appCSPropsDockPanel";
+         this.appCSPropsDockPanel.OriginalSize = new System.Drawing.Size(299, 449);
+         this.appCSPropsDockPanel.Size = new System.Drawing.Size(396, 449);
+         this.appCSPropsDockPanel.Text = "AppCS";
+         // 
+         // appCSDockPropsPanel_Container
+         // 
+         this.appCSDockPropsPanel_Container.Controls.Add(this.appCSPropXtraUserControl);
+         this.appCSDockPropsPanel_Container.Location = new System.Drawing.Point(0, 0);
+         this.appCSDockPropsPanel_Container.Name = "appCSDockPropsPanel_Container";
+         this.appCSDockPropsPanel_Container.Size = new System.Drawing.Size(396, 449);
+         this.appCSDockPropsPanel_Container.TabIndex = 0;
+         // 
+         // appCSPropXtraUserControl
+         // 
+         this.appCSPropXtraUserControl.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.appCSPropXtraUserControl.Location = new System.Drawing.Point(0, 0);
+         this.appCSPropXtraUserControl.Margin = new System.Windows.Forms.Padding(2);
+         this.appCSPropXtraUserControl.Name = "appCSPropXtraUserControl";
+         this.appCSPropXtraUserControl.Size = new System.Drawing.Size(396, 449);
+         this.appCSPropXtraUserControl.TabIndex = 0;
+         // 
+         // dataStorePropsDockPanel
+         // 
+         this.dataStorePropsDockPanel.Controls.Add(this.dataStorePropsDockPanel_Container);
+         this.dataStorePropsDockPanel.Dock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
+         this.dataStorePropsDockPanel.ID = new System.Guid("d2d18cbf-765b-4e24-8f54-a49663211d6e");
+         this.dataStorePropsDockPanel.Location = new System.Drawing.Point(5, 23);
+         this.dataStorePropsDockPanel.Name = "dataStorePropsDockPanel";
+         this.dataStorePropsDockPanel.OriginalSize = new System.Drawing.Size(299, 449);
+         this.dataStorePropsDockPanel.Size = new System.Drawing.Size(396, 449);
+         this.dataStorePropsDockPanel.Text = "DataStore";
+         // 
+         // dataStorePropsDockPanel_Container
+         // 
+         this.dataStorePropsDockPanel_Container.Controls.Add(this.dataStorePropXtraUserControl);
+         this.dataStorePropsDockPanel_Container.Location = new System.Drawing.Point(0, 0);
+         this.dataStorePropsDockPanel_Container.Name = "dataStorePropsDockPanel_Container";
+         this.dataStorePropsDockPanel_Container.Size = new System.Drawing.Size(396, 449);
+         this.dataStorePropsDockPanel_Container.TabIndex = 0;
+         // 
+         // dataStorePropXtraUserControl
+         // 
+         this.dataStorePropXtraUserControl.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.dataStorePropXtraUserControl.Location = new System.Drawing.Point(0, 0);
+         this.dataStorePropXtraUserControl.Margin = new System.Windows.Forms.Padding(2);
+         this.dataStorePropXtraUserControl.Name = "dataStorePropXtraUserControl";
+         this.dataStorePropXtraUserControl.Size = new System.Drawing.Size(396, 449);
+         this.dataStorePropXtraUserControl.TabIndex = 0;
+         // 
+         // projectPropsDockPanel
+         // 
+         this.projectPropsDockPanel.Controls.Add(this.projectPropsDockPanel_Container);
+         this.projectPropsDockPanel.Dock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
+         this.projectPropsDockPanel.ID = new System.Guid("feb05806-d13f-430c-84d7-fddab398ef71");
+         this.projectPropsDockPanel.Location = new System.Drawing.Point(5, 23);
+         this.projectPropsDockPanel.Name = "projectPropsDockPanel";
+         this.projectPropsDockPanel.OriginalSize = new System.Drawing.Size(299, 449);
+         this.projectPropsDockPanel.Size = new System.Drawing.Size(396, 449);
+         this.projectPropsDockPanel.Text = "Project";
+         // 
+         // projectPropsDockPanel_Container
+         // 
+         this.projectPropsDockPanel_Container.Controls.Add(this.projectPropXtraUserControl);
+         this.projectPropsDockPanel_Container.Location = new System.Drawing.Point(0, 0);
+         this.projectPropsDockPanel_Container.Name = "projectPropsDockPanel_Container";
+         this.projectPropsDockPanel_Container.Size = new System.Drawing.Size(396, 449);
+         this.projectPropsDockPanel_Container.TabIndex = 0;
+         // 
+         // projectPropXtraUserControl
+         // 
+         this.projectPropXtraUserControl.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.projectPropXtraUserControl.Location = new System.Drawing.Point(0, 0);
+         this.projectPropXtraUserControl.Margin = new System.Windows.Forms.Padding(2);
+         this.projectPropXtraUserControl.Name = "projectPropXtraUserControl";
+         this.projectPropXtraUserControl.Size = new System.Drawing.Size(396, 449);
+         this.projectPropXtraUserControl.TabIndex = 0;
+         // 
+         // snapshotPropsDockPanel
+         // 
+         this.snapshotPropsDockPanel.Controls.Add(this.snapshotDockPanel_Container);
+         this.snapshotPropsDockPanel.Dock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
+         this.snapshotPropsDockPanel.ID = new System.Guid("e6927893-eea0-4efa-a163-2e0e90f255d3");
+         this.snapshotPropsDockPanel.Location = new System.Drawing.Point(5, 23);
+         this.snapshotPropsDockPanel.Name = "snapshotPropsDockPanel";
+         this.snapshotPropsDockPanel.OriginalSize = new System.Drawing.Size(299, 449);
+         this.snapshotPropsDockPanel.Size = new System.Drawing.Size(396, 449);
+         this.snapshotPropsDockPanel.Text = "Snapshot";
+         // 
+         // snapshotDockPanel_Container
+         // 
+         this.snapshotDockPanel_Container.Controls.Add(this.snapshotPropXtraUserControl);
+         this.snapshotDockPanel_Container.Location = new System.Drawing.Point(0, 0);
+         this.snapshotDockPanel_Container.Name = "snapshotDockPanel_Container";
+         this.snapshotDockPanel_Container.Size = new System.Drawing.Size(396, 449);
+         this.snapshotDockPanel_Container.TabIndex = 0;
+         // 
+         // snapshotPropXtraUserControl
+         // 
+         this.snapshotPropXtraUserControl.Dock = System.Windows.Forms.DockStyle.Fill;
+         this.snapshotPropXtraUserControl.Location = new System.Drawing.Point(0, 0);
+         this.snapshotPropXtraUserControl.Margin = new System.Windows.Forms.Padding(2);
+         this.snapshotPropXtraUserControl.Name = "snapshotPropXtraUserControl";
+         this.snapshotPropXtraUserControl.Size = new System.Drawing.Size(396, 449);
+         this.snapshotPropXtraUserControl.TabIndex = 0;
          // 
          // dockPanel3
          // 
@@ -631,25 +690,35 @@
          // 
          this.dockPanel3_Container.Location = new System.Drawing.Point(0, 0);
          this.dockPanel3_Container.Name = "dockPanel3_Container";
-         this.dockPanel3_Container.Size = new System.Drawing.Size(888, 475);
+         this.dockPanel3_Container.Size = new System.Drawing.Size(502, 475);
          this.dockPanel3_Container.TabIndex = 0;
          // 
-         // propertiesXtraUserControl1
+         // solutionPropsDockPanel_Container
          // 
-         this.propertiesXtraUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-         this.propertiesXtraUserControl1.Location = new System.Drawing.Point(0, 0);
-         this.propertiesXtraUserControl1.Name = "propertiesXtraUserControl1";
-         this.propertiesXtraUserControl1.Size = new System.Drawing.Size(299, 476);
-         this.propertiesXtraUserControl1.TabIndex = 0;
+         this.solutionPropsDockPanel_Container.Location = new System.Drawing.Point(0, 0);
+         this.solutionPropsDockPanel_Container.Name = "solutionPropsDockPanel_Container";
+         this.solutionPropsDockPanel_Container.Size = new System.Drawing.Size(299, 449);
+         this.solutionPropsDockPanel_Container.TabIndex = 0;
+         // 
+         // solutionPropsDockPanel
+         // 
+         this.solutionPropsDockPanel.Controls.Add(this.solutionPropsDockPanel_Container);
+         this.solutionPropsDockPanel.Dock = DevExpress.XtraBars.Docking.DockingStyle.Fill;
+         this.solutionPropsDockPanel.ID = new System.Guid("65c77ea7-a190-4865-9a58-564934fac637");
+         this.solutionPropsDockPanel.Location = new System.Drawing.Point(5, 23);
+         this.solutionPropsDockPanel.Name = "solutionPropsDockPanel";
+         this.solutionPropsDockPanel.OriginalSize = new System.Drawing.Size(299, 476);
+         this.solutionPropsDockPanel.Size = new System.Drawing.Size(299, 449);
+         this.solutionPropsDockPanel.Text = "Solution";
          // 
          // Form1
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(932, 596);
+         this.Controls.Add(this.rightPanelContainer);
          this.Controls.Add(this.hideContainerBottom);
          this.Controls.Add(this.hideContainerLeft);
-         this.Controls.Add(this.hideContainerRight);
          this.Controls.Add(this.barDockControlLeft);
          this.Controls.Add(this.barDockControlRight);
          this.Controls.Add(this.barDockControlBottom);
@@ -665,15 +734,6 @@
          ((System.ComponentModel.ISupportInitialize)(this.documentManager1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.tabbedView1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.dockManager1)).EndInit();
-         this.hideContainerRight.ResumeLayout(false);
-         this.rightPanelContainer.ResumeLayout(false);
-         this.snapshotPropsDockPanel.ResumeLayout(false);
-         this.appCSPropsDockPanel.ResumeLayout(false);
-         this.sysCSPropsDockPanel.ResumeLayout(false);
-         this.sysCSPropsDockPanel_Container.ResumeLayout(false);
-         this.dataStorePropsDockPanel.ResumeLayout(false);
-         this.solutionPropsDockPanel.ResumeLayout(false);
-         this.projectPropsDockPanel.ResumeLayout(false);
          this.hideContainerLeft.ResumeLayout(false);
          this.leftPanelContainer.ResumeLayout(false);
          this.dataStoreTreeDockPanel.ResumeLayout(false);
@@ -684,7 +744,21 @@
          this.jobListDockPanel.ResumeLayout(false);
          this.dockPanel1.ResumeLayout(false);
          this.dockPanel2.ResumeLayout(false);
+         this.rightPanelContainer.ResumeLayout(false);
+         this.solutionPropDockPanel.ResumeLayout(false);
+         this.solutionPropDockPanel_Container.ResumeLayout(false);
+         this.sysCSPropsDockPanel.ResumeLayout(false);
+         this.sysCSPropsDockPanel_Container.ResumeLayout(false);
+         this.appCSPropsDockPanel.ResumeLayout(false);
+         this.appCSDockPropsPanel_Container.ResumeLayout(false);
+         this.dataStorePropsDockPanel.ResumeLayout(false);
+         this.dataStorePropsDockPanel_Container.ResumeLayout(false);
+         this.projectPropsDockPanel.ResumeLayout(false);
+         this.projectPropsDockPanel_Container.ResumeLayout(false);
+         this.snapshotPropsDockPanel.ResumeLayout(false);
+         this.snapshotDockPanel_Container.ResumeLayout(false);
          this.dockPanel3.ResumeLayout(false);
+         this.solutionPropsDockPanel.ResumeLayout(false);
          this.ResumeLayout(false);
          this.PerformLayout();
 
@@ -718,8 +792,8 @@
       private DevExpress.XtraBars.Docking.ControlContainer sysCSPropsDockPanel_Container;
       private DevExpress.XtraBars.Docking.DockPanel dataStorePropsDockPanel;
       private DevExpress.XtraBars.Docking.ControlContainer dataStorePropsDockPanel_Container;
-      private DevExpress.XtraBars.Docking.DockPanel solutionPropsDockPanel;
-      private DevExpress.XtraBars.Docking.ControlContainer solutionPropsDockPanel_Container;
+      private DevExpress.XtraBars.Docking.DockPanel solutionPropDockPanel;
+      private DevExpress.XtraBars.Docking.ControlContainer solutionPropDockPanel_Container;
       private DevExpress.XtraBars.Docking.DockPanel projectPropsDockPanel;
       private DevExpress.XtraBars.Docking.ControlContainer projectPropsDockPanel_Container;
       private DevExpress.XtraBars.Docking.DockPanel snapshotPropsDockPanel;
@@ -740,12 +814,18 @@
       private DevExpress.XtraBars.Docking2010.Views.Tabbed.DocumentGroup documentGroup1;
       private DevExpress.XtraBars.Docking.AutoHideContainer hideContainerBottom;
       private DevExpress.XtraBars.Docking.AutoHideContainer hideContainerLeft;
-      private DevExpress.XtraBars.Docking.AutoHideContainer hideContainerRight;
       private DevExpress.XtraBars.SkinBarSubItem skinBarSubItem;
       private DevExpress.XtraBars.BarWorkspaceMenuItem workspaceMenuItem;
       private DevExpress.Utils.WorkspaceManager workspaceManager1;
       private DevExpress.XtraBars.BarDockingMenuItem dockingMenuItem;
-      private FrontEnd.PropertiesXtraUserControl propertiesXtraUserControl1;
+      private DevExpress.XtraBars.Docking.ControlContainer solutionPropsDockPanel_Container;
+      private DevExpress.XtraBars.Docking.DockPanel solutionPropsDockPanel;
+      private Prop.PropXtraUserControl sysCSPropXtraUserControl;
+      private Prop.PropXtraUserControl appCSPropXtraUserControl;
+      private Prop.PropXtraUserControl dataStorePropXtraUserControl;
+      private Prop.PropXtraUserControl projectPropXtraUserControl;
+      private Prop.PropXtraUserControl snapshotPropXtraUserControl;
+      private Prop.PropXtraUserControl solutionPropXtraUserControl;
    }
 }
 
