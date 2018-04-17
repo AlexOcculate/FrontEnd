@@ -85,9 +85,13 @@
     <Compile Include="Events\File\OpenFile\BeforeOpenFileEventArgs.cs" />
     <Compile Include="Events\File\OpenFile\OpenFileDelegates.cs" />
     <Compile Include="Events\File\OpenFile\OpenFileException.cs" />
+    <Compile Include="Events\SysCS\FocusedSysCSChanged\FocusedSysCSChangedDelegates.cs" />
+    <Compile Include="Events\SysCS\FocusedSysCSChanged\FocusedSysCSChangedEventArgs.cs" />
+    <Compile Include="Events\SysCS\FocusedSysCSChanged\FocusedSysCSChangedException.cs" />
     <Compile Include="Model\Configuration.cs" />
     <Compile Include="Model\ConnectionString.cs" />
     <Compile Include="Model\DataStore.cs" />
+    <Compile Include="Model\SysConnectionString.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Events\File\SaveAs\AfterSaveAsFileEventArgs.cs" />
     <Compile Include="Events\File\SaveAs\BeforeSaveAsFileEventArgs.cs" />
@@ -99,5 +103,6 @@
     <Compile Include="Events\File\SaveFile\SaveFileDelegates.cs" />
     <Compile Include="Events\File\SaveFile\SaveFileException.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

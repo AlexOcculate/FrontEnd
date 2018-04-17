@@ -84,6 +84,10 @@ namespace Prop
       private void VerifyStatuses()
       {
          BaseRow focusedRow = this.propertyGridControl.FocusedRow;
+         if( focusedRow == null )
+         {
+            return;
+         }
          bool isCategoryRow = this.propertyGridControl.IsCategoryRow( focusedRow );
          bool hasParent = focusedRow.ParentRow != null;
          bool hasChildren = focusedRow.HasChildren;

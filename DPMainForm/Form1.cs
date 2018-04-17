@@ -34,5 +34,10 @@ namespace DataPhilosophiae.MainForm
          DevExpress.XtraSplashScreen.SplashScreenManager.HideImage(1000, this);
       }
       #endregion
+
+      private void sysCSXtraUserControl1_FocusedSysCSChangedEvent( object sender, GridDataPhilosophiae.Events.SysCS.FocusedSysCSChangedEventArgs ea )
+      {
+         this.sysCSPropXtraUserControl.SetSelectedObject(ea.FocusedSysCS);
+      }
    }
 }
