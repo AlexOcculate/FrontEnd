@@ -20,5 +20,28 @@ namespace DataPhilosophiae.Events.AppCS
       {
          get; set;
       }
+      public bool wasCanceled
+      {
+         get
+         {
+            return this.Cancel;
+         }
+      }
+
+      public bool hasException
+      {
+         get
+         {
+            return this.Exception != null;
+         }
+      }
+
+      public bool isOk
+      {
+         get
+         {
+            return !this.wasCanceled && !this.hasException;
+         }
+      }
    }
 }
