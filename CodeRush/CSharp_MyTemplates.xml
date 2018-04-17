@@ -2,6 +2,51 @@
 <XmlTemplateCategoryInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="MyTemplates" OptExpanded="true">
   <TemplateCategory Name="ActiveQueryBuilder" OptExpanded="true">
     <TemplateCategory Name="ZYZ" OptExpanded="true">
+      <Template Name="SplashScreen">
+        <Comment>Create a SplashScreen</Comment>
+        <Expansion Priority="0">
+          <Body>      [STAThread]
+      private static void Main()
+      {
+         Application.EnableVisualStyles();
+         Application.SetCompatibleTextRenderingDefault(false);
+
+         DevExpress.UserSkins.BonusSkins.Register();
+         DevExpress.Skins.SkinManager.EnableFormSkins();
+
+         string skinStyle = "Visual Studio 2013 Blue"; // "Metropolis Dark";
+         //if( true )
+         //   skinStyle = "Office 2016 Colorful";
+         //else
+         //   skinStyle = "Visual Studio 2013 Blue";
+         DevExpress.LookAndFeel.UserLookAndFeel.Default.SetSkinStyle(skinStyle);
+         //
+         System.Drawing.Bitmap splashScreenImage = new System.Drawing.Bitmap(
+            Assembly.GetExecutingAssembly()
+            .GetManifestResourceStream("DPMainForm.Resources.splashScreen.png")
+            );
+         DevExpress.XtraSplashScreen.SplashScreenManager.ShowImage(splashScreenImage, true, false);
+
+         Application.Run(new Form1());
+      }
+
+
+
+
+      #region --- Splash Screen ---
+      private void Form1_Load( object sender, EventArgs e )
+      {
+         BeginInvoke( new MethodInvoker( this.InitDemo ) );
+      }
+      private void InitDemo()
+      {
+         DevExpress.XtraSplashScreen.SplashScreenManager.HideImage( 1000, this );
+      }
+      #endregion
+</Body>
+          <Context />
+        </Expansion>
+      </Template>
       <Template Name="treeList.Init">
         <Comment>Initialize a TreeList</Comment>
         <Expansion Priority="0">
@@ -61,7 +106,7 @@
 
       private void OpenItemClick()
       {
-         using( XtraOpenFileDialog dialog = new XtraOpenFileDialog( ) )
+         using( XtraOpenFileDialog dialog = new DevExpress.XtraEditors.XtraOpenFileDialog( ) )
          {
             dialog.InitialDirectory = this.initialPath;
             dialog.ShowDragDropConfirmation = true;
@@ -77,7 +122,7 @@
 
       private void SaveItemClick()
       {
-         using( XtraSaveFileDialog dialog = new XtraSaveFileDialog( ) )
+         using( XtraSaveFileDialog dialog = new DevExpress.XtraEditors.XtraSaveFileDialog( ) )
          {
             dialog.InitialDirectory = this.initialPath;
             dialog.ShowDragDropConfirmation = true;
@@ -94,7 +139,7 @@
 
       private void SetWorkingFolderItemClick()
       {
-         using( XtraFolderBrowserDialog dialog = new XtraFolderBrowserDialog( ) )
+         using( XtraFolderBrowserDialog dialog = new DevExpress.XtraEditors.XtraFolderBrowserDialog( ) )
          {
             dialog.SelectedPath = this.initialPath;
             if( dialog.ShowDialog( ) == DialogResult.OK )
@@ -165,12 +210,6 @@ switch(dialogResult)
         <Body>//
       #region --- Before and After «Paste» EVENTS + HANDLERS + EXCEPTIONS ---
 //
-      public event AllowedTo«Paste»EventHandler Allowed«Paste»Event;
-      public event NotAllowedTo«Paste»EventHandler NotAllowed«Paste»Event;
-//
-      public event Before«Paste»EventHandler Before«Paste»Event;
-      public event After«Paste»EventHandler After«Paste»Event;
-//
       public delegate void AllowedTo«Paste»EventHandler( object sender );
       public delegate void NotAllowedTo«Paste»EventHandler( object sender );
 //
@@ -180,8 +219,12 @@ switch(dialogResult)
       public class Before«Paste»EventArgs : System.EventArgs
       {
          public bool Cancel { get; set; }
-         public string Filename { get; set; }
+         public string NewName { get; set; }
          public «Paste»Exception Exception { get; set; }
+//
+         public bool wasCanceled { get { return this.Cancel; } }
+         public bool hasException { get { return this.Exception != null; } }
+         public bool isOk { get { return !this.wasCanceled &amp;&amp; !this.hasException; } }
       }
 //
       public class After«Paste»EventArgs : System.EventArgs
@@ -216,17 +259,47 @@ switch(dialogResult)
              : base( info, context ) { }
       }
 //
-      public void «Paste»( string filename )
+      [Browsable( true )]
+      [CategoryAttribute( "00001-Obj-OBJNAME" )]
+      [Description( "" )]
+      public event AllowedTo«Paste»EventHandler Allowed«Paste»Event;
+      [Browsable( true )]
+      [CategoryAttribute( "00001-Obj-OBJNAME" )]
+      [Description( "" )]
+      public event NotAllowedTo«Paste»EventHandler NotAllowed«Paste»Event;
+//
+      [Browsable( true )]
+      [CategoryAttribute( "00001-Obj-OBJNAME" )]
+      [Description( "" )]
+      public event Before«Paste»EventHandler Before«Paste»Event;
+      [Browsable( true )]
+      [CategoryAttribute( "00001-Obj-OBJNAME" )]
+      [Description( "" )]
+      public event After«Paste»EventHandler After«Paste»Event;
+//
+      public void «Paste»( string newName = "&lt;NEW NAME&gt;" )
       {
          Before«Paste»EventArgs args1 = new Before«Paste»EventArgs( );
          After«Paste»EventArgs args2 = new After«Paste»EventArgs( args1 );
-         args1.Filename = filename;
-         this.Before«Paste»Event?.Invoke( this, args1 );
-         if( !args1.Cancel )
+         //
+         const string title = "New AppCS";
+         const string msg = "Enter the new unique name for it!";
+         string value = XtraInputBox.Show( msg, title, newName );
+         args1.NewName = value.Trim();
+         if( string.IsNullOrWhiteSpace( args1.NewName ))
          {
-            this.«Paste»Event( args1 );
+            args1.Exception = new AddAppCSException( "name cannot be null, empty or whitespaces!" );
          }
-         this.After«Paste»Event?.Invoke( this, args2 );
+         //
+         if( args1.isOk )
+         {
+            this.BeforeAddAppCSEvent?.Invoke( this, args1 );
+            if( args1.isOk )
+            {
+               this.«Paste»Event( args1 );
+               this.After«Paste»Event?.Invoke( this, args2 );
+            }
+         }
       }
 //
       private void «Paste»Event( Before«Paste»EventArgs args )
@@ -254,9 +327,11 @@ switch(dialogResult)
       }
 // this.After«Paste»Event += this.After«Paste»EventPostStatuses;
 
-</Body>
+#endregion</Body>
         <Context />
         <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InString])</ContextString>
+        <UsingClause>System.ComponentModel</UsingClause>
+        <UsingClause>DevExpress.XtraEditors</UsingClause>
       </Expansion>
     </Template>
     <Template Name="neah">
@@ -271,6 +346,10 @@ switch(dialogResult)
          public bool Cancel { get; set; }
          public string Filename { get; set; }
          public «Paste»Exception Exception { get; set; }
+//
+         public bool wasCanceled { get { return this.Cancel; } }
+         public bool hasException { get { return this.Exception != null; } }
+         public bool isOk { get { return !this.wasCanceled &amp;&amp; !this.hasException; } }
       }
 //
       [System.Serializable]
