@@ -94,6 +94,7 @@
          this.sysCSXtraUserControl1 = new DataPhilosophiae.Control.SysCSXtraUserControl();
          this.solutionPropsDockPanel_Container = new DevExpress.XtraBars.Docking.ControlContainer();
          this.solutionPropsDockPanel = new DevExpress.XtraBars.Docking.DockPanel();
+         this.metadataPullerXtraUserControl1 = new DPControls.Controls.MetadataPuller.MetadataPullerXtraUserControl();
          ((System.ComponentModel.ISupportInitialize)(this.documentGroup1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.document1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.document2)).BeginInit();
@@ -111,6 +112,7 @@
          this.outputListDockPanel.SuspendLayout();
          this.jobListDockPanel.SuspendLayout();
          this.dockPanel1.SuspendLayout();
+         this.dockPanel1_Container.SuspendLayout();
          this.dockPanel2.SuspendLayout();
          this.rightPanelContainer.SuspendLayout();
          this.sysCSPropsDockPanel.SuspendLayout();
@@ -477,6 +479,7 @@
          // 
          // dockPanel1_Container
          // 
+         this.dockPanel1_Container.Controls.Add(this.metadataPullerXtraUserControl1);
          this.dockPanel1_Container.Location = new System.Drawing.Point(0, 0);
          this.dockPanel1_Container.Name = "dockPanel1_Container";
          this.dockPanel1_Container.Size = new System.Drawing.Size(298, 475);
@@ -747,6 +750,13 @@
          this.solutionPropsDockPanel.Size = new System.Drawing.Size(299, 449);
          this.solutionPropsDockPanel.Text = "Solution";
          // 
+         // metadataPullerXtraUserControl1
+         // 
+         this.metadataPullerXtraUserControl1.Location = new System.Drawing.Point(82, 237);
+         this.metadataPullerXtraUserControl1.Name = "metadataPullerXtraUserControl1";
+         this.metadataPullerXtraUserControl1.Size = new System.Drawing.Size(150, 150);
+         this.metadataPullerXtraUserControl1.TabIndex = 0;
+         // 
          // Form1
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -780,6 +790,7 @@
          this.outputListDockPanel.ResumeLayout(false);
          this.jobListDockPanel.ResumeLayout(false);
          this.dockPanel1.ResumeLayout(false);
+         this.dockPanel1_Container.ResumeLayout(false);
          this.dockPanel2.ResumeLayout(false);
          this.rightPanelContainer.ResumeLayout(false);
          this.sysCSPropsDockPanel.ResumeLayout(false);
@@ -868,6 +879,7 @@
       private Prop.PropXtraUserControl snapshotPropXtraUserControl;
       private Prop.PropXtraUserControl solutionPropXtraUserControl;
       private Control.SysCSXtraUserControl sysCSXtraUserControl1;
+      private DPControls.Controls.MetadataPuller.MetadataPullerXtraUserControl metadataPullerXtraUserControl1;
    }
 }
 

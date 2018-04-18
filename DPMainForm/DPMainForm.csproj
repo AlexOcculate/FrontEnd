@@ -33,6 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ActiveQueryBuilder.Core, Version=3.4.3.1079, Culture=neutral, PublicKeyToken=3cbcbcc9bf57ecde" />
     <Reference Include="DevExpress.BonusSkins.v17.2" />
     <Reference Include="DevExpress.Data.v17.2" />
     <Reference Include="DevExpress.Utils.v17.2" />
