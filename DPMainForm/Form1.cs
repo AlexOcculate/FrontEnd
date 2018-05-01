@@ -23,11 +23,11 @@ namespace DataPhilosophiae.MainForm
             "DPMainForm.Resources.AppIcon.ico",
             typeof(Form1).Assembly
             );
-         bool testAqbSqlContext4SQLiteConnection = MetadataPullerXtraUserControl.TestAqbSqlContext4SQLiteConnection(string.Empty);
-         SQLContext scOffilne = MetadataPullerXtraUserControl.CreateAqbSqlContext4SQLiteOffline(string.Empty);
-         SQLContext scOnline = MetadataPullerXtraUserControl.CreateAqbSqlContext4SQLiteOnline(string.Empty);
-         System.Data.DataTable dt = MetadataPullerXtraUserControl.CreateMetadataItemTable();
-         MetadataPullerXtraUserControl.DrillDownAqbSqlContext(scOffilne, dt, "XPTO");
+   //      bool testAqbSqlContext4SQLiteConnection = MetadataPullerXtraUserControl.TestAqbSqlContext4SQLiteConnection(string.Empty);
+   //      SQLContext scOffilne = MetadataPullerXtraUserControl.CreateAqbSqlContext4SQLiteOffline(string.Empty);
+    //     SQLContext scOnline = MetadataPullerXtraUserControl.CreateAqbSqlContext4SQLiteOnline(string.Empty);
+    //     System.Data.DataTable dt = MetadataPullerXtraUserControl.CreateMetadataItemTable();
+    //     MetadataPullerXtraUserControl.DrillDownAqbSqlContext(scOffilne, dt, "XPTO");
       }
 
       #region --- Splash Screen ---
